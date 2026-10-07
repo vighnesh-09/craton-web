@@ -4,8 +4,8 @@ import { site } from '@/config/site'
 
 export default function Proof() {
   return (
-    <section id="proof" aria-label="Proof" className="pad-x relative z-10 py-4">
-      <Glass className="mx-auto max-w-[1400px] px-5 py-6 sm:px-8" glow>
+    <section id="proof" aria-label="Proof" className="pad-x relative z-10 py-6 sm:py-8">
+      <Glass className="mx-auto max-w-[1400px] px-5 py-7 sm:px-8 sm:py-8" glow>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {site.proof.map((item, i) => (
             <Reveal key={item.label} delay={i * 0.06} as="li">

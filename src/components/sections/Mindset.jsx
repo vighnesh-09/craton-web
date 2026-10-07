@@ -33,11 +33,12 @@ export default function Mindset() {
         {site.beliefs.map((belief, i) => (
           <Reveal
             key={belief.title}
-            delay={i * 0.08}
+            delay={i * 0.1}
+            y={40}
             as="li"
-            className="border-line py-8 md:border-r md:px-7 md:py-10 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+            className="border-line py-10 md:border-r md:px-8 md:py-12 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
           >
-            <span className="mb-5 inline-block h-1 w-10 bg-accent" />
+            <span className="mb-6 inline-block h-px w-12 bg-accent" />
             <h3 className="text-[1.35rem] font-medium tracking-tight">
               {belief.title}
             </h3>

@@ -7,14 +7,17 @@ export function LenisProvider({ children }) {
   const [lenis, setLenis] = useState(null)
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return undefined
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (mq.matches) return undefined
 
     const instance = new Lenis({
-      duration: 1.15,
+      // Agency-grade pacing: longer ease, soft wheel — scroll feels intentional
+      duration: 1.35,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.4,
+      wheelMultiplier: 0.92,
+      touchMultiplier: 1.35,
+      syncTouch: false,
     })
 
     setLenis(instance)
@@ -26,7 +29,17 @@ export function LenisProvider({ children }) {
     }
     rafId = requestAnimationFrame(raf)
 
+    const onChange = () => {
+      if (mq.matches) {
+        instance.destroy()
+        setLenis(null)
+        cancelAnimationFrame(rafId)
+      }
+    }
+    mq.addEventListener('change', onChange)
+
     return () => {
+      mq.removeEventListener('change', onChange)
       cancelAnimationFrame(rafId)
       instance.destroy()
       setLenis(null)
