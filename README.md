@@ -10,6 +10,7 @@ Structured for SEO, maintainability, and a clean path into the landing redesign.
 | UI      | React 19                                |
 | Build   | Vite 8                                  |
 | Styles  | Tailwind CSS 4                          |
+| Hero FX | Three.js (WebGL — same stack as V7)     |
 | Motion  | Framer Motion (respects reduced motion) |
 | Routing | React Router 7 (lazy pages)             |
 | Icons   | Lucide React                            |

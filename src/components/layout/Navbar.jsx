@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <Link
           to="/"
-          className="font-display text-xl font-bold tracking-tight text-ink transition-colors duration-300 hover:text-lagoon"
+          className="font-display text-xl font-bold tracking-tight text-[#f8f6ee] transition-colors duration-300 hover:text-copper"
         >
           {env.appName}
         </Link>
@@ -29,14 +29,14 @@ export default function Navbar() {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-ink/70 transition-colors duration-300 hover:text-ink"
+              className="text-sm font-medium text-[#d2d3ca]/70 transition-colors duration-300 hover:text-[#f8f6ee]"
             >
               {link.label}
             </a>
           ))}
           <a
             href="/#contact"
-            className="rounded-full bg-ink px-5 py-2.5 text-sm font-semibold text-foam transition-all duration-300 hover:bg-lagoon hover:shadow-lg hover:shadow-lagoon/25"
+            className="rounded-full bg-[#f0eee7] px-5 py-2.5 text-sm font-semibold text-craton transition-all duration-300 hover:bg-white"
           >
             Start a project
           </a>
@@ -48,7 +48,7 @@ export default function Navbar() {
           aria-controls="mobile-nav"
           aria-label={open ? 'Close menu' : 'Open menu'}
           onClick={() => setOpen((v) => !v)}
-          className="rounded-full p-2 text-ink transition-colors duration-300 hover:bg-mist md:hidden"
+          className="rounded-full p-2 text-[#f8f6ee] transition-colors duration-300 hover:bg-white/10 md:hidden"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -57,7 +57,7 @@ export default function Navbar() {
       <div
         id="mobile-nav"
         className={cn(
-          'overflow-hidden border-t border-ink/5 bg-foam/95 backdrop-blur-md transition-all duration-300 md:hidden',
+          'overflow-hidden border-t border-white/10 bg-craton/95 backdrop-blur-md transition-all duration-300 md:hidden',
           open ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0',
         )}
       >
@@ -67,7 +67,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="text-base font-medium text-ink/80"
+              className="text-base font-medium text-[#d2d3ca]"
             >
               {link.label}
             </a>
@@ -75,7 +75,7 @@ export default function Navbar() {
           <a
             href="/#contact"
             onClick={() => setOpen(false)}
-            className="rounded-full bg-ink px-5 py-3 text-center text-sm font-semibold text-foam"
+            className="rounded-full bg-[#f0eee7] px-5 py-3 text-center text-sm font-semibold text-craton"
           >
             Start a project
           </a>
