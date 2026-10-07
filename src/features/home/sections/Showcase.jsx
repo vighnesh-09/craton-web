@@ -63,7 +63,13 @@ export default function Showcase() {
               <div
                 className={`relative aspect-[4/5] overflow-hidden rounded-3xl bg-gradient-to-br ${project.tone}`}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.25),transparent_45%)] transition-opacity duration-500 group-hover:opacity-80" />
+                <div
+                  className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-80"
+                  style={{
+                    background:
+                      'radial-gradient(circle at 30% 20%, var(--highlight), transparent 45%)',
+                  }}
+                />
                 <div className="absolute inset-x-0 bottom-0 p-6 text-foam">
                   <p className="text-xs font-medium uppercase tracking-[0.18em] text-foam/70">
                     {project.role}

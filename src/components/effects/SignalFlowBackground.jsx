@@ -28,8 +28,6 @@ const MAX_SIGNALS = 200
 
 /** Tuned to match V7’s live hero (amber signals, charcoal funnel). */
 const CONFIG = Object.freeze({
-  colorLine: '#373f48',
-  colorSignal: '#ff9a45',
   lineCount: 80,
   signalCount: 90,
   spreadHeight: 30,
@@ -41,6 +39,20 @@ const CONFIG = Object.freeze({
   speedGlobal: 0.35,
   trailLength: 10,
 })
+
+function readCssColor(name, fallback) {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+  return value || fallback
+}
+
+function themeSignalColors() {
+  return {
+    colorLine: readCssColor('--signal-line', '#373f48'),
+    colorSignal: readCssColor('--signal-pulse', '#ff9a45'),
+  }
+}
 
 /**
  * Exact V7 path math: fan on the left → converge → flat trunk to the right.
@@ -78,7 +90,7 @@ export default function SignalFlowBackground({ className }) {
     const container = containerRef.current
     if (!container) return undefined
 
-    const cfg = { ...CONFIG }
+    const cfg = { ...CONFIG, ...themeSignalColors() }
     const tempVec = new Vector3()
 
     let width = container.clientWidth || 800
@@ -158,6 +170,18 @@ export default function SignalFlowBackground({ className }) {
         color: new Color(cfg.colorSignal),
       })
     }
+
+    const syncThemeColors = () => {
+      const next = themeSignalColors()
+      cfg.colorLine = next.colorLine
+      cfg.colorSignal = next.colorSignal
+      lineMaterial.color.set(next.colorLine)
+      for (const sig of signals) {
+        sig.color.set(next.colorSignal)
+      }
+    }
+
+    window.addEventListener('craton:themechange', syncThemeColors)
 
     let isVisible = true
     let raf = 0
@@ -346,6 +370,7 @@ export default function SignalFlowBackground({ className }) {
       resizeObserver.disconnect()
       visibilityObserver.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)
+      window.removeEventListener('craton:themechange', syncThemeColors)
       lines.forEach((line) => line.geometry.dispose())
       signals.forEach((sig) => sig.mesh.geometry.dispose())
       lineMaterial.dispose()

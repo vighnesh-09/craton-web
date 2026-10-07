@@ -1,0 +1,52 @@
+---
+description: All UI colors must use theme tokens so light/dark mode stays easy
+alwaysApply: true
+---
+
+# Dynamic colors (theme tokens)
+
+Every visual color in this project must come from the theme system — never raw hex/rgb in components (except one-off SVG assets).
+
+## Source of truth
+
+- Tokens live in `src/config/theme.js` (`themes.light` / `themes.dark`)
+- CSS fallbacks + Tailwind bridges live in `src/styles/index.css`
+- `ThemeProvider` applies vars on `<html>` and toggles `data-mode`
+
+## Do
+
+- Use Tailwind semantic colors: `bg-foam`, `text-ink`, `text-hero-fg`, `border-line`, `bg-lagoon`, `text-copper`, …
+- For gradients / Three.js / canvas, read `var(--token)` or `getComputedStyle(...).getPropertyValue('--token')`
+- When adding a new color role, add it to **both** light and dark in `theme.js`, map it in `@theme` in `index.css`, then use the Tailwind name
+- Prefer existing tokens before inventing new ones
+
+## Don’t
+
+```jsx
+// ❌ BAD — breaks dark mode later
+className="bg-[#f8f6ee] text-[#1c1c1c]"
+style={{ color: '#0d6e6e' }}
+
+// ✅ GOOD
+className="bg-hero-cta text-craton"
+className="text-lagoon"
+style={{ background: 'radial-gradient(..., var(--highlight), ...)' }}
+```
+
+## Checklist for new UI
+
+1. Pick a semantic token (or add one to light + dark)
+2. Style with `bg-*` / `text-*` / `border-*` or `var(--*)`
+3. Toggle light/dark in the navbar and verify contrast
+4. Canvas/WebGL must listen for `craton:themechange` if colors are cached
+
+## Common tokens
+
+| Role | Token examples |
+| --- | --- |
+| Page bg / body text | `foam`, `ink` |
+| Alt surface | `mist`, `ink-soft` |
+| Brand / CTA | `lagoon`, `lagoon-deep`, `coral`, `copper` |
+| Hero on dark | `craton`, `hero-base`, `hero-fg`, `hero-muted`, `hero-cta` |
+| Borders | `line`, `line-on-dark` |
+| Effects | `signal-line`, `signal-pulse`, `highlight`, `cursor` |

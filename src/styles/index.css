@@ -1,28 +1,82 @@
 @import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
 
+/*
+  Colors are CSS variables — values come from ThemeProvider / :root.
+  Never hardcode brand hex in components; use these Tailwind names.
+*/
 @theme {
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
-  --font-serif: Georgia, 'Times New Roman', serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
 
-  --color-ink: #0f1c1a;
-  --color-ink-soft: #1a2e2a;
-  --color-mist: #e8f0ed;
-  --color-foam: #f4faf7;
-  --color-lagoon: #0d6e6e;
-  --color-lagoon-deep: #085454;
-  --color-coral: #e85d4c;
-  --color-sun: #f0a202;
-  --color-craton: #131513;
-  --color-copper: #d8a075;
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-mist: var(--mist);
+  --color-foam: var(--foam);
+  --color-lagoon: var(--lagoon);
+  --color-lagoon-deep: var(--lagoon-deep);
+  --color-coral: var(--coral);
+  --color-sun: var(--sun);
+  --color-craton: var(--craton);
+  --color-copper: var(--copper);
+  --color-hero-base: var(--hero-base);
+  --color-hero-fg: var(--hero-fg);
+  --color-hero-muted: var(--hero-muted);
+  --color-hero-soft: var(--hero-soft);
+  --color-hero-body: var(--hero-body);
+  --color-hero-cta: var(--hero-cta);
+  --color-hero-nav: var(--hero-nav);
+  --color-line: var(--line);
+  --color-line-on-dark: var(--line-on-dark);
+  --color-highlight: var(--highlight);
+  --color-signal-line: var(--signal-line);
+  --color-signal-pulse: var(--signal-pulse);
+  --color-cursor: var(--cursor);
+}
+
+/* Fallback before ThemeProvider hydrates (keep in sync with theme.js light) */
+:root {
+  --ink: #0f1c1a;
+  --ink-soft: #1a2e2a;
+  --mist: #e8f0ed;
+  --foam: #f4faf7;
+  --lagoon: #0d6e6e;
+  --lagoon-deep: #085454;
+  --coral: #e85d4c;
+  --sun: #f0a202;
+  --craton: #131513;
+  --copper: #d8a075;
+  --hero-base: #1c1c1c;
+  --hero-fg: #f8f6ee;
+  --hero-muted: #ced0c5;
+  --hero-soft: #e6e5d9;
+  --hero-body: #c3c6ba;
+  --hero-cta: #f0eee7;
+  --hero-nav: #d2d3ca;
+  --hero-veil: rgba(28, 28, 28, 0.4);
+  --hero-veil-mid: rgba(28, 28, 28, 0.08);
+  --hero-veil-edge: rgba(28, 28, 28, 0.25);
+  --line: rgba(15, 28, 26, 0.1);
+  --line-on-dark: rgba(248, 246, 238, 0.12);
+  --highlight: rgba(255, 255, 255, 0.25);
+  --signal-line: #373f48;
+  --signal-pulse: #ff9a45;
+  --cursor: #ffffff;
+  color-scheme: light;
 }
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -42,6 +96,14 @@
 
   body {
     @apply m-0 min-h-screen bg-foam font-body text-ink antialiased;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
+  }
+
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
   }
 
   :focus-visible {
@@ -55,5 +117,27 @@
   img,
   svg {
     @apply max-w-full;
+  }
+}
+
+@layer utilities {
+  @keyframes proof-marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .proof-marquee {
+    animation: proof-marquee 48s linear infinite;
+    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .proof-marquee {
+      animation: none;
+    }
   }
 }
