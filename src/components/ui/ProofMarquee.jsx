@@ -1,5 +1,6 @@
 'use client'
 
+import SiteContainer from '@/components/layout/SiteContainer'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { cn } from '@/lib/cn'
 
@@ -34,21 +35,21 @@ export default function ProofMarquee({ className }) {
   const track = [...facts, ...facts]
 
   return (
-    <div className={cn('border-t border-line-on-dark', className)}>
-      <div className="mx-auto max-w-6xl px-6 pb-3 pt-8 text-center sm:px-8">
+    <div className={cn(className)}>
+      <SiteContainer className="px-6 pb-3 pt-8 text-center sm:px-8">
         <p className="font-serif text-[15px] italic tracking-[-0.01em] text-hero-soft/80 sm:text-[16px]">
           Building the evidence layer for regulated work.
         </p>
-      </div>
+      </SiteContainer>
 
       <div className="relative pb-7 pt-4">
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-hero-base via-hero-base/80 to-transparent sm:w-20"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-craton via-craton/80 to-transparent sm:w-20"
         />
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-hero-base via-hero-base/80 to-transparent sm:w-20"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-craton via-craton/80 to-transparent sm:w-20"
         />
 
         {reduced ? (

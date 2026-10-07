@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import SiteContainer from '@/components/layout/SiteContainer'
 
 export default function Studio() {
   return (
@@ -15,7 +16,7 @@ export default function Studio() {
         className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-lagoon/30 blur-3xl"
       />
 
-      <div className="relative mx-auto grid max-w-6xl gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
+      <SiteContainer className="relative grid gap-12 md:grid-cols-[1.1fr_0.9fr] md:items-center">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -51,7 +52,7 @@ export default function Studio() {
             </p>
           ))}
         </motion.div>
-      </div>
+      </SiteContainer>
     </section>
   )
 }

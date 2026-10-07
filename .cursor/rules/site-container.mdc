@@ -1,0 +1,39 @@
+---
+description: Keep all page sections on the shared site content width
+alwaysApply: true
+---
+
+# Site content width
+
+Every page section, navbar, and footer content column must use the shared site width — never invent a one-off layout max-width.
+
+## Source of truth
+
+- Token: `--max-width-site: 100rem` in `src/styles/index.css` (`@theme`)
+- Tailwind: `max-w-site`
+- Component: `SiteContainer` from `@/components/layout/SiteContainer`
+
+## Do
+
+```jsx
+import SiteContainer from '@/components/layout/SiteContainer'
+
+<section className="bg-foam px-6 py-24">
+  <SiteContainer>{/* section content */}</SiteContainer>
+</section>
+```
+
+- Put horizontal padding on the section or on `SiteContainer` (`px-6 sm:px-8`), not a different max-width
+- Prefer `<SiteContainer>` over raw `max-w-site` so structure stays consistent
+- Use `as={motion.div}` when the container itself needs Framer Motion props
+
+## Don’t
+
+```jsx
+// ❌ BAD — breaks the site grid
+<div className="mx-auto max-w-6xl">…
+<div className="mx-auto max-w-[90rem]">…
+
+// ✅ GOOD
+<SiteContainer>…
+```

@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import SiteContainer from '@/components/layout/SiteContainer'
 
 const projects = [
   {
@@ -23,7 +24,7 @@ const projects = [
 export default function Showcase() {
   return (
     <section id="work" className="bg-mist px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-6xl">
+      <SiteContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -84,7 +85,7 @@ export default function Showcase() {
             </motion.article>
           ))}
         </div>
-      </div>
+      </SiteContainer>
     </section>
   )
 }

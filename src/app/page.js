@@ -1,4 +1,11 @@
-import { Contact, Features, Hero, Showcase, Studio } from '@/features/home'
+import {
+  Contact,
+  Features,
+  Hero,
+  ProofBand,
+  Showcase,
+  Studio,
+} from '@/features/home'
 import { pages } from '@/content/pages'
 
 const meta = pages.home
@@ -22,6 +29,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <ProofBand />
       <Features />
       <Showcase />
       <Studio />

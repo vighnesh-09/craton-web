@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { env } from '@/config/env'
 import { primaryNav } from '@/content/navigation'
+import SiteContainer from '@/components/layout/SiteContainer'
 import { cn } from '@/lib/cn'
 
 export default function Navbar() {
@@ -20,7 +21,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className="fixed inset-x-0 top-0 z-50"
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      <SiteContainer className="flex items-center justify-between px-6 py-5">
         <Link
           href="/"
           className="font-display text-xl font-bold tracking-tight text-hero-fg transition-colors duration-300 hover:text-copper"
@@ -75,7 +76,7 @@ export default function Navbar() {
             {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-      </div>
+      </SiteContainer>
 
       <div
         id="mobile-nav"

@@ -12,6 +12,9 @@
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
     monospace;
 
+  /* Site content column — use max-w-site / <SiteContainer> everywhere */
+  --max-width-site: 100rem;
+
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
   --color-mist: var(--mist);

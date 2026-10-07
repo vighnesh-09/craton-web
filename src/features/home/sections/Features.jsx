@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Layers, Sparkles, Zap } from 'lucide-react'
+import SiteContainer from '@/components/layout/SiteContainer'
 
 const features = [
   {
@@ -38,7 +39,7 @@ const item = {
 export default function Features() {
   return (
     <section id="approach" className="bg-foam px-6 py-24 md:py-32">
-      <div className="mx-auto max-w-6xl">
+      <SiteContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,7 +77,7 @@ export default function Features() {
             </motion.li>
           ))}
         </motion.ul>
-      </div>
+      </SiteContainer>
     </section>
   )
 }
