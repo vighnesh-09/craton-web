@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import HeroSculpture from '@/components/effects/HeroSculpture'
 import SignalFlowBackground from '@/components/effects/SignalFlowBackground'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { env } from '@/config/env'
@@ -59,7 +60,19 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 bg-hero-base"
       />
 
-      <SignalFlowBackground className="z-[1]" />
+      {/* Funnel stays on the left; masked so the trunk doesn't cut through the sculpture */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-[1]"
+        style={{
+          WebkitMaskImage:
+            'linear-gradient(90deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 52%, transparent 68%)',
+          maskImage:
+            'linear-gradient(90deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 52%, transparent 68%)',
+        }}
+      >
+        <SignalFlowBackground />
+      </div>
 
       <div
         aria-hidden
@@ -70,62 +83,67 @@ export default function Hero() {
         }}
       />
 
-      <SiteContainer className="relative z-[3] flex flex-1 flex-col justify-center px-6 pb-8 pt-28 sm:px-8 lg:pb-10">
-        <div className="mb-6 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-hero-muted">
-          <RevealLine delay={t(0)} reduced={reduced}>
-            <span className="inline-flex items-center gap-3">
-              <span aria-hidden className="inline-block h-px w-7 bg-copper" />
-              {env.appName}
-            </span>
-          </RevealLine>
-        </div>
+      {/* v2 sculpture — right side, above funnel */}
+      <HeroSculpture className="z-[3] right-[-4%] top-20 bottom-8 w-[62%]" />
 
-        <h1 className="max-w-[12ch] font-display text-[clamp(2.75rem,7vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-hero-fg">
-          <RevealLine delay={t(1)} reduced={reduced}>
-            Bold ideas.
-          </RevealLine>
-          <RevealLine
-            delay={t(2)}
-            reduced={reduced}
-            className="font-serif text-[1.06em] font-normal italic tracking-[-0.03em] text-hero-soft"
-          >
-            Engineered forward.
-          </RevealLine>
-        </h1>
+      <SiteContainer className="relative z-[4] flex flex-1 flex-col justify-center px-6 pb-8 pt-28 sm:px-8 lg:pb-10">
+        <div className="w-full max-w-xl lg:max-w-[46%]">
+          <div className="mb-6 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-hero-muted">
+            <RevealLine delay={t(0)} reduced={reduced}>
+              <span className="inline-flex items-center gap-3">
+                <span aria-hidden className="inline-block h-px w-7 bg-copper" />
+                {env.appName}
+              </span>
+            </RevealLine>
+          </div>
 
-        <div className="mt-7 max-w-[36ch] font-body text-[15px] leading-[1.75] text-hero-body sm:text-[16px]">
-          <RevealLine delay={t(3)} reduced={reduced}>
-            We invent, protect, and ship AI-enabled products
-          </RevealLine>
-          <RevealLine delay={t(4)} reduced={reduced}>
-            for trust-critical work — from a stable core,
-          </RevealLine>
-          <RevealLine delay={t(5)} reduced={reduced}>
-            across many domains.
-          </RevealLine>
-        </div>
+          <h1 className="max-w-[12ch] font-display text-[clamp(2.75rem,7vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-hero-fg">
+            <RevealLine delay={t(1)} reduced={reduced}>
+              Bold ideas.
+            </RevealLine>
+            <RevealLine
+              delay={t(2)}
+              reduced={reduced}
+              className="font-serif text-[1.06em] font-normal italic tracking-[-0.03em] text-hero-soft"
+            >
+              Engineered forward.
+            </RevealLine>
+          </h1>
 
-        <div className="mt-9">
-          <RevealLine delay={t(6)} reduced={reduced}>
-            <span className="inline-flex flex-wrap items-center gap-3 sm:gap-4">
-              <a
-                href="#work"
-                className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-hero-cta px-6 text-[13px] font-semibold text-craton transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
-              >
-                Explore products
-                <ArrowRight
-                  size={15}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </a>
-              <a
-                href="/#contact"
-                className="inline-flex min-h-11 items-center rounded-full border border-line-on-dark px-5 text-[13px] font-medium text-hero-cta transition-all duration-200 hover:-translate-y-0.5 hover:border-hero-fg/35 hover:bg-hero-fg/[0.04]"
-              >
-                Get in touch
-              </a>
-            </span>
-          </RevealLine>
+          <div className="mt-7 max-w-[36ch] font-body text-[15px] leading-[1.75] text-hero-body sm:text-[16px]">
+            <RevealLine delay={t(3)} reduced={reduced}>
+              We invent, protect, and ship AI-enabled products
+            </RevealLine>
+            <RevealLine delay={t(4)} reduced={reduced}>
+              for trust-critical work — from a stable core,
+            </RevealLine>
+            <RevealLine delay={t(5)} reduced={reduced}>
+              across many domains.
+            </RevealLine>
+          </div>
+
+          <div className="mt-9">
+            <RevealLine delay={t(6)} reduced={reduced}>
+              <span className="inline-flex flex-wrap items-center gap-3 sm:gap-4">
+                <a
+                  href="#work"
+                  className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-hero-cta px-6 text-[13px] font-semibold text-craton transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
+                >
+                  Explore products
+                  <ArrowRight
+                    size={15}
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </a>
+                <a
+                  href="/#contact"
+                  className="inline-flex min-h-11 items-center rounded-full border border-line-on-dark px-5 text-[13px] font-medium text-hero-cta transition-all duration-200 hover:-translate-y-0.5 hover:border-hero-fg/35 hover:bg-hero-fg/[0.04]"
+                >
+                  Get in touch
+                </a>
+              </span>
+            </RevealLine>
+          </div>
         </div>
 
         <span className="sr-only">{site.name}</span>
