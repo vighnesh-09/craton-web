@@ -1,5 +1,6 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { cancelFrame, frame } from 'framer-motion'
 import Lenis from 'lenis'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 const LenisContext = createContext(null)
 
@@ -10,24 +11,25 @@ export function LenisProvider({ children }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduced) return undefined
 
+    // Drive Lenis from Framer Motion's single frame loop so scroll +
+    // useScroll / useTransform stay in sync (avoids dual-RAF jank).
     const instance = new Lenis({
-      duration: 1.15,
+      duration: 0.95,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.4,
+      touchMultiplier: 1.2,
+      wheelMultiplier: 0.95,
     })
 
     setLenis(instance)
 
-    let rafId = 0
-    const raf = (time) => {
-      instance.raf(time)
-      rafId = requestAnimationFrame(raf)
+    const update = ({ timestamp }) => {
+      instance.raf(timestamp)
     }
-    rafId = requestAnimationFrame(raf)
+    frame.update(update, true)
 
     return () => {
-      cancelAnimationFrame(rafId)
+      cancelFrame(update)
       instance.destroy()
       setLenis(null)
     }

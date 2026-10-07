@@ -49,7 +49,7 @@ function ProductCard({ product, visual }) {
     <Reveal
       as="article"
       id={product.id}
-      className="group flex flex-col rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.65)] backdrop-blur-2xl sm:p-7"
+      className="group flex flex-col rounded-[1.75rem] border border-white/10 bg-white/[0.06] p-5 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.65)] backdrop-blur-md sm:p-7"
     >
       <div className="mb-5 flex flex-wrap items-center gap-3">
         <span className="mono-label text-muted">{product.domain}</span>

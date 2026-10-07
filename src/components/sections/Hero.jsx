@@ -26,10 +26,9 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const mediaScale = useTransform(scrollYProgress, [0, 1], [1, 1.08])
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 80])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0.15])
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 48])
+  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 56])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2])
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 32])
 
   return (
     <section
@@ -40,8 +39,8 @@ export default function Hero() {
       {/* Full-bleed foundation plane */}
       <motion.div
         aria-hidden
-        className="absolute inset-0"
-        style={reduced ? undefined : { scale: mediaScale, y: mediaY }}
+        className="absolute inset-0 will-change-transform"
+        style={reduced ? undefined : { y: mediaY }}
       >
         <img
           src="/hero/foundation.jpg"
@@ -90,13 +89,7 @@ export default function Hero() {
           </motion.div>
         ))}
 
-        {!reduced ? (
-          <motion.div
-            className="absolute inset-[30%] border border-[#3ecfba]/25"
-            animate={{ opacity: [0.2, 0.45, 0.2] }}
-            transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        ) : null}
+        <div className="absolute inset-[30%] border border-[#3ecfba]/25 opacity-30" />
       </div>
 
       {/* Center composition */}

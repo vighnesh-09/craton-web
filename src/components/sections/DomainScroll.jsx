@@ -92,9 +92,8 @@ function ChapterCard({ chapter, index, total, progress, reduced }) {
     [start, start + 0.08, end - 0.08, end],
     [0, 1, 1, 0],
   )
-  const y = useTransform(progress, [start, end], [48, -48])
-  const rotateX = useTransform(progress, [start, end], [10, -8])
-  const scale = useTransform(progress, [start, start + 0.1, end], [0.94, 1, 0.96])
+  // Opacity + Y only — 3D rotate/scale + glass blur was a major scroll hitch
+  const y = useTransform(progress, [start, end], [28, -28])
 
   if (reduced) {
     return (
@@ -109,10 +108,7 @@ function ChapterCard({ chapter, index, total, progress, reduced }) {
   }
 
   return (
-    <motion.div
-      style={{ opacity, y, rotateX, scale, transformPerspective: 900 }}
-      className="absolute inset-0"
-    >
+    <motion.div style={{ opacity, y }} className="absolute inset-0 will-change-transform">
       <Glass className="h-full p-7 sm:p-9" glow>
         <CardInner chapter={chapter} index={index} />
       </Glass>

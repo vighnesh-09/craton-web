@@ -17,7 +17,10 @@ export default function Header() {
   const { cycleTheme, isLight } = useTheme()
   const { scrollY } = useScroll()
 
-  useMotionValueEvent(scrollY, 'change', (v) => setSolid(v > 20))
+  useMotionValueEvent(scrollY, 'change', (v) => {
+    const next = v > 20
+    setSolid((prev) => (prev === next ? prev : next))
+  })
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 pad-x pt-3">

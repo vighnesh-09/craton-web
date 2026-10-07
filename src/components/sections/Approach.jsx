@@ -24,7 +24,7 @@ export default function Approach() {
             key={step.n}
             delay={i * 0.07}
             as="li"
-            className="glass-panel relative overflow-hidden rounded-2xl p-6 transition duration-300 hover:-translate-y-1"
+            className="glass-panel relative overflow-hidden rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1"
           >
             <div className="relative z-10">
               <div className="flex items-baseline justify-between gap-3">
