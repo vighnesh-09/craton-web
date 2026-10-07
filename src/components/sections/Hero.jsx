@@ -6,16 +6,9 @@ import {
   useTransform,
 } from 'framer-motion'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import Button from '@/components/ui/Button'
 import { site } from '@/config/site'
 
-const FRAMES = [
-  { inset: '6%', delay: 0 },
-  { inset: '12%', delay: 0.08 },
-  { inset: '18%', delay: 0.16 },
-  { inset: '24%', delay: 0.24 },
-  { inset: '30%', delay: 0.32 },
-]
+const ease = [0.22, 1, 0.36, 1]
 
 export default function Hero() {
   const ref = useRef(null)
@@ -26,9 +19,9 @@ export default function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 56])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.2])
-  const contentY = useTransform(scrollYProgress, [0, 1], [0, 32])
+  const mediaY = useTransform(scrollYProgress, [0, 1], [0, 48])
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.15])
+  const contentY = useTransform(scrollYProgress, [0, 1], [0, 28])
 
   return (
     <section
@@ -36,7 +29,7 @@ export default function Hero() {
       id="top"
       className="relative flex min-h-[100svh] flex-col overflow-hidden text-[#eef8f4]"
     >
-      {/* Full-bleed foundation plane */}
+      {/* Full-bleed foundation */}
       <motion.div
         aria-hidden
         className="absolute inset-0 will-change-transform"
@@ -45,121 +38,117 @@ export default function Hero() {
         <img
           src="/hero/foundation.jpg"
           alt=""
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full scale-[1.02] object-cover object-center"
           fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-[#0a1412]/55" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(10,20,18,0.72)_0%,rgba(10,20,18,0.35)_38%,rgba(10,20,18,0.45)_62%,rgba(10,20,18,0.88)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,20,18,0.55)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,143,123,0.18),transparent_35%,transparent_65%,rgba(224,154,95,0.10))] mix-blend-soft-light" />
-        <div className="noise pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-overlay" />
+        <div className="absolute inset-0 bg-[#07110f]/50" />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,17,15,0.78)_0%,rgba(7,17,15,0.42)_42%,rgba(7,17,15,0.55)_68%,rgba(7,17,15,0.92)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_42%,transparent_0%,rgba(7,17,15,0.62)_100%)]" />
+        <div className="noise pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-overlay" />
       </motion.div>
 
-      {/* Precision frames — depth tunnel */}
-      <div
+      {/* Quiet edge frame — one composition, not stacked chrome */}
+      {/* <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 flex items-center justify-center"
-        style={{ perspective: '1400px' }}
+        className="pointer-events-none absolute inset-4 border border-white/[0.08] sm:inset-6 lg:inset-8"
       >
-        {FRAMES.map((frame, i) => (
-          <motion.div
-            key={frame.inset}
-            initial={reduced ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 0.35 + i * 0.08, scale: 1 }}
-            transition={{
-              duration: 1.1,
-              delay: frame.delay,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-            className="absolute border border-white/25"
-            style={{
-              inset: frame.inset,
-              borderRadius: i === FRAMES.length - 1 ? '2px' : '0',
-              boxShadow:
-                i === FRAMES.length - 1
-                  ? '0 0 0 1px rgba(62,207,186,0.12), inset 0 0 60px rgba(10,20,18,0.15)'
-                  : undefined,
-            }}
-          >
-            {/* Corner ticks */}
-            <span className="absolute -left-px -top-px size-2.5 border-l border-t border-[#3ecfba]/70" />
-            <span className="absolute -right-px -top-px size-2.5 border-r border-t border-[#3ecfba]/70" />
-            <span className="absolute -bottom-px -left-px size-2.5 border-b border-l border-[#3ecfba]/70" />
-            <span className="absolute -bottom-px -right-px size-2.5 border-b border-r border-[#3ecfba]/70" />
-          </motion.div>
-        ))}
-
-        <div className="absolute inset-[30%] border border-[#3ecfba]/25 opacity-30" />
-      </div>
+        <span className="absolute left-0 top-0 h-8 w-px bg-[#3ecfba]/70" />
+        <span className="absolute left-0 top-0 h-px w-8 bg-[#3ecfba]/70" />
+        <span className="absolute right-0 top-0 h-8 w-px bg-[#3ecfba]/70" />
+        <span className="absolute right-0 top-0 h-px w-8 bg-[#3ecfba]/70" />
+        <span className="absolute bottom-0 left-0 h-8 w-px bg-[#3ecfba]/55" />
+        <span className="absolute bottom-0 left-0 h-px w-8 bg-[#3ecfba]/55" />
+        <span className="absolute bottom-0 right-0 h-8 w-px bg-[#3ecfba]/55" />
+        <span className="absolute bottom-0 right-0 h-px w-8 bg-[#3ecfba]/55" />
+      </div> */}
 
       {/* Center composition */}
       <motion.div
         style={reduced ? undefined : { opacity: contentOpacity, y: contentY }}
-        className="relative z-10 flex flex-1 flex-col items-center justify-center px-5 pb-8 pt-28 text-center sm:px-8"
+        className="relative z-10 mx-auto flex w-full max-w-[920px] flex-1 flex-col items-center justify-center px-6 pb-10 pt-32 text-center sm:px-10"
       >
         <motion.p
-          initial={reduced ? false : { opacity: 0, y: 12 }}
+          initial={reduced ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          className="serif text-[clamp(1rem,2vw,1.25rem)] text-[#eef8f4]/80"
+          transition={{ duration: 0.7, delay: 0.1, ease }}
+          className="mono-label text-[#8ebdb0]"
         >
-          Bold ideas. Engineered forward.
+          Frisco, Texas · Evidence-led products
         </motion.p>
 
         <motion.h1
           initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.28 }}
-          className="mt-4 max-w-[18ch] text-[clamp(2.1rem,7.2vw,5.4rem)] font-semibold uppercase leading-[0.95] tracking-[-0.04em] text-[#eef8f4]"
+          transition={{ duration: 0.9, delay: 0.2, ease }}
+          className="mt-5 text-[clamp(2.75rem,9vw,6.5rem)] font-semibold uppercase leading-[0.92] tracking-[-0.045em] text-[#eef8f4]"
         >
-          Craton Technologies
+          Craton
+          <span className="block text-[0.38em] font-medium tracking-[0.18em] text-[#eef8f4]/72">
+            Technologies
+          </span>
         </motion.h1>
+
+        <motion.div
+          aria-hidden
+          initial={reduced ? false : { scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 0.45, ease }}
+          className="mt-7 h-px w-16 origin-center bg-[#3ecfba]/80"
+        />
 
         <motion.p
           initial={reduced ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.42 }}
-          className="mt-5 max-w-[36ch] text-[clamp(0.95rem,1.6vw,1.15rem)] leading-relaxed text-[#eef8f4]/78"
+          transition={{ duration: 0.75, delay: 0.5, ease }}
+          className="mt-7 max-w-[34ch] text-[clamp(1.05rem,2.1vw,1.35rem)] font-medium leading-snug tracking-[-0.02em] text-[#eef8f4]"
         >
           AI for EU MDR &amp; IVDR regulatory evidence.
         </motion.p>
 
         <motion.p
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.55 }}
-          className="mt-2 max-w-[40ch] text-[13px] leading-relaxed text-[#8ebdb0] sm:text-[14px]"
+          initial={reduced ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.62, ease }}
+          className="mt-4 max-w-[42ch] text-[15px] leading-relaxed text-[#c5ddd4]/78 sm:text-[16px]"
         >
-          Complex requirements. Clearer decisions. Human judgment.
+          Complex requirements. Clearer decisions. Human judgment in the loop.
         </motion.p>
 
         <motion.div
-          initial={reduced ? false : { opacity: 0, y: 10 }}
+          initial={reduced ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.68 }}
-          className="mt-8"
+          transition={{ duration: 0.7, delay: 0.74, ease }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
-          <Button
+          <a
             href="#contact"
-            className="!min-h-11 !rounded-sm !bg-[#eef8f4] !px-7 !text-[13px] !font-semibold !text-[#0a1412] !shadow-[0_12px_40px_-16px_rgba(0,0,0,0.55)] hover:!brightness-100 hover:!bg-white"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-sm bg-[#eef8f4] px-7 text-[13px] font-semibold text-[#0a1412] shadow-[0_16px_40px_-18px_rgba(0,0,0,0.65)] transition hover:bg-white"
           >
             Request a pilot
             <ArrowUpRight size={15} strokeWidth={2.25} />
-          </Button>
+          </a>
+          <a
+            href="#domain"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-sm border border-white/25 bg-white/[0.04] px-6 text-[13px] font-medium text-[#eef8f4]/90 transition hover:border-white/40 hover:bg-white/[0.08]"
+          >
+            Explore the work
+          </a>
         </motion.div>
       </motion.div>
 
       {/* Hero foot */}
-      <div className="relative z-10 pad-x grid grid-cols-[1fr_auto_1fr] items-end gap-3 pb-6 pt-2 text-[11px] tracking-[0.12em] text-[#8ebdb0] uppercase sm:pb-8">
-        <span className="justify-self-start font-mono">01 — The foundation</span>
+      <div className="relative z-10 pad-x grid grid-cols-1 items-center gap-4 border-t border-white/[0.08] py-5 text-[11px] tracking-[0.14em] text-[#8ebdb0] uppercase sm:grid-cols-[1fr_auto_1fr] sm:py-6">
+        <span className="hidden justify-self-start font-mono sm:block">
+          01 — Foundation
+        </span>
         <a
           href="#proof"
-          className="inline-flex items-center gap-2 justify-self-center normal-case tracking-[0.04em] text-[#eef8f4]/75 transition hover:text-[#eef8f4]"
+          className="inline-flex items-center justify-center gap-2 justify-self-center normal-case tracking-[0.02em] text-[#eef8f4]/70 transition hover:text-[#eef8f4]"
         >
           <ArrowDown size={14} className="opacity-70" />
           From complexity to clarity
         </a>
-        <span className="justify-self-end font-mono text-[10px] opacity-70">
+        <span className="hidden justify-self-end font-mono text-[10px] opacity-70 sm:block">
           {site.location}
         </span>
       </div>

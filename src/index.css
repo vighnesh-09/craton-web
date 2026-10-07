@@ -87,6 +87,12 @@
     transform: translateZ(0);
   }
 
+  /* Custom cursor — fine pointer only (class toggled in JS) */
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

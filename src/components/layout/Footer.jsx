@@ -5,20 +5,16 @@ export default function Footer() {
   return (
     <footer className="pad-x border-t border-line bg-ink pb-10 pt-16 text-cream">
       <div className="mb-12 grid gap-10 lg:grid-cols-[1.1fr_1.4fr_0.8fr]">
-        <a href="#top" className="flex items-end gap-2.5 self-start">
+        <a href="#top" className="self-start" aria-label={site.name}>
           <span className="text-[1.7rem] font-semibold leading-none tracking-[-0.06em]">
-            craton
+            craton<span className="text-accent">.</span>
           </span>
-          <span className="mono-label mb-0.5 max-w-[4.5rem] text-[7.5px] leading-tight text-muted">
-            Techno­logies
-          </span>
+          <span className="mt-2 block text-[12px] text-muted">Technologies</span>
         </a>
         <p className="max-w-xl text-[14px] leading-relaxed text-cream/65">
-          Craton Technologies is an innovation-driven product company based in
-          Frisco, Texas. It invents, protects, and ships AI-enabled products for
-          regulated and evidence-heavy industries — beginning with RAccelerator
-          for EU MDR and IVDR — and applies the same method across agentic
-          commerce and new domains.
+          Innovation-driven product company inventing AI for regulated, evidence-heavy
+          work — starting with RAccelerator for EU MDR and IVDR, then applying the same
+          method across agentic commerce and new domains.
         </p>
         <nav
           className="flex flex-col gap-3 text-[13px] text-cream/70"

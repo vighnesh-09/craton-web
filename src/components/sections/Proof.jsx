@@ -1,22 +1,25 @@
 import Reveal from '@/components/ui/Reveal'
-import Glass from '@/components/ui/Glass'
 import { site } from '@/config/site'
 
 export default function Proof() {
   return (
-    <section id="proof" aria-label="Proof" className="pad-x relative z-10 py-4">
-      <Glass className="mx-auto max-w-[1400px] px-5 py-6 sm:px-8" glow>
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-          {site.proof.map((item, i) => (
-            <Reveal key={item.label} delay={i * 0.06} as="li">
-              <p className="text-[clamp(1.5rem,2.3vw,2rem)] font-medium tracking-tight text-cream">
-                {item.value}
-              </p>
-              <p className="mt-2 text-[13px] leading-snug text-muted">{item.label}</p>
-            </Reveal>
-          ))}
-        </ul>
-      </Glass>
+    <section
+      id="proof"
+      aria-label="Proof"
+      className="pad-x relative z-10 border-y border-line bg-ink/80 py-10 backdrop-blur-sm sm:py-12"
+    >
+      <div className="mx-auto grid max-w-[1400px] gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-10">
+        {site.proof.map((item, i) => (
+          <Reveal key={item.label} delay={i * 0.05} as="div">
+            <p className="text-[clamp(1.65rem,2.4vw,2.1rem)] font-semibold tracking-[-0.03em] text-cream">
+              {item.value}
+            </p>
+            <p className="mt-2 max-w-[22ch] text-[13px] leading-snug text-muted">
+              {item.label}
+            </p>
+          </Reveal>
+        ))}
+      </div>
     </section>
   )
 }
