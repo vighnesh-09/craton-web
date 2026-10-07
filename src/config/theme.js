@@ -26,8 +26,8 @@ export const themes = {
       '--ember': '#e09a5f',
       '--success': '#2f9e6b',
       '--danger': '#c45d4a',
-      '--glass-bg': 'rgba(255,255,255,0.62)',
-      '--glass-bg-strong': 'rgba(255,255,255,0.82)',
+      '--glass-bg': 'rgba(255,255,255,0.88)',
+      '--glass-bg-strong': 'rgba(255,255,255,0.96)',
       '--glass-border': 'rgba(255,255,255,0.88)',
       '--glass-highlight': 'rgba(255,255,255,0.98)',
       '--glass-shadow':

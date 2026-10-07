@@ -3,8 +3,8 @@ import { site } from '@/config/site'
 
 export default function Footer() {
   return (
-    <footer className="pad-x border-t border-line bg-ink pb-10 pt-16 text-cream">
-      <div className="mb-12 grid gap-10 lg:grid-cols-[1.1fr_1.4fr_0.8fr]">
+    <footer className="pad-x border-t border-line bg-ink pb-6 pt-8 text-cream">
+      <div className="shell mb-6 grid gap-6 lg:grid-cols-[1.1fr_1.4fr_0.8fr]">
         <a href="#top" className="flex items-end gap-2.5 self-start">
           <span className="text-[1.7rem] font-semibold leading-none tracking-[-0.06em]">
             craton
@@ -39,7 +39,7 @@ export default function Footer() {
         </nav>
       </div>
 
-      <div className="flex flex-col gap-4 border-t border-line pt-6 text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="shell flex flex-col gap-4 border-t border-line pt-6 text-[12px] text-muted sm:flex-row sm:items-center sm:justify-between">
         <span>© 2026 {site.legalName}. All rights reserved.</span>
         <div className="flex flex-wrap gap-5">
           <Link to="/privacy" className="hover:text-cream">

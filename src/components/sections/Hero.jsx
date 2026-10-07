@@ -11,7 +11,7 @@ import Button from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
 
 /** Single soft precision frame — cinematic, not a HUD stack. */
-const FRAME_INSET = '12%'
+const FRAME_INSET = 'clamp(1rem, 3.5vw, 3.25rem)'
 
 /**
  * Hero stays cinematic dark regardless of site light/dark toggle.

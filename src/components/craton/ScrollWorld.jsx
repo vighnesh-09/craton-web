@@ -41,13 +41,31 @@ export default function ScrollWorld() {
         style={{ top: blobY, opacity: fade }}
         className="absolute left-[8%] h-[38vmax] w-[38vmax] -translate-y-1/2 rounded-full blur-3xl"
       >
-        <div className="h-full w-full rounded-full bg-[var(--scene-a)]" />
+        <div
+          className="h-full w-full rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle, var(--scroll-glow, var(--scene-a)), transparent 70%)',
+          }}
+        />
       </motion.div>
 
       <motion.div
-        style={{ opacity: fade, y: yMid }}
-        className="absolute right-[4%] top-[18%] h-[32vmax] w-[32vmax] rounded-full bg-[var(--scene-b)] blur-3xl"
-      />
+        style={{
+          opacity: fade,
+          y: yMid,
+          rotate: 'var(--scroll-shift, 0deg)',
+        }}
+        className="absolute right-[4%] top-[18%] h-[32vmax] w-[32vmax] rounded-full blur-3xl"
+      >
+        <div
+          className="h-full w-full rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle, var(--scroll-ember, var(--scene-b)), transparent 68%)',
+          }}
+        />
+      </motion.div>
 
       <div
         className="absolute inset-0 flex items-center justify-center opacity-40"

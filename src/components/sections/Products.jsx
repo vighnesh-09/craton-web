@@ -1,136 +1,128 @@
-import { useState } from 'react'
-import { ArrowUpRight, ChevronDown } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import GsprMock from '@/components/craton/GsprMock'
 import ReviewsMock from '@/components/craton/ReviewsMock'
 import Button from '@/components/ui/Button'
 import Reveal from '@/components/ui/Reveal'
-import Section, { SectionHead } from '@/components/ui/Section'
 import { site } from '@/config/site'
-import { cn } from '@/lib/cn'
 
+const products = [
+  {
+    product: site.products.ra,
+    visual: 'gspr',
+    chapter: '01',
+    cta: 'Start a pilot',
+  },
+  {
+    product: site.products.ri,
+    visual: 'reviews',
+    chapter: '02',
+    cta: 'Discuss ReviewsIntel',
+  },
+]
+
+/**
+ * Clear dual product presentation — both cards always visible on desktop.
+ * No sticky scrub / focus wipe. Light enter reveal only.
+ */
 export default function Products() {
   return (
-    <Section id="products" tone="dark" className="overflow-hidden">
-      <SectionHead
-        eyebrow="02 / Intelligence, applied"
-        title={
-          <Reveal
-            as="h2"
-            className="text-[clamp(2.2rem,4.2vw,4.4rem)] font-normal leading-[1.05] tracking-[-0.04em]"
-          >
-            Complexity meets{' '}
-            <span className="serif text-accent">clarity.</span>
-          </Reveal>
-        }
-        aside={
-          <Reveal
-            delay={0.08}
-            className="max-w-[36ch] text-[15px] leading-relaxed text-cream/65"
-          >
-            Two products, two domains, one conviction: deep problems deserve
-            purpose-built intelligence with the reasoning shown.
-          </Reveal>
-        }
-      />
+    <section
+      id="products"
+      className="pad-x relative py-[clamp(2.5rem,4vw,4rem)]"
+      aria-label="Products"
+    >
+      <div className="shell">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-[36rem]">
+            <p className="mono-label text-accent">02 / Intelligence, applied</p>
+            <h2 className="mt-3 text-[clamp(1.85rem,3.6vw,3.2rem)] font-normal leading-[1.05] tracking-[-0.04em]">
+              Complexity meets{' '}
+              <span className="serif text-accent">clarity.</span>
+            </h2>
+            <p className="mt-3 max-w-[46ch] text-[14px] leading-relaxed text-muted">
+              Two products. Same evidence-first method — MedTech regulatory AI
+              and proof for agentic commerce.
+            </p>
+          </div>
+          <ol className="flex gap-6">
+            {products.map(({ product, chapter }, i) => (
+              <li key={product.id} className="min-w-[7.5rem]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted">
+                  {chapter} / 0{products.length}
+                </p>
+                <a
+                  href={`#${product.id}`}
+                  className="mt-1 block text-[1rem] tracking-tight hover:text-accent"
+                >
+                  {product.name}
+                </a>
+                <p className="mt-0.5 text-[11px] text-muted">{product.domain}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <ProductCard product={site.products.ra} visual={<GsprMock />} />
-        <ProductCard product={site.products.ri} visual={<ReviewsMock />} />
+        <div className="mt-8 grid gap-5 lg:grid-cols-2 lg:gap-6">
+          {products.map(({ product, visual, chapter, cta }, i) => (
+            <Reveal key={product.id} delay={i * 0.06}>
+              <ProductCard
+                product={product}
+                chapter={chapter}
+                cta={cta}
+                visual={
+                  visual === 'gspr' ? (
+                    <GsprMock compact />
+                  ) : (
+                    <ReviewsMock compact />
+                  )
+                }
+              />
+            </Reveal>
+          ))}
+        </div>
       </div>
-    </Section>
-
+    </section>
   )
 }
 
-function ProductCard({ product, visual }) {
-  const [open, setOpen] = useState(false)
-
+function ProductCard({ product, chapter, cta, visual }) {
   return (
-    <Reveal
-      as="article"
+    <article
       id={product.id}
-      className="group flex flex-col rounded-[1.75rem] border border-white/10 bg-white/[0.04] p-5 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.65)] backdrop-blur-2xl sm:p-7"
+      aria-label={product.name}
+      className="flex h-full flex-col rounded-[1.5rem] border border-line bg-[color-mix(in_oklab,var(--paper)_82%,transparent)] p-4 sm:p-5"
     >
-      <div className="mb-5 flex flex-wrap items-center gap-3">
-        <span className="mono-label text-muted">{product.domain}</span>
-        <span className="inline-flex items-center gap-2 rounded-full border border-line px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-cream/80">
-          <span className="size-1.5 rounded-full bg-accent" />
-          {product.status}
-        </span>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-3">
+          <span className="mono-label text-accent">{chapter}</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
+            {product.status}
+          </span>
+        </div>
+        <span className="text-[12px] text-muted">{product.domain}</span>
       </div>
 
-      <h3 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font-normal leading-tight tracking-tight">
+      <h3 className="mt-3 text-[clamp(1.45rem,2.2vw,1.95rem)] font-normal tracking-tight">
         {product.name}
       </h3>
-      <p className="mt-3 text-[15px] leading-relaxed text-cream/70">
+      <p className="mt-1.5 max-w-[44ch] text-[13.5px] leading-relaxed text-muted">
         {product.headline}
       </p>
 
-      <div className="mt-6">{visual}</div>
-
-      <dl className="mt-6 space-y-4 border-t border-line pt-5 text-[13.5px]">
-        <div>
-          <dt className="mono-label text-muted">Problem</dt>
-          <dd className="mt-2 text-cream/75">{product.problem}</dd>
-        </div>
-        <div>
-          <dt className="mono-label text-muted">What changes</dt>
-          <dd className="mt-2 text-cream/75">{product.change}</dd>
-        </div>
-      </dl>
-
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4 text-left text-[13px] font-medium text-cream"
-        aria-expanded={open}
-      >
-        Does today / next
-        <ChevronDown
-          size={16}
-          className={cn('transition-transform duration-300', open && 'rotate-180')}
-        />
-      </button>
-
-      <div
-        className={cn(
-          'grid transition-all duration-300',
-          open ? 'mt-4 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
-        )}
-      >
-        <div className="overflow-hidden">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <List title="Does today" items={product.today} />
-            <List title="Next" items={product.next} />
-          </div>
-          <p className="mt-4 text-[12px] leading-relaxed text-muted">
-            {product.disclaimer}
-          </p>
-        </div>
+      <div className="mt-4 min-h-0 flex-1 overflow-hidden rounded-2xl border border-line bg-ink/30 p-1">
+        {visual}
       </div>
 
-      <div className="mt-auto pt-6">
-        <Button href="#contact" variant="outline" className="w-full sm:w-auto">
-          {product.id === 'raccelerator' ? 'Start a pilot' : 'Discuss ReviewsIntel'}
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-3 border-t border-line pt-4">
+        <p className="max-w-[38ch] text-[12.5px] leading-relaxed text-muted">
+          <span className="mono-label mr-2 text-accent">Problem</span>
+          {product.problem}
+        </p>
+        <Button href="#contact" variant="outline" className="!min-h-10 !px-3">
+          {cta}
           <ArrowUpRight size={14} />
         </Button>
       </div>
-    </Reveal>
-  )
-}
-
-function List({ title, items }) {
-  return (
-    <div>
-      <p className="mono-label text-accent">{title}</p>
-      <ul className="mt-2 space-y-2 text-[13px] text-cream/70">
-        {items.map((item) => (
-          <li key={item} className="flex gap-2">
-            <span className="mt-2 size-1 shrink-0 rounded-full bg-accent" />
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
+    </article>
   )
 }

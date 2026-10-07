@@ -27,7 +27,7 @@ const Glass = forwardRef(function Glass(
     >
       <span aria-hidden className="glass-shine" />
       <span aria-hidden className="glass-satin" />
-      <div className="relative z-10 h-full">{children}</div>
+      <div className="relative z-10 h-full min-h-0">{children}</div>
     </Comp>
   )
 })

@@ -45,8 +45,8 @@
   --ember: #e09a5f;
   --success: #2f9e6b;
   --danger: #c45d4a;
-  --glass-bg: rgba(255, 255, 255, 0.62);
-  --glass-bg-strong: rgba(255, 255, 255, 0.82);
+  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg-strong: rgba(255, 255, 255, 0.96);
   --glass-border: rgba(255, 255, 255, 0.88);
   --glass-highlight: rgba(255, 255, 255, 0.98);
   --glass-shadow:
@@ -60,7 +60,9 @@
   --scene-a: rgba(120, 210, 195, 0.42);
   --scene-b: rgba(255, 210, 170, 0.38);
   --scene-c: rgba(170, 220, 190, 0.32);
-  --pad: clamp(1.25rem, 5vw, 6.5rem);
+  /* Fluid page gutters — mobile-safe, denser vertical rhythm */
+  --pad: clamp(0.875rem, 2.2vw, 2rem);
+  --section-y: clamp(2.5rem, 4vw, 4rem);
   color-scheme: light;
 }
 
@@ -164,33 +166,43 @@
       0 1px 0 var(--glass-highlight);
   }
 
-  /* Diagonal glare (effect 01) */
+  /* Diagonal glare — kept subtle so light-mode copy stays WCAG-readable */
   .glass-shine {
     pointer-events: none;
     position: absolute;
     inset: 0;
+    z-index: 0;
     background: linear-gradient(
       125deg,
       var(--glass-highlight) 0%,
       transparent 38%,
       transparent 62%,
-      rgba(255, 255, 255, 0.08) 100%
+      rgba(255, 255, 255, 0.06) 100%
     );
-    opacity: 0.55;
+    opacity: 0.28;
   }
 
-  /* Soft satin wave (effect 09) */
+  html[data-mode='light'] .glass-shine {
+    opacity: 0.16;
+  }
+
+  /* Soft satin wave */
   .glass-satin {
     pointer-events: none;
     position: absolute;
     inset: -20% -10%;
+    z-index: 0;
     background: radial-gradient(
       60% 40% at 20% 0%,
-      rgba(255, 255, 255, 0.35),
+      rgba(255, 255, 255, 0.22),
       transparent 55%
     );
-    opacity: 0.5;
+    opacity: 0.35;
     mix-blend-mode: soft-light;
+  }
+
+  html[data-mode='light'] .glass-satin {
+    opacity: 0.18;
   }
 
   html[data-mode='dark'] .glass-satin {
@@ -202,6 +214,13 @@
 @layer utilities {
   .pad-x {
     padding-inline: var(--pad);
+  }
+
+  /* Fluid content width inside .pad-x — full available width, no 1440 cage */
+  .shell {
+    width: 100%;
+    max-width: none;
+    margin-inline: auto;
   }
 
   .serif {

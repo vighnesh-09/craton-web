@@ -11,13 +11,15 @@ export function LenisProvider({ children }) {
     if (mq.matches) return undefined
 
     const instance = new Lenis({
-      // Agency-grade pacing: longer ease, soft wheel — scroll feels intentional
-      duration: 1.35,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // Whyphy / Cohere-like pacing: long ease, intentional wheel response
+      duration: 1.25,
+      easing: (t) => 1 - Math.pow(1 - t, 4),
       smoothWheel: true,
-      wheelMultiplier: 0.92,
-      touchMultiplier: 1.35,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.25,
       syncTouch: false,
+      // Keep native scroll position in sync for Framer / IntersectionObserver
+      autoRaf: false,
     })
 
     setLenis(instance)

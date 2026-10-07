@@ -36,11 +36,11 @@ export default function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.22, margin: '0px 0px -10% 0px' }}
+      viewport={{ once: true, amount: 0.15, margin: '0px 0px -4% 0px' }}
       transition={{
-        duration: 0.85,
-        delay,
-        ease: [0.16, 1, 0.3, 1],
+        duration: 0.55,
+        delay: Math.min(delay, 0.12),
+        ease: [0.22, 1, 0.36, 1],
       }}
       {...rest}
     >
