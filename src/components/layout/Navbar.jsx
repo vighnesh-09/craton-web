@@ -15,7 +15,7 @@ import {
 import { scrollToId } from '@/lib/scroll'
 import { cn } from '@/lib/cn'
 
-const NAV_SAMPLE_Y = 56
+const NAV_SAMPLE_Y = 44
 
 function isNavOverDark() {
   for (const id of darkNavSections) {
@@ -83,15 +83,16 @@ export default function Navbar() {
         !solid && 'border-b border-transparent bg-transparent',
       )}
     >
-      <SiteContainer className="flex items-center justify-between gap-6 px-6 py-4 sm:px-8 sm:py-5">
+      <SiteContainer className="flex items-center justify-between gap-5 px-6 py-2.5 sm:px-8 sm:py-3">
         <BrandMark
           href="#top"
+          size="sm"
           tone={onDark ? 'on-dark' : 'on-light'}
           onClick={go('#top')}
         />
 
         <nav
-          className="hidden items-center gap-8 lg:flex"
+          className="hidden items-center gap-7 lg:flex"
           aria-label="Primary"
         >
           {primaryNav.map((link) => (
@@ -100,7 +101,7 @@ export default function Navbar() {
               href={link.href}
               onClick={go(link.href)}
               className={cn(
-                'group relative py-2.5 text-[13px] font-medium transition-colors duration-300',
+                'group relative py-1.5 text-[12.5px] font-medium transition-colors duration-300',
                 onDark
                   ? 'text-hero-nav hover:text-hero-fg'
                   : 'text-ink/70 hover:text-ink',
@@ -120,12 +121,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="hidden items-center gap-2.5 lg:flex">
           <button
             type="button"
             onClick={cycleTheme}
             className={cn(
-              'inline-flex size-9 items-center justify-center rounded-full border transition-colors duration-300',
+              'inline-flex size-8 items-center justify-center rounded-full border transition-colors duration-300',
               onDark
                 ? 'border-line-on-dark text-hero-fg hover:bg-hero-fg/10'
                 : 'border-line text-ink hover:bg-ink/5',
@@ -133,14 +134,14 @@ export default function Navbar() {
             aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
             title={isLight ? 'Dark' : 'Light'}
           >
-            {isLight ? <Moon size={15} /> : <Sun size={15} />}
+            {isLight ? <Moon size={14} /> : <Sun size={14} />}
           </button>
 
           <a
             href={headerCta.href}
             onClick={go(headerCta.href)}
             className={cn(
-              'group inline-flex items-center gap-3 text-[12px] font-medium transition-colors duration-300',
+              'group inline-flex items-center gap-2.5 text-[12px] font-medium transition-colors duration-300',
               onDark
                 ? 'text-hero-nav hover:text-hero-fg'
                 : 'text-ink/70 hover:text-ink',
@@ -149,13 +150,13 @@ export default function Navbar() {
             <span className="hidden xl:inline">{headerCta.label}</span>
             <span
               className={cn(
-                'grid size-9 place-items-center rounded-full border transition-colors duration-300',
+                'grid size-8 place-items-center rounded-full border transition-colors duration-300',
                 onDark
                   ? 'border-line-on-dark group-hover:bg-hero-cta group-hover:text-craton'
                   : 'border-line group-hover:bg-ink group-hover:text-foam',
               )}
             >
-              <ArrowUpRight size={14} />
+              <ArrowUpRight size={13} />
             </span>
           </a>
         </div>
@@ -165,14 +166,14 @@ export default function Navbar() {
             type="button"
             onClick={cycleTheme}
             className={cn(
-              'inline-flex size-10 items-center justify-center rounded-full border transition-colors duration-300',
+              'inline-flex size-8 items-center justify-center rounded-full border transition-colors duration-300',
               onDark
                 ? 'border-line-on-dark text-hero-fg hover:bg-hero-fg/10'
                 : 'border-line text-ink hover:bg-ink/5',
             )}
             aria-label={isLight ? 'Switch to dark mode' : 'Switch to light mode'}
           >
-            {isLight ? <Moon size={16} /> : <Sun size={16} />}
+            {isLight ? <Moon size={14} /> : <Sun size={14} />}
           </button>
           <button
             type="button"

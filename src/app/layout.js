@@ -20,8 +20,8 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    icon: [{ url: '/favicon.png', type: 'image/png' }],
+    apple: '/favicon.png',
   },
   openGraph: {
     type: 'website',
@@ -46,7 +46,7 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: '#0d6e6e',
+  themeColor: '#1E2A3A',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',

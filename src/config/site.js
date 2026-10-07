@@ -12,7 +12,7 @@ export const site = Object.freeze({
   url: 'https://craton.io',
   locale: 'en_US',
   language: 'en',
-  themeColor: '#131513',
+  themeColor: '#1E2A3A',
   twitterHandle: '',
   foundingLocation: Object.freeze({
     locality: 'Frisco',

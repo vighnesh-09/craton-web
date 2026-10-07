@@ -9,8 +9,8 @@
   --font-display: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
   --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas,
-    monospace;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Site content column — use max-w-site / <SiteContainer> everywhere */
   --max-width-site: 100rem;
@@ -42,32 +42,32 @@
 
 /* Fallback before ThemeProvider hydrates (keep in sync with theme.js light) */
 :root {
-  --ink: #0f1c1a;
-  --ink-soft: #1a2e2a;
-  --mist: #e8f0ed;
-  --foam: #f4faf7;
-  --lagoon: #0d6e6e;
-  --lagoon-deep: #085454;
+  --ink: #1e2a3a;
+  --ink-soft: #2f3f54;
+  --mist: #e6edf4;
+  --foam: #f3f7fb;
+  --lagoon: #00c4d9;
+  --lagoon-deep: #0099ad;
   --coral: #e85d4c;
-  --sun: #f0a202;
-  --craton: #131513;
-  --copper: #d8a075;
-  --hero-base: #1c1c1c;
-  --hero-fg: #f8f6ee;
-  --hero-muted: #ced0c5;
-  --hero-soft: #e6e5d9;
-  --hero-body: #c3c6ba;
-  --hero-cta: #f0eee7;
-  --hero-nav: #d2d3ca;
-  --hero-veil: rgba(28, 28, 28, 0.4);
-  --hero-veil-mid: rgba(28, 28, 28, 0.08);
-  --hero-veil-edge: rgba(28, 28, 28, 0.25);
-  --line: rgba(15, 28, 26, 0.1);
-  --line-on-dark: rgba(248, 246, 238, 0.12);
-  --highlight: rgba(255, 255, 255, 0.25);
-  --signal-line: #373f48;
-  --signal-pulse: #ff9a45;
-  --cursor: #ffffff;
+  --sun: #e8b84a;
+  --craton: #1e2a3a;
+  --copper: #00e5ff;
+  --hero-base: #1e2a3a;
+  --hero-fg: #f3f7fb;
+  --hero-muted: #a8b7c7;
+  --hero-soft: #d5e2ee;
+  --hero-body: #b4c3d2;
+  --hero-cta: #f3f7fb;
+  --hero-nav: #c5d1dc;
+  --hero-veil: rgba(30, 42, 58, 0.45);
+  --hero-veil-mid: rgba(30, 42, 58, 0.1);
+  --hero-veil-edge: rgba(30, 42, 58, 0.3);
+  --line: rgba(30, 42, 58, 0.12);
+  --line-on-dark: rgba(243, 247, 251, 0.14);
+  --highlight: rgba(0, 229, 255, 0.22);
+  --signal-line: #3a4a5c;
+  --signal-pulse: #00e5ff;
+  --cursor: #00e5ff;
   color-scheme: light;
 }
 
@@ -80,6 +80,17 @@
   html.lenis,
   html.lenis body {
     height: auto;
+  }
+
+  /* Native scrollbar hidden — replaced by ScrollProgress */
+  * {
+    scrollbar-width: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -107,7 +118,7 @@
   /* Clear fixed header when jumping to in-page sections */
   section[id],
   footer[id] {
-    scroll-margin-top: 5.5rem;
+    scroll-margin-top: 4.25rem;
   }
 
   /* Avoid universal * selector — it forces style recalc across the whole tree */

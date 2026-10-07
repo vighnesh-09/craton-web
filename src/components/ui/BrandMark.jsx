@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import { cn } from '@/lib/cn'
 
 /**
- * Craton wordmark — “craton” + stacked TECHNO / LOGIES (logo lockup).
+ * Brand lockup — transparent mark + “craton” wordmark.
  */
 export default function BrandMark({
   href = '#top',
@@ -10,17 +11,20 @@ export default function BrandMark({
   className,
   ariaLabel = 'Craton Technologies — home',
   onClick,
+  showWord = true,
 }) {
   const onDark = tone === 'on-dark'
   const sizes = {
     sm: {
-      word: 'text-[1.35rem]',
-      sub: 'text-[6.5px]',
+      mark: 'h-8 w-8',
+      word: 'text-[1.25rem]',
+      sub: 'text-[6px]',
       gap: 'gap-2',
     },
     md: {
-      word: 'text-[1.75rem] sm:text-[1.875rem]',
-      sub: 'text-[7px] sm:text-[7.5px]',
+      mark: 'h-10 w-10 sm:h-11 sm:w-11',
+      word: 'text-[1.6rem] sm:text-[1.75rem]',
+      sub: 'text-[6.5px] sm:text-[7px]',
       gap: 'gap-2.5',
     },
   }
@@ -28,31 +32,43 @@ export default function BrandMark({
 
   const content = (
     <>
-      <span
-        className={cn(
-          'font-display font-semibold leading-none tracking-[-0.06em] transition-colors duration-300',
-          s.word,
-          onDark ? 'text-hero-fg' : 'text-ink',
-        )}
-      >
-        craton
-      </span>
-      <span
-        aria-hidden
-        className={cn(
-          'mb-[2px] flex flex-col font-mono font-medium uppercase leading-[1.2] tracking-[0.18em] transition-colors duration-300',
-          s.sub,
-          onDark ? 'text-hero-muted' : 'text-ink/45',
-        )}
-      >
-        <span>Techno</span>
-        <span>logies</span>
-      </span>
+      <Image
+        src="/brand/logo.png"
+        alt=""
+        width={88}
+        height={88}
+        priority
+        className={cn('shrink-0 object-contain', s.mark)}
+      />
+      {showWord ? (
+        <span className="inline-flex items-end gap-2">
+          <span
+            className={cn(
+              'font-display font-semibold leading-none tracking-[-0.06em] transition-colors duration-300',
+              s.word,
+              onDark ? 'text-hero-fg' : 'text-ink',
+            )}
+          >
+            craton
+          </span>
+          <span
+            aria-hidden
+            className={cn(
+              'mb-0.5 flex flex-col font-mono font-medium uppercase leading-[1.15] tracking-[0.16em] transition-colors duration-300',
+              s.sub,
+              onDark ? 'text-hero-muted' : 'text-ink/40',
+            )}
+          >
+            <span>Techno</span>
+            <span>logies</span>
+          </span>
+        </span>
+      ) : null}
     </>
   )
 
   const classes = cn(
-    'inline-flex items-end transition-opacity duration-300 hover:opacity-90',
+    'inline-flex items-center transition-opacity duration-300 hover:opacity-90',
     s.gap,
     className,
   )

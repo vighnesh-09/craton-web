@@ -1,20 +1,98 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { approach } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
 
-const ease = [0.22, 1, 0.36, 1]
+/**
+ * Abridge `.step_grid_press` stagger: scrubbed yPercent fall
+ * (block1 → 100, block2 → 75, block3 → 50, block4 → ~25) for an
+ * ascending diagonal as the section scrolls.
+ */
+const FALL_Y = ['56%', '38%', '20%', '4%']
+
+function useWideStagger() {
+  const [wide, setWide] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)')
+    const update = () => setWide(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  return wide
+}
+
+function StepCard({ step, y, animate }) {
+  return (
+    <motion.li
+      style={animate ? { y } : undefined}
+      className="relative flex min-h-[17.5rem] flex-col rounded-2xl border border-line bg-foam p-6 sm:min-h-[19rem] sm:p-7"
+    >
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-copper">
+          {step.num}
+        </span>
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink/40">
+          {step.phase}
+        </span>
+      </div>
+
+      <h3 className="mt-8 font-display text-[1.25rem] font-semibold leading-snug tracking-[-0.025em] text-ink sm:text-[1.35rem]">
+        {step.title}
+      </h3>
+      <p className="mt-3 max-w-[34ch] font-body text-[14px] leading-relaxed text-ink/60">
+        {step.copy}
+      </p>
+
+      <div className="mt-auto flex items-center justify-between gap-3 pt-8">
+        <span className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.14em] text-lagoon">
+          <span aria-hidden className="size-1.5 rounded-full bg-copper" />
+          {step.tag}
+        </span>
+        <span
+          aria-hidden
+          className="grid size-8 place-items-center rounded-lg border border-line bg-mist/70 font-display text-[15px] text-ink/45"
+        >
+          →
+        </span>
+      </div>
+    </motion.li>
+  )
+}
 
 export default function Approach() {
   const reduced = useReducedMotion()
+  const wide = useWideStagger()
+  const sectionRef = useRef(null)
+  const animate = wide && !reduced
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 80%', 'end 20%'],
+  })
+
+  const y0 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[0]])
+  const y1 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[1]])
+  const y2 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[2]])
+  const y3 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[3]])
+  const ys = [y0, y1, y2, y3]
 
   return (
     <section
+      ref={sectionRef}
       id={approach.id}
       aria-labelledby="h-approach"
-      className="bg-foam px-6 py-24 sm:px-8 md:py-32"
+      className="bg-mist/40 px-6 pb-24 pt-24 sm:px-8 md:pt-32 xl:pb-[23rem]"
     >
       <SiteContainer>
         <SectionHeading
@@ -27,44 +105,14 @@ export default function Approach() {
           headingId="h-approach"
         />
 
-        <ol className="mt-14 grid gap-5 sm:mt-20 sm:grid-cols-2 xl:grid-cols-4 xl:gap-0 xl:border-t xl:border-line">
+        <ol className="mt-14 grid grid-cols-1 gap-4 sm:mt-20 sm:grid-cols-2 sm:gap-3 xl:mt-16 xl:grid-cols-4 xl:gap-1">
           {approach.steps.map((step, index) => (
-            <motion.li
+            <StepCard
               key={step.num}
-              initial={reduced ? false : { opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{
-                duration: 0.55,
-                delay: reduced ? 0 : index * 0.08,
-                ease,
-              }}
-              className="relative border border-line bg-mist/40 p-6 xl:border-0 xl:border-r xl:bg-transparent xl:px-6 xl:py-10 xl:first:pl-0 xl:last:border-r-0 xl:last:pr-0"
-            >
-              <div className="flex items-baseline justify-between gap-4">
-                <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.16em] text-copper">
-                  {step.num}
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink/40">
-                  {step.phase}
-                </span>
-              </div>
-
-              <div
-                aria-hidden
-                className="mt-6 h-px w-10 bg-gradient-to-r from-copper to-transparent"
-              />
-
-              <h3 className="mt-6 font-display text-[1.3rem] font-semibold leading-snug tracking-[-0.025em] text-ink">
-                {step.title}
-              </h3>
-              <p className="mt-3 max-w-[34ch] font-body text-[14.5px] leading-relaxed text-ink/60">
-                {step.copy}
-              </p>
-              <p className="mt-5 font-mono text-[10px] uppercase tracking-[0.14em] text-lagoon">
-                {step.tag}
-              </p>
-            </motion.li>
+              step={step}
+              y={ys[index]}
+              animate={animate}
+            />
           ))}
         </ol>
       </SiteContainer>

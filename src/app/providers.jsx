@@ -7,6 +7,7 @@ import { LenisProvider } from '@/components/providers/LenisProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 // import CustomCursor from '@/components/ui/CustomCursor'
 import ErrorBoundary from '@/components/ui/ErrorBoundary'
+import ScrollProgress from '@/components/ui/ScrollProgress'
 import ScrollToTop from '@/components/ui/ScrollToTop'
 import SkipLink from '@/components/ui/SkipLink'
 
@@ -19,6 +20,7 @@ export default function Providers({ children }) {
             <div className="min-h-screen bg-foam text-ink">
               <SkipLink />
               <ScrollToTop />
+              <ScrollProgress />
               {/* <CustomCursor /> */}
               <Navbar />
               <main id="main-content" tabIndex={-1} className="outline-none">
