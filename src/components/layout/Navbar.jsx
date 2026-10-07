@@ -3,13 +3,8 @@ import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { env } from '@/config/env'
+import { primaryNav } from '@/content/navigation'
 import { cn } from '@/lib/cn'
-
-const links = [
-  { label: 'Work', href: '/#work' },
-  { label: 'Approach', href: '/#approach' },
-  { label: 'Studio', href: '/#studio' },
-]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
@@ -30,7 +25,7 @@ export default function Navbar() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
-          {links.map((link) => (
+          {primaryNav.map((link) => (
             <a
               key={link.href}
               href={link.href}
@@ -67,7 +62,7 @@ export default function Navbar() {
         )}
       >
         <div className="flex flex-col gap-4 px-6 py-6">
-          {links.map((link) => (
+          {primaryNav.map((link) => (
             <a
               key={link.href}
               href={link.href}

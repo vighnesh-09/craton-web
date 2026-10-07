@@ -3,3 +3,7 @@ node_modules
 package-lock.json
 *.min.js
 *.min.css
+coverage
+
+# Large client reference (not product code)
+docs/client-brief/**

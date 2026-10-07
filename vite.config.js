@@ -26,7 +26,7 @@ function securityHeadersPlugin() {
   }
 
   return {
-    name: 'lumen-security-headers',
+    name: 'craton-security-headers',
     configureServer(server) {
       server.middlewares.use(apply)
     },
@@ -81,13 +81,13 @@ export default defineConfig(({ mode }) => {
           },
           ...(isProd
             ? {
-              minify: {
-                compress: {
-                  dropConsole: true,
-                  dropDebugger: true,
+                minify: {
+                  compress: {
+                    dropConsole: true,
+                    dropDebugger: true,
+                  },
                 },
-              },
-            }
+              }
             : {}),
         },
       },

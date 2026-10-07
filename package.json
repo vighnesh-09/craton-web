@@ -1,7 +1,8 @@
 {
-  "name": "demo-project",
+  "name": "craton-web",
   "private": true,
   "version": "1.0.0",
+  "description": "Craton Technologies marketing site",
   "type": "module",
   "engines": {
     "node": ">=20"

@@ -1,15 +1,22 @@
-import Contact from '@/components/sections/Contact'
-import Features from '@/components/sections/Features'
-import Hero from '@/components/sections/Hero'
-import Showcase from '@/components/sections/Showcase'
-import Studio from '@/components/sections/Studio'
-import { useDocumentTitle } from '@/hooks/useDocumentTitle'
+import Seo from '@/components/seo/Seo'
+import { pages } from '@/content/pages'
+import { Contact, Features, Hero, Showcase, Studio } from '@/features/home'
+import { organizationJsonLd, websiteJsonLd } from '@/lib/seo'
+
+const meta = pages.home
 
 export default function HomePage() {
-  useDocumentTitle('UI/UX Studio')
-
   return (
     <>
+      <Seo
+        title={meta.title}
+        description={meta.description}
+        path={meta.path}
+        ogTitle={meta.ogTitle}
+        ogDescription={meta.ogDescription}
+        robots={meta.robots}
+        jsonLd={[organizationJsonLd(), websiteJsonLd()]}
+      />
       <Hero />
       <Features />
       <Showcase />

@@ -1,7 +1,7 @@
-# Lumen — Professional React + Tailwind UI/UX Starter
+# Craton Technologies — Marketing Site
 
-Fast, smooth, human-feeling interfaces on a secure, production-ready foundation.
-Styling is **inline Tailwind** (`className` utilities) throughout.
+Production-ready React + Tailwind foundation for the Craton Technologies website.
+Structured for SEO, maintainability, and a clean path into the landing redesign.
 
 ## Stack
 
@@ -40,28 +40,47 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Project structure
 
 ```
+public/                 # Static assets served as-is
+  og/                   # Open Graph share images
+  robots.txt
+  sitemap.xml
 src/
-  app/           # Router
+  app/                  # App bootstrap + router
+  assets/
+    images/             # Imported images
+    icons/              # Imported icons
   components/
-    layout/      # Shell (nav, footer)
-    sections/    # Page sections
-    ui/          # Shared UI (loader, error boundary)
-  config/        # Env accessors (VITE_* only)
-  hooks/         # Reusable hooks
-  lib/           # Helpers (cn)
-  pages/         # Route pages (lazy-loaded)
+    layout/             # Shell (nav, footer, layout)
+    seo/                # <Seo />, JSON-LD helpers
+    ui/                 # Shared UI primitives
+  config/               # env + site identity / SEO defaults
+  content/              # Nav links, per-page SEO copy
+  features/
+    home/sections/      # Home-page section modules
+  hooks/                # Reusable hooks
+  lib/                  # Helpers (cn, seo URL builders)
+  pages/                # Route pages (lazy-loaded)
+  styles/               # Global CSS / Tailwind theme
 ```
 
 Path alias: `@/` → `src/`
 
+## SEO foundations
+
+- Static meta, Open Graph, Twitter cards, and JSON-LD in `index.html` (first paint / crawlers)
+- Route-level `<Seo />` updates title, description, canonical, and share tags
+- `public/robots.txt` + `public/sitemap.xml`
+- Site identity centralized in `src/config/site.js` and `src/content/pages.js`
+
+When adding a public route: register it in `content/pages.js`, the router, and `sitemap.xml`.
+
 ## Security defaults
 
 - Security headers on Vite dev / preview and deploy configs (`vercel.json`, `public/_headers`)
-- Env separation: only `VITE_*` reaches the browser; secrets stay off the client
+- Env separation: only `VITE_*` reaches the browser
 - Production console stripping
 - Error boundary with safe fallback UI
 - Skip link + focus-visible styles for accessible navigation
-- CSP on deploy hosts (Netlify `_headers` / Vercel)
 
 Never put API keys or private tokens in `VITE_*` variables.
 
@@ -70,13 +89,11 @@ Never put API keys or private tokens in `VITE_*` variables.
 Copy `.env.example` → `.env` and adjust:
 
 ```env
-VITE_APP_NAME=Lumen
-VITE_APP_URL=http://localhost:3000
-VITE_CONTACT_EMAIL=hello@lumen.studio
+VITE_APP_NAME=Craton Technologies
+VITE_APP_URL=https://craton.io
+VITE_CONTACT_EMAIL=hello@craton.io
 ```
 
-## Design notes
+## Reference
 
-- Calm lagoon palette, Syne + DM Sans
-- One clear job per section, motion that supports reading
-- Inline Tailwind for rapid UI iteration
+Client brief and design reference live under `docs/client-brief/` (not production code).

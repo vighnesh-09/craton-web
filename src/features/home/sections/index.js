@@ -1,0 +1,5 @@
+export { default as Contact } from '@/features/home/sections/Contact'
+export { default as Features } from '@/features/home/sections/Features'
+export { default as Hero } from '@/features/home/sections/Hero'
+export { default as Showcase } from '@/features/home/sections/Showcase'
+export { default as Studio } from '@/features/home/sections/Studio'

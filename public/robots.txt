@@ -1,4 +1,8 @@
+# https://craton.io/robots.txt
 User-agent: *
 Allow: /
 
-Sitemap: /
+# Disallow non-content app paths if added later
+Disallow: /api/
+
+Sitemap: https://craton.io/sitemap.xml
