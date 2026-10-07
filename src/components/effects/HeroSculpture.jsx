@@ -14,11 +14,12 @@ import {
  * Faithful port of craton-v2.html hero sculpture:
  * swarm → sphere → bulb → infinity → wordmark (loop).
  */
-const HOLD = 3.4
-const TRANS = 1.8
+const HOLD = 2.2
+const TRANS = 1.15
 const SEG = HOLD + TRANS
 const P = 5
 const CYCLE = SEG * P
+const DEPTH_BUCKETS = 48
 
 function makeSprite(rgb) {
   const s = document.createElement('canvas')
@@ -59,7 +60,8 @@ export default function HeroSculpture({ className }) {
     if (!ctx) return
 
     const mobile = matchMedia('(max-width: 900px)').matches
-    const N = mobile ? 1500 : 3400
+    // Fewer particles + cheaper depth order = smoother frame pacing
+    const N = mobile ? 900 : 2000
     const { shapes: base, jit, C } = buildShapes(N, 3)
     const shapes = [...base, new Float32Array(N * 3)]
     let wm = buildWordmark(N, C, 9, shapes[4])
@@ -92,6 +94,8 @@ export default function HeroSculpture({ className }) {
     const pos = new Float32Array(N * 3)
     const depth = new Float32Array(N)
     const order = new Int32Array(N)
+    const bucketHeads = new Int32Array(DEPTH_BUCKETS)
+    const bucketNext = new Int32Array(N)
     for (let i = 0; i < N; i++) order[i] = i
 
     const spPlat = makeSprite('214,216,204')
@@ -108,7 +112,7 @@ export default function HeroSculpture({ className }) {
 
       W = nextW
       H = nextH
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5)
       const bw = Math.round(W * dpr)
       const bh = Math.round(H * dpr)
       if (canvas.width !== bw || canvas.height !== bh) {
@@ -117,6 +121,28 @@ export default function HeroSculpture({ className }) {
       }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       return true
+    }
+
+    /** O(n) depth order — avoids Array.sort every frame */
+    function orderByDepth() {
+      bucketHeads.fill(-1)
+      for (let i = 0; i < N; i++) {
+        const t = (depth[i] + 2.4) / 4.8
+        const b = Math.max(
+          0,
+          Math.min(DEPTH_BUCKETS - 1, (t * DEPTH_BUCKETS) | 0),
+        )
+        bucketNext[i] = bucketHeads[b]
+        bucketHeads[b] = i
+      }
+      let o = 0
+      for (let b = 0; b < DEPTH_BUCKETS; b++) {
+        let i = bucketHeads[b]
+        while (i !== -1) {
+          order[o++] = i
+          i = bucketNext[i]
+        }
+      }
     }
 
     function compute(t) {
@@ -184,7 +210,7 @@ export default function HeroSculpture({ className }) {
         depth[i] = z2
       }
 
-      order.sort((a, b) => depth[a] - depth[b])
+      orderByDepth()
 
       {
         const y = 0.26 * 1.15
@@ -201,7 +227,8 @@ export default function HeroSculpture({ className }) {
     function draw() {
       if (W < 2 || H < 2) return
       ctx.clearRect(0, 0, W, H)
-      const base = mobile ? 0.021 : 0.017
+      // Slightly larger dots so fewer particles still read as dense
+      const base = mobile ? 0.026 : 0.022
 
       if (shine > 0.01) {
         const r = fil[2] * 1.3
@@ -281,10 +308,11 @@ export default function HeroSculpture({ className }) {
     function frame(now) {
       if (!running) return
       if (!last) last = now
-      const dt = Math.min(0.05, (now - last) / 1000)
+      // Cap spikes; scale time so motion stays snappy without hitching
+      const dt = Math.min(0.033, (now - last) / 1000)
       last = now
-      time += dt
-      rotY = -0.3 + 0.55 * Math.sin(time * 0.21)
+      time += dt * 1.35
+      rotY = -0.3 + 0.55 * Math.sin(time * 0.34)
       if (W >= 2) {
         compute(time)
         draw()
