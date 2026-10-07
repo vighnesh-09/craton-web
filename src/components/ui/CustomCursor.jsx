@@ -5,10 +5,10 @@ import { useEffect, useRef, useState } from 'react'
 const INTERACTIVE =
   'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor="hover"]'
 
-/** Lower = silkier trail; ~0.08–0.14 feels premium */
-const RING_LERP = 0.1
-const DOT_LERP = 0.55
-const SCALE_LERP = 0.14
+/** Higher = snappier follow; keep below ~0.9 to avoid jitter */
+const RING_LERP = 0.28
+const DOT_LERP = 0.8
+const SCALE_LERP = 0.22
 
 export default function CustomCursor() {
   const [active, setActive] = useState(false)
