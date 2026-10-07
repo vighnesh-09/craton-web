@@ -2,6 +2,7 @@ import {
   Approach,
   Company,
   Contact,
+  Domains,
   Hero,
   Mindset,
   Products,
@@ -32,6 +33,7 @@ export default function HomePage() {
       <Hero />
       <ProofBand />
       <Mindset />
+      <Domains />
       <Products />
       <Approach />
       <Company />

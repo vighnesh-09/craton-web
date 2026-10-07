@@ -1,6 +1,7 @@
 export { default as Approach } from '@/features/home/sections/Approach'
 export { default as Company } from '@/features/home/sections/Company'
 export { default as Contact } from '@/features/home/sections/Contact'
+export { default as Domains } from '@/features/home/sections/Domains'
 export { default as Hero } from '@/features/home/sections/Hero'
 export { default as Mindset } from '@/features/home/sections/Mindset'
 export { default as Products } from '@/features/home/sections/Products'

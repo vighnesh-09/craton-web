@@ -1,76 +1,93 @@
-/** Home page section copy — sourced from craton-v2 content. */
+/**
+ * Home page narrative — written for this site.
+ * Craton invents, protects, and ships AI products for trust-critical work.
+ */
 
 export const mindset = Object.freeze({
   id: 'mindset',
-  eyebrow: { num: '01', label: 'The Craton mindset' },
-  title: 'The next breakthrough starts with a',
-  titleAccent: 'better question.',
-  lead: 'What if complex information could become clearer decisions? We bring bold thinking, deep research, and thoughtful architecture together to build products for work where trust is the hard part.',
+  eyebrow: { num: '01', label: 'Why we exist' },
+  title: 'Hard problems deserve',
+  titleAccent: 'honest systems.',
+  lead: 'Craton builds AI-enabled products for work where a wrong answer is expensive — regulated industries, evidence-heavy decisions, and teams that must show their reasoning.',
   beliefs: [
     {
-      title: 'Trust is the product.',
-      copy: 'In regulated work, a recommendation is worth exactly as much as the evidence behind it. We build so the evidence is always in view.',
+      title: 'Evidence in plain sight.',
+      copy: 'We do not hide the trail. Every material output should point back to the rule, the document, or the review that supports it.',
     },
     {
-      title: 'Protect before you build.',
-      copy: 'Novel ideas are filed first, then engineered. That discipline is what lets an enterprise trust a young company with critical work.',
+      title: 'Invent, then protect.',
+      copy: 'Novel methods are filed before they scale. That habit protects partners and keeps the company durable as domains expand.',
     },
     {
-      title: 'Experts own what they build.',
-      copy: 'Every product is led by people who have done the work for decades, with product-level ownership — not consultants passing through.',
+      title: 'Operators at the core.',
+      copy: 'Products are led by people who have lived the domain — not by a temporary bench of advisors passing through.',
+    },
+  ],
+})
+
+export const domains = Object.freeze({
+  id: 'focus',
+  eyebrow: { num: '02', label: 'Where we work' },
+  title: 'Two frontiers.',
+  titleAccent: 'One discipline.',
+  lead: 'We start where trust is non-negotiable, then reuse the same invention habit as the next domain opens.',
+  items: [
+    {
+      num: '01',
+      title: 'MedTech regulation',
+      copy: 'EU MDR and IVDR work for device and IVD manufacturers — classification, GSPR gaps, and evidence mapped for expert review.',
+      signal: 'RAccelerator',
+    },
+    {
+      num: '02',
+      title: 'Agentic commerce',
+      copy: 'Purchase decisions made by autonomous agents still need independent review evidence the buyer can inspect before checkout.',
+      signal: 'ReviewsIntel',
     },
   ],
 })
 
 export const products = Object.freeze({
   id: 'products',
-  eyebrow: { num: '02', label: 'Intelligence, applied' },
-  title: 'Complexity meets',
-  titleAccent: 'clarity.',
-  aside:
-    'Two products, two domains, one conviction: deep problems deserve purpose-built intelligence with the reasoning shown.',
-  foot: {
-    lead: 'One company. Two frontiers.',
-    copy: 'Built around real decisions, not technology for its own sake.',
-    cta: { label: 'Explore our approach', href: '#approach' },
-  },
+  eyebrow: { num: '03', label: 'Products' },
+  title: 'Built for decisions',
+  titleAccent: 'that need proof.',
+  aside: 'Scroll to move between products — each one is purpose-built for a single high-trust domain.',
+  hint: 'Scroll to explore',
   items: [
     {
       id: 'ra',
       num: '01',
       name: 'RAccelerator',
-      domain: 'MedTech regulatory affairs',
+      domain: 'MedTech · EU MDR / IVDR',
       badge: 'In development',
-      kicker: 'AI-enabled MedTech platform',
-      title: 'Regulatory complexity.',
-      titleAccent: 'Connected clarity.',
+      kicker: 'Regulatory affairs platform',
+      title: 'Turn technical files into',
+      titleAccent: 'traceable arguments.',
       description:
-        'RAccelerator streamlines EU MDR and IVDR work for medical-device and IVD manufacturers — device classification and GSPR gap assessment today, with the reasoning traceable to the rule and the evidence.',
+        'RAccelerator helps medical-device and IVD teams run classification and GSPR gap work with the reasoning attached — so experts review an evidence-backed case instead of rebuilding it from scratch.',
       facts: [
         {
-          label: 'Problem',
-          value:
-            'A GSPR gap assessment means reading thousands of pages of evidence against Annex I requirements, by hand, under deadline.',
+          label: 'For',
+          value: 'RA teams navigating Annex I evidence under deadline pressure.',
         },
         {
-          label: 'What changes',
-          value:
-            'Evidence is mapped to each requirement with the reasoning shown, so the team reviews an argument instead of building one.',
+          label: 'Today',
+          value: 'Device classification and GSPR gap assessment with rule + document traceability.',
         },
         {
-          label: 'Proof',
-          value:
-            'First enterprise evaluation · global device manufacturer · Sept 2026',
+          label: 'Next',
+          value: 'Remediation paths, regulatory intelligence, and lifecycle coverage.',
           mono: true,
         },
       ],
       preview: {
-        label: 'GSPR gap assessment',
-        note: 'Illustrative view',
+        label: 'GSPR gap view',
+        note: 'Illustrative',
         stats: [
-          { label: 'GSPR gaps', value: '7', hint: 'of 23' },
-          { label: 'Critical gaps', value: '2' },
-          { label: 'Evidence docs', value: '41', hint: 'mapped' },
+          { label: 'Gaps', value: '7', hint: 'of 23' },
+          { label: 'Critical', value: '2' },
+          { label: 'Docs mapped', value: '41' },
         ],
         rows: [
           {
@@ -90,69 +107,57 @@ export const products = Object.freeze({
           {
             req: 'GSPR 10.4',
             name: 'Substances (CMR / ED)',
-            status: 'Critical gap',
+            status: 'Critical',
             tone: 'crit',
             evidence: 'No evidence linked',
           },
-          {
-            req: 'GSPR 23.4',
-            name: 'Instructions for use',
-            status: 'Gap',
-            tone: 'gap',
-            evidence: 'IFU-01 · rev. pending',
-          },
         ],
-        foot: [
-          'Expert review remains central',
-          'Rule + evidence traceability on every row',
-        ],
+        foot: ['Expert review stays central', 'Traceability on every row'],
       },
     },
     {
       id: 'ri',
       num: '02',
       name: 'ReviewsIntel',
-      domain: 'Evidence for agentic commerce',
+      domain: 'Agentic commerce · evidence layer',
       badge: 'Patent pending',
-      kicker: 'Evidence for agentic commerce',
-      title: 'Every decision',
-      titleAccent: 'deserves evidence.',
+      kicker: 'Decision evidence for agents',
+      title: 'Let agents buy only on',
+      titleAccent: 'what the reviews support.',
       description:
-        'ReviewsIntel binds an autonomous agent’s purchase decision to independent product-review evidence, so agents buy on proof — with the rationale visible to the person they act for.',
+        'ReviewsIntel connects product-review evidence to an agent’s purchase context so a recommendation arrives with rationale the human can authorize — not a black-box suggestion.',
       facts: [
         {
-          label: 'Problem',
-          value:
-            'Shopping agents act on prompts and listings. The evidence that a product actually performs sits in reviews nobody has verified or connected.',
+          label: 'For',
+          value: 'Teams building or governing shopping agents that need accountable outcomes.',
         },
         {
-          label: 'What changes',
-          value:
-            'A recommendation arrives with its evidence and context attached, so a purchase can be authorized on what the evidence supports.',
+          label: 'Today',
+          value: 'Evidence binding, decision context, and reviewable authorization.',
         },
         {
           label: 'Proof',
-          value: 'US provisional filed June 2026 · built with an AI-native SDLC',
+          value: 'US provisional filed June 2026 · AI-native SDLC',
           mono: true,
         },
       ],
       preview: {
-        label: 'The decision layer',
-        note: 'Conceptual flow',
+        label: 'Decision layer',
+        note: 'Conceptual',
         request:
-          'Cordless drill for a home workshop · budget ≤ $180 · needed by Friday',
+          'Cordless drill · home workshop · budget ≤ $180 · needed by Friday',
         chips: [
-          { title: 'Battery life under load', meta: '412 reviews · 3 sources' },
+          { title: 'Battery under load', meta: '412 reviews · 3 sources' },
           { title: 'Chuck durability', meta: '168 reviews · 2 sources' },
           { title: 'Warranty response', meta: '77 reviews · 1 source' },
         ],
         context:
-          'Weekend use, occasional masonry, price ceiling honored. Two candidates meet the evidence bar; one exceeds budget.',
+          'Weekend use, occasional masonry, price ceiling honored. Two candidates clear the evidence bar.',
         verdict: {
           title: 'Authorized on evidence',
-          detail: 'Rationale attached · reviewable by the buyer before checkout',
+          detail: 'Rationale attached for buyer review before checkout',
         },
-        foot: ['Connected rationale', 'Not just another recommendation'],
+        foot: ['Connected rationale', 'Human still decides'],
       },
     },
   ],
@@ -160,61 +165,67 @@ export const products = Object.freeze({
 
 export const approach = Object.freeze({
   id: 'approach',
-  eyebrow: { num: '03', label: 'How we move forward' },
-  title: 'Curious by nature.',
-  titleAccent: 'Rigorous by design.',
+  eyebrow: { num: '04', label: 'How we work' },
+  title: 'A repeatable way to',
+  titleAccent: 'enter a domain.',
+  lead: 'We do not chase every idea. We run a method that can survive diligence — from the first question to the product in market.',
   steps: [
     {
       num: '01',
-      phase: 'Ideas',
-      title: 'Question deeply.',
-      copy: 'Start with a real problem. Understand the domain, the people, and the decisions that matter before defining a solution.',
-      tag: 'Discovery & research',
+      phase: 'Discover',
+      title: 'Find the expensive decision.',
+      copy: 'Map the domain, the people accountable for outcomes, and the moment where evidence is still assembled by hand.',
+      tag: 'Research',
     },
     {
       num: '02',
-      phase: 'Focus',
-      title: 'Protect the idea.',
-      copy: 'Novel approaches are filed before they are built, so the company and its partners can invest with confidence.',
-      tag: 'Invention & IP',
+      phase: 'Protect',
+      title: 'File what is novel.',
+      copy: 'Protect the approach early so customers, partners, and the company can invest without watching the idea walk away.',
+      tag: 'IP',
     },
     {
       num: '03',
-      phase: 'Innovation',
-      title: 'Bring in the domain’s best.',
-      copy: 'Product leaders with decades in the field own what they build, with product-level equity — credibility an enterprise can check.',
-      tag: 'Domain leadership',
+      phase: 'Staff',
+      title: 'Put operators in charge.',
+      copy: 'Domain leaders with decades in the field own the product — credibility an enterprise can verify.',
+      tag: 'Leadership',
     },
     {
       num: '04',
-      phase: 'Forward',
-      title: 'Ship. Refine. Repeat.',
-      copy: 'Develop, evaluate, and refine with human judgment in the loop. Then apply the same method to the next domain.',
-      tag: 'Development & refinement',
+      phase: 'Ship',
+      title: 'Release with judgment in the loop.',
+      copy: 'Build, evaluate, and refine with humans accountable for the output. Then carry the method into the next domain.',
+      tag: 'Delivery',
     },
   ],
 })
 
 export const company = Object.freeze({
   id: 'company',
-  eyebrow: { num: '04', label: 'Craton Technologies' },
-  title: 'Bold thinking.',
-  titleAccent: 'Grounded execution.',
+  eyebrow: { num: '05', label: 'Company' },
+  title: 'A stable core for',
+  titleAccent: 'restless products.',
   story: [
-    'Craton Technologies is an innovation-driven product company based in Frisco, Texas. We identify hard, high-trust problems in regulated or evidence-heavy industries, invent a novel approach, protect it, assemble the domain leadership to make it credible, and ship it as a product — then repeat the method in the next domain.',
-    'A craton is the ancient, stable core of a continent — the bedrock everything else is built on. That is the idea: one method, one engineering discipline, one patent-first habit, from which restless, domain-specific products rise.',
+    'Craton Technologies is based in Frisco, Texas. We invent AI-enabled products for regulated and evidence-heavy work, protect what is novel, assemble domain leadership, and ship — then apply the same habit elsewhere.',
+    'A craton is the ancient bedrock of a continent. That is our metaphor: one engineering discipline and patent-first culture, from which domain-specific products can rise.',
   ],
   chips: [
     'Artificial intelligence',
     'Domain expertise',
-    'Evidence-led thinking',
+    'Evidence-led',
     'Patent-first',
   ],
   founder: {
     name: 'Sheik Ahamed Ali',
     role: 'Founder & CEO',
-    bio: 'Twenty-two years building enterprise systems where failure was expensive — retail integration at national scale, then platform and architecture leadership — with the habit of inventing from inside operating roles.',
-    facts: ['3 granted US patents', '9 pending', 'Judge, R&D 100 Awards', 'TOGAF 9.1'],
+    bio: 'Twenty-two years building enterprise systems where failure was expensive — national-scale retail integration, then platform and architecture leadership — inventing from inside operating roles.',
+    facts: [
+      '3 granted US patents',
+      '9 pending',
+      'Judge, R&D 100 Awards',
+      'TOGAF 9.1',
+    ],
   },
   roster: [
     {
@@ -223,7 +234,7 @@ export const company = Object.freeze({
     },
     {
       title: 'Chief Product Officer',
-      detail: 'Co-founder · product & user acceptance',
+      detail: 'Co-founder · product & acceptance',
     },
     {
       title: 'Head of Regulatory Affairs, IVD',
@@ -234,56 +245,56 @@ export const company = Object.freeze({
       title: 'Regulatory consultants',
       detail: 'Independent MD and IVD specialists',
     },
-    { title: 'AI engineering team', detail: 'Palo Alto' },
+    { title: 'AI engineering', detail: 'Palo Alto' },
   ],
   rosterNote: 'Roles shown; names appear with each person’s consent.',
   impact: [
     {
-      eyebrow: 'Next generation',
+      eyebrow: 'Community',
       title: 'DiscoverSTEM Foundation',
-      copy: 'A 501(c)(3) our founder helped establish, supporting underprivileged children in STEM, entrepreneurship, and innovation.',
+      copy: 'A 501(c)(3) our founder helped establish, supporting underprivileged children in STEM and entrepreneurship.',
     },
     {
       eyebrow: 'Recognition',
       title: 'R&D 100 Awards',
-      copy: 'Our founder serves on the judging panel for one of the longest-running recognitions of applied research and innovation.',
+      copy: 'Our founder serves on the judging panel for a long-running recognition of applied research.',
     },
   ],
 })
 
 export const contact = Object.freeze({
   id: 'contact',
-  kicker: 'A question worth exploring?',
-  title: 'The future doesn’t build itself.',
-  titleAccent: 'Let’s move it forward.',
-  lead: 'Tell us who you are and we’ll route you to the right conversation.',
+  kicker: 'Ready when you are',
+  title: 'Tell us what you are',
+  titleAccent: 'working through.',
+  lead: 'Choose how you want to engage — we will route you to the right conversation.',
   doors: [
     {
       id: 'pilot',
       label: 'Start a pilot',
-      copy: 'Evaluate RAccelerator on your own technical file, with your regulatory team in the loop.',
+      copy: 'Evaluate RAccelerator on your technical file with your RA team in the loop.',
     },
     {
       id: 'partner',
       label: 'Partner with Craton',
-      copy: 'Co-develop or distribute a product with a team that files first and ships.',
+      copy: 'Co-develop or distribute with a team that files first and ships.',
     },
     {
       id: 'lead',
       label: 'Lead a product',
-      copy: 'Bring decades of domain expertise and own the product you build.',
+      copy: 'Bring deep domain expertise and own the product you build.',
     },
     {
       id: 'join',
-      label: 'Join Craton',
-      copy: 'Serious problems, a modern AI-native stack, and a founder who has shipped.',
+      label: 'Join the team',
+      copy: 'Hard problems, an AI-native stack, and a founder who has shipped.',
     },
   ],
   topics: [
     'Start a pilot',
     'Partner with Craton',
     'Lead a product',
-    'Join Craton',
+    'Join the team',
     'Something else',
   ],
   form: {
@@ -293,15 +304,15 @@ export const contact = Object.freeze({
     emailError: 'Enter a work email so we can reply from the right team.',
     companyLabel: 'Company',
     topicLabel: 'Conversation',
-    messageLabel: 'One line on what you’re working on',
+    messageLabel: 'What are you working on?',
     messagePlaceholder: 'e.g. Class IIb device, MDR technical file due Q2',
-    submit: 'Start a conversation',
-    note: 'Opens your email client addressed to Craton. We reply within two business days.',
-    success: 'Your email draft is ready — send it and we’ll reply within two business days.',
+    submit: 'Send message',
+    note: 'Opens your email client to Craton. We reply within two business days.',
+    success: 'Your email draft is ready — send it and we will reply soon.',
   },
 })
 
 export const footerCopy = Object.freeze({
   boiler:
-    'Craton Technologies is an innovation-driven product company based in Frisco, Texas. It invents, protects, and ships AI-enabled products for regulated and evidence-heavy industries — beginning with RAccelerator, a regulatory-affairs platform for medical device and IVD manufacturers navigating EU MDR and IVDR — and applies the same method across agentic commerce and new domains.',
+    'Craton Technologies invents, protects, and ships AI-enabled products for regulated and evidence-heavy industries — beginning with RAccelerator for MedTech regulatory affairs, and applying the same method to agentic commerce and new domains.',
 })

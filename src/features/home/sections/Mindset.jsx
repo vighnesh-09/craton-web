@@ -27,7 +27,7 @@ export default function Mindset() {
           headingId="h-mindset"
         />
 
-        <ul className="mt-14 grid border-t border-line md:mt-20 md:grid-cols-3">
+        <ul className="mt-14 grid gap-4 sm:mt-20 md:grid-cols-3 md:gap-0 md:border-t md:border-line">
           {mindset.beliefs.map((belief, index) => (
             <motion.li
               key={belief.title}
@@ -39,12 +39,18 @@ export default function Mindset() {
                 delay: reduced ? 0 : index * 0.1,
                 ease,
               }}
-              className="border-line py-8 md:border-r md:px-7 md:py-10 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+              className="border border-line bg-mist/50 p-6 md:border-0 md:border-r md:bg-transparent md:px-7 md:py-10 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
             >
-              <p className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-copper">
-                0{index + 1}
-              </p>
-              <h3 className="mt-4 font-display text-[1.35rem] font-semibold leading-snug tracking-[-0.025em] text-ink">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-copper">
+                  0{index + 1}
+                </span>
+                <span
+                  aria-hidden
+                  className="h-px flex-1 bg-gradient-to-r from-line to-transparent"
+                />
+              </div>
+              <h3 className="mt-5 font-display text-[1.3rem] font-semibold leading-snug tracking-[-0.025em] text-ink">
                 {belief.title}
               </h3>
               <p className="mt-3 max-w-[36ch] font-body text-[14.5px] leading-relaxed text-ink/60">

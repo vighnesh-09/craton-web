@@ -23,10 +23,11 @@ export default function Approach() {
           label={approach.eyebrow.label}
           title={approach.title}
           titleAccent={approach.titleAccent}
+          lead={approach.lead}
           headingId="h-approach"
         />
 
-        <ol className="mt-14 grid gap-0 border-t border-line sm:mt-20 md:grid-cols-2 xl:grid-cols-4">
+        <ol className="mt-14 grid gap-5 sm:mt-20 sm:grid-cols-2 xl:grid-cols-4 xl:gap-0 xl:border-t xl:border-line">
           {approach.steps.map((step, index) => (
             <motion.li
               key={step.num}
@@ -38,7 +39,7 @@ export default function Approach() {
                 delay: reduced ? 0 : index * 0.08,
                 ease,
               }}
-              className="border-line py-8 md:border-r md:px-6 md:py-10 md:first:pl-0 md:[&:nth-child(2n)]:border-r-0 xl:[&:nth-child(2n)]:border-r xl:last:border-r-0 xl:last:pr-0"
+              className="relative border border-line bg-mist/40 p-6 xl:border-0 xl:border-r xl:bg-transparent xl:px-6 xl:py-10 xl:first:pl-0 xl:last:border-r-0 xl:last:pr-0"
             >
               <div className="flex items-baseline justify-between gap-4">
                 <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.16em] text-copper">
@@ -54,7 +55,7 @@ export default function Approach() {
                 className="mt-6 h-px w-10 bg-gradient-to-r from-copper to-transparent"
               />
 
-              <h3 className="mt-6 font-display text-[1.35rem] font-semibold leading-snug tracking-[-0.025em] text-ink">
+              <h3 className="mt-6 font-display text-[1.3rem] font-semibold leading-snug tracking-[-0.025em] text-ink">
                 {step.title}
               </h3>
               <p className="mt-3 max-w-[34ch] font-body text-[14.5px] leading-relaxed text-ink/60">

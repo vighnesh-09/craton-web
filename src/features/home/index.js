@@ -2,6 +2,7 @@ export {
   Approach,
   Company,
   Contact,
+  Domains,
   Hero,
   Mindset,
   Products,

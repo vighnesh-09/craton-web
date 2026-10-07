@@ -1,9 +1,9 @@
-/** Primary site navigation — mirrors craton-v2 header. */
+/** Primary site navigation */
 export const primaryNav = Object.freeze([
+  { label: 'Focus', href: '#focus' },
   { label: 'Products', href: '#products' },
   { label: 'Approach', href: '#approach' },
   { label: 'Company', href: '#company' },
-  { label: 'Contact', href: '#contact' },
 ])
 
 export const headerCta = Object.freeze({
@@ -19,7 +19,7 @@ export const footerNav = Object.freeze([
 ])
 
 export const footerMetaNav = Object.freeze([
-  { label: 'Approach', href: '#approach' },
+  { label: 'Focus', href: '#focus' },
   { label: 'Products', href: '#products' },
   { label: 'Contact', href: '#contact' },
 ])
