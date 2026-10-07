@@ -1,0 +1,36 @@
+---
+description: Craton landing project identity, workflow locks, and agent constraints
+alwaysApply: true
+---
+
+# Craton Technologies — Project Rules
+
+## What this project is
+
+- Rebuild the **Craton Technologies** marketing landing experience in React + Tailwind.
+- Client reference: `docs/client-brief/craton-v2.html` + `docs/client-brief/Craton-Landing-Page-Review.docx`.
+- Craton is a **product + IP company**, not an IT services shop.
+- Products: **RAccelerator** (EU MDR / IVDR MedTech regulatory AI) and **ReviewsIntel** (evidence for agentic commerce).
+- Location: Frisco, Texas · Founder: Sheik Ahamed Ali.
+
+## Creative mandate (client)
+
+- Focus is **UI/UX excellence** — creativity, SEO, and market need.
+- **No artificial design ceiling**: push originality, craft, and conversion quality.
+- Treat `craton-v2.html` as **content + intent reference**, not a pixel clone.
+- Address review gaps (concrete hero, proof, CTAs, SEO, form, trust) while elevating the visual system.
+
+## Hard locks for the agent
+
+- **Do not change the Vite/dev port** (keep whatever is in `.env` / current config).
+- **Do not run `npm run dev`, build, preview, or servers** unless the user explicitly asks.
+- Ask before installing new packages or changing deploy/host config.
+- Prefer inline Tailwind `className` utilities.
+- Keep claims honest: “in development”, “illustrative”, patent counts — never invent customer logos or metrics without approval.
+
+## Source of truth order
+
+1. Latest user instruction in chat
+2. These `.cursor/rules`
+3. Client review DOCX priorities
+4. Client HTML for facts, copy tone, and product truth

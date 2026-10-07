@@ -1,0 +1,55 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --color-ink: #0f1c1a;
+  --color-ink-soft: #1a2e2a;
+  --color-mist: #e8f0ed;
+  --color-foam: #f4faf7;
+  --color-lagoon: #0d6e6e;
+  --color-lagoon-deep: #085454;
+  --color-coral: #e85d4c;
+  --color-sun: #f0a202;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-foam font-body text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-lagoon;
+  }
+
+  ::selection {
+    @apply bg-lagoon/20 text-ink;
+  }
+
+  img,
+  svg {
+    @apply max-w-full;
+  }
+}

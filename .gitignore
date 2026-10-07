@@ -1,0 +1,59 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies & build
+node_modules
+dist
+dist-ssr
+*.local
+.cache
+.turbo
+.vercel
+coverage
+*.tsbuildinfo
+
+# Environment (keep .env.example)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Cursor — ignore local/agent cache; keep project rules versioned
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
+# Editor / IDE
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# Temp / dumps
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.parcel-cache
+.eslintcache
+.stylelintcache
