@@ -1,3 +1,5 @@
+'use client'
+
 import {
   createContext,
   useCallback,
@@ -34,24 +36,28 @@ function applyThemeVars(theme) {
 }
 
 export function ThemeProvider({ children }) {
-  const [themeId, setThemeId] = useState(() => {
-    try {
-      return resolveThemeId(localStorage.getItem(STORAGE_KEY))
-    } catch {
-      return defaultThemeId
-    }
-  })
-
+  const [themeId, setThemeId] = useState(defaultThemeId)
+  const [hydrated, setHydrated] = useState(false)
   const theme = themes[themeId] || themes[defaultThemeId]
 
   useEffect(() => {
+    try {
+      setThemeId(resolveThemeId(localStorage.getItem(STORAGE_KEY)))
+    } catch {
+      /* ignore */
+    }
+    setHydrated(true)
+  }, [])
+
+  useEffect(() => {
+    if (!hydrated) return
     applyThemeVars(theme)
     try {
       localStorage.setItem(STORAGE_KEY, theme.id)
     } catch {
       /* ignore */
     }
-  }, [theme])
+  }, [theme, hydrated])
 
   const setTheme = useCallback((id) => {
     if (themes[id]) setThemeId(id)

@@ -11,12 +11,15 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.next
+out
 *.local
 .cache
 .turbo
 .vercel
 coverage
 *.tsbuildinfo
+next-env.d.ts
 
 # Environment (keep .env.example)
 .env

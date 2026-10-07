@@ -1,3 +1,5 @@
+'use client'
+
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { cn } from '@/lib/cn'
 

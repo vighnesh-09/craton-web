@@ -1,6 +1,6 @@
 /**
  * Canonical site identity used for SEO, structured data, and share cards.
- * Keep VITE_* overrides in env.js — this file is the content/SEO source of truth.
+ * Keep NEXT_PUBLIC_* overrides in env.js — this file is the content/SEO source of truth.
  */
 export const site = Object.freeze({
   name: 'Craton Technologies',

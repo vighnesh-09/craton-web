@@ -1,7 +1,9 @@
+'use client'
+
 import { motion } from 'framer-motion'
 import { Menu, Moon, Sun, X } from 'lucide-react'
+import Link from 'next/link'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { env } from '@/config/env'
 import { primaryNav } from '@/content/navigation'
@@ -20,7 +22,7 @@ export default function Navbar() {
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
         <Link
-          to="/"
+          href="/"
           className="font-display text-xl font-bold tracking-tight text-hero-fg transition-colors duration-300 hover:text-copper"
         >
           {env.appName}

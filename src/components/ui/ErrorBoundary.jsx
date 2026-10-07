@@ -1,3 +1,5 @@
+'use client'
+
 import { Component } from 'react'
 import { env } from '@/config/env'
 
@@ -9,7 +11,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    if (import.meta.env.DEV) {
+    if (process.env.NODE_ENV === 'development') {
       console.error('[ErrorBoundary]', error, info)
     }
   }

@@ -1,22 +1,22 @@
 /**
- * Typed access to Vite public env.
- * Never put API secrets here — only VITE_* values are safe in the browser.
+ * Typed access to Next.js public env.
+ * Never put API secrets here — only NEXT_PUBLIC_* values are safe in the browser.
  */
 import { site } from '@/config/site'
 
-const raw = import.meta.env
-
 function required(key, fallback = '') {
-  const value = raw[key]
+  const value = process.env[key]
   if (value === undefined || value === '') return fallback
   return String(value)
 }
 
+const nodeEnv = process.env.NODE_ENV || 'development'
+
 export const env = Object.freeze({
-  mode: raw.MODE,
-  isDev: raw.DEV,
-  isProd: raw.PROD,
-  appName: required('VITE_APP_NAME', site.name),
-  appUrl: required('VITE_APP_URL', site.url).replace(/\/$/, ''),
-  contactEmail: required('VITE_CONTACT_EMAIL', site.contactEmail),
+  mode: nodeEnv,
+  isDev: nodeEnv === 'development',
+  isProd: nodeEnv === 'production',
+  appName: required('NEXT_PUBLIC_APP_NAME', site.name),
+  appUrl: required('NEXT_PUBLIC_APP_URL', site.url).replace(/\/$/, ''),
+  contactEmail: required('NEXT_PUBLIC_CONTACT_EMAIL', site.contactEmail),
 })

@@ -1,3 +1,5 @@
+'use client'
+
 import { cancelFrame, frame } from 'framer-motion'
 import Lenis from 'lenis'
 import { createContext, useContext, useEffect, useState } from 'react'
