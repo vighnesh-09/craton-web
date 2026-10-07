@@ -28,7 +28,6 @@ export const footerMetaNav = Object.freeze([
 export const darkNavSections = Object.freeze([
   'top',
   'proof',
-  'products',
   'contact',
   'footer',
 ])

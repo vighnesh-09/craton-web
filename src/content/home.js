@@ -52,112 +52,49 @@ export const products = Object.freeze({
   eyebrow: { num: '03', label: 'Products' },
   title: 'Built for decisions',
   titleAccent: 'that need proof.',
-  aside: 'Scroll to move between products — each one is purpose-built for a single high-trust domain.',
-  hint: 'Scroll to explore',
+  aside: 'Two products. Same discipline — evidence you can inspect before you act.',
+  hint: 'Scroll to stack',
   items: [
     {
       id: 'ra',
       num: '01',
       name: 'RAccelerator',
-      domain: 'MedTech · EU MDR / IVDR',
       badge: 'In development',
       kicker: 'Regulatory affairs platform',
-      title: 'Turn technical files into',
-      titleAccent: 'traceable arguments.',
+      tagline:
+        'Turn technical files into arguments experts can review — with the evidence still attached.',
       description:
-        'RAccelerator helps medical-device and IVD teams run classification and GSPR gap work with the reasoning attached — so experts review an evidence-backed case instead of rebuilding it from scratch.',
-      facts: [
-        {
-          label: 'For',
-          value: 'RA teams navigating Annex I evidence under deadline pressure.',
-        },
-        {
-          label: 'Today',
-          value: 'Device classification and GSPR gap assessment with rule + document traceability.',
-        },
-        {
-          label: 'Next',
-          value: 'Remediation paths, regulatory intelligence, and lifecycle coverage.',
-          mono: true,
-        },
+        'Built for medical-device and IVD teams running classification and GSPR gap work under MDR and IVDR. Every material finding points back to the rule and the document that supports it.',
+      points: [
+        'EU MDR / IVDR technical files',
+        'Classification & GSPR gap assessment',
+        'Traceability for expert review',
       ],
-      preview: {
-        label: 'GSPR gap view',
-        note: 'Illustrative',
-        stats: [
-          { label: 'Gaps', value: '7', hint: 'of 23' },
-          { label: 'Critical', value: '2' },
-          { label: 'Docs mapped', value: '41' },
-        ],
-        rows: [
-          {
-            req: 'GSPR 1',
-            name: 'Performance and safety',
-            status: 'Covered',
-            tone: 'ok',
-            evidence: 'CER-04 · RMF-02',
-          },
-          {
-            req: 'GSPR 3',
-            name: 'Risk management system',
-            status: 'Gap',
-            tone: 'gap',
-            evidence: 'RMF-02 · partial',
-          },
-          {
-            req: 'GSPR 10.4',
-            name: 'Substances (CMR / ED)',
-            status: 'Critical',
-            tone: 'crit',
-            evidence: 'No evidence linked',
-          },
-        ],
-        foot: ['Expert review stays central', 'Traceability on every row'],
+      cta: 'Explore RAccelerator',
+      image: {
+        src: '/products/ra-composition.jpg',
+        alt: 'RAccelerator product composition — desktop, mobile, and card',
       },
     },
     {
       id: 'ri',
       num: '02',
       name: 'ReviewsIntel',
-      domain: 'Agentic commerce · evidence layer',
       badge: 'Patent pending',
-      kicker: 'Decision evidence for agents',
-      title: 'Let agents buy only on',
-      titleAccent: 'what the reviews support.',
+      kicker: 'Evidence layer for agents',
+      tagline:
+        'Let shopping agents recommend only what the reviews can support — and show why.',
       description:
-        'ReviewsIntel connects product-review evidence to an agent’s purchase context so a recommendation arrives with rationale the human can authorize — not a black-box suggestion.',
-      facts: [
-        {
-          label: 'For',
-          value: 'Teams building or governing shopping agents that need accountable outcomes.',
-        },
-        {
-          label: 'Today',
-          value: 'Evidence binding, decision context, and reviewable authorization.',
-        },
-        {
-          label: 'Proof',
-          value: 'US provisional filed June 2026 · AI-native SDLC',
-          mono: true,
-        },
+        'Connects review evidence to an agent’s purchase context so a recommendation arrives with rationale a human can authorize before checkout.',
+      points: [
+        'Agent purchase context',
+        'Review evidence binding',
+        'Human authorization in the loop',
       ],
-      preview: {
-        label: 'Decision layer',
-        note: 'Conceptual',
-        request:
-          'Cordless drill · home workshop · budget ≤ $180 · needed by Friday',
-        chips: [
-          { title: 'Battery under load', meta: '412 reviews · 3 sources' },
-          { title: 'Chuck durability', meta: '168 reviews · 2 sources' },
-          { title: 'Warranty response', meta: '77 reviews · 1 source' },
-        ],
-        context:
-          'Weekend use, occasional masonry, price ceiling honored. Two candidates clear the evidence bar.',
-        verdict: {
-          title: 'Authorized on evidence',
-          detail: 'Rationale attached for buyer review before checkout',
-        },
-        foot: ['Connected rationale', 'Human still decides'],
+      cta: 'Explore ReviewsIntel',
+      image: {
+        src: '/products/ri-composition.jpg',
+        alt: 'ReviewsIntel product composition — desktop, mobile, and card',
       },
     },
   ],
