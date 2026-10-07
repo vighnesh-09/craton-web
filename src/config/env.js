@@ -14,7 +14,11 @@ export const env = Object.freeze({
   mode: raw.MODE,
   isDev: raw.DEV,
   isProd: raw.PROD,
-  appName: required('VITE_APP_NAME', 'Lumen'),
+  appName: required('VITE_APP_NAME', 'Craton Technologies'),
   appUrl: required('VITE_APP_URL', 'http://localhost:3000'),
-  contactEmail: required('VITE_CONTACT_EMAIL', 'hello@lumen.studio'),
+  contactEmail: required('VITE_CONTACT_EMAIL', 'hello@craton.io'),
+  formEndpoint: required('VITE_FORM_ENDPOINT', ''),
+  bookingUrl: required('VITE_BOOKING_URL', ''),
+  heroVideoUrl: required('VITE_HERO_VIDEO_URL', ''),
+  heroPosterUrl: required('VITE_HERO_POSTER_URL', ''),
 })

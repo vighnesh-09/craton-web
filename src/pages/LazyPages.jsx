@@ -3,19 +3,24 @@ import PageLoader from '@/components/ui/PageLoader'
 
 const HomePage = lazy(() => import('@/pages/HomePage'))
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
+const LegalPage = lazy(() => import('@/pages/LegalPage'))
 
-export function LazyHomePage() {
+function wrap(Page) {
   return (
     <Suspense fallback={<PageLoader />}>
-      <HomePage />
+      <Page />
     </Suspense>
   )
 }
 
+export function LazyHomePage() {
+  return wrap(HomePage)
+}
+
 export function LazyNotFoundPage() {
-  return (
-    <Suspense fallback={<PageLoader />}>
-      <NotFoundPage />
-    </Suspense>
-  )
+  return wrap(NotFoundPage)
+}
+
+export function LazyLegalPage() {
+  return wrap(LegalPage)
 }

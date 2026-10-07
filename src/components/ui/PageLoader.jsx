@@ -6,7 +6,7 @@ export default function PageLoader() {
       aria-live="polite"
       aria-label="Loading"
     >
-      <div className="h-9 w-9 animate-spin rounded-full border-2 border-mist border-t-lagoon" />
+      <div className="h-9 w-9 animate-spin rounded-full border-2 border-line border-t-accent" />
     </div>
   )
 }

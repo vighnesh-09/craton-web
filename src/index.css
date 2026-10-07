@@ -1,24 +1,88 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
 
 @theme {
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
 
-  --color-ink: #0f1c1a;
-  --color-ink-soft: #1a2e2a;
-  --color-mist: #e8f0ed;
-  --color-foam: #f4faf7;
-  --color-lagoon: #0d6e6e;
-  --color-lagoon-deep: #085454;
-  --color-coral: #e85d4c;
-  --color-sun: #f0a202;
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-paper: var(--paper);
+  --color-cream: var(--cream);
+  --color-paper-2: var(--paper-2);
+  --color-muted: var(--muted);
+  --color-muted-ink: var(--muted-ink);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-sage: var(--sage);
+  --color-sage-deep: var(--sage-deep);
+  --color-line: var(--line);
+  --color-line-ink: var(--line-ink);
+  --color-glow: var(--glow);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
 }
+
+/* Default = Light (teal + warm cream, not grey) */
+:root {
+  --ink: #f4f7f5;
+  --ink-2: #e8f0ec;
+  --ink-3: #d9e8e2;
+  --paper: #ffffff;
+  --cream: #152821;
+  --paper-2: #faf8f4;
+  --muted: #3d6b5f;
+  --muted-ink: #2f564c;
+  --accent: #0f8f7b;
+  --accent-deep: #0b6f60;
+  --sage: #4aa896;
+  --sage-deep: #2f7d6d;
+  --line: rgba(21, 40, 33, 0.1);
+  --line-ink: rgba(21, 40, 33, 0.1);
+  --glow: rgba(15, 143, 123, 0.28);
+  --ember: #e09a5f;
+  --success: #2f9e6b;
+  --danger: #c45d4a;
+  --glass-bg: rgba(255, 255, 255, 0.62);
+  --glass-bg-strong: rgba(255, 255, 255, 0.82);
+  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-highlight: rgba(255, 255, 255, 0.98);
+  --glass-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 -1px 0 rgba(15, 143, 123, 0.08) inset,
+    0 20px 48px -22px rgba(15, 100, 90, 0.28),
+    8px 10px 24px rgba(45, 120, 100, 0.1),
+    -6px -6px 18px rgba(255, 255, 255, 0.9);
+  --glass-glow: 0 0 44px -10px rgba(15, 143, 123, 0.35);
+  --btn-face: linear-gradient(145deg, #2bb89f 0%, #0f8f7b 48%, #0b6f60 100%);
+  --scene-a: rgba(120, 210, 195, 0.42);
+  --scene-b: rgba(255, 210, 170, 0.38);
+  --scene-c: rgba(170, 220, 190, 0.32);
+  --pad: clamp(1.25rem, 5vw, 6.5rem);
+  color-scheme: light;
+}
+
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
     text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-ink font-sans text-cream antialiased;
+    overflow-x: clip;
+    transition:
+      background-color 0.35s ease,
+      color 0.35s ease;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -32,24 +96,130 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
     }
   }
 
-  body {
-    @apply m-0 min-h-screen bg-foam font-body text-ink antialiased;
-  }
-
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-lagoon;
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
   }
 
   ::selection {
-    @apply bg-lagoon/20 text-ink;
+    background: color-mix(in oklab, var(--accent) 35%, white);
+    color: var(--cream);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  button {
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+    border: 0;
+    background: none;
+    padding: 0;
   }
 
   img,
   svg {
-    @apply max-w-full;
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(22px) saturate(1.45);
+    -webkit-backdrop-filter: blur(22px) saturate(1.45);
+  }
+
+  .glass-panel--strong {
+    background: var(--glass-bg-strong);
+  }
+
+  .glass-panel--glow {
+    box-shadow: var(--glass-shadow), var(--glass-glow);
+  }
+
+  /* Inner shadow / pressed (effect 07) */
+  .glass-panel--inset {
+    box-shadow:
+      inset 6px 6px 14px rgba(84, 98, 112, 0.16),
+      inset -4px -4px 12px rgba(255, 255, 255, 0.55),
+      0 1px 0 var(--glass-highlight);
+  }
+
+  /* Diagonal glare (effect 01) */
+  .glass-shine {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      125deg,
+      var(--glass-highlight) 0%,
+      transparent 38%,
+      transparent 62%,
+      rgba(255, 255, 255, 0.08) 100%
+    );
+    opacity: 0.55;
+  }
+
+  /* Soft satin wave (effect 09) */
+  .glass-satin {
+    pointer-events: none;
+    position: absolute;
+    inset: -20% -10%;
+    background: radial-gradient(
+      60% 40% at 20% 0%,
+      rgba(255, 255, 255, 0.35),
+      transparent 55%
+    );
+    opacity: 0.5;
+    mix-blend-mode: soft-light;
+  }
+
+  html[data-mode='dark'] .glass-satin {
+    opacity: 0.35;
+    mix-blend-mode: screen;
+  }
+}
+
+@layer utilities {
+  .pad-x {
+    padding-inline: var(--pad);
+  }
+
+  .serif {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }

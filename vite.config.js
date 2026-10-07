@@ -77,8 +77,13 @@ export default defineConfig(({ mode }) => {
                 name: 'router',
                 test: /node_modules[\\/](react-router|react-router-dom)[\\/]/,
               },
+              {
+                name: 'three',
+                test: /node_modules[\\/](three|@react-three)[\\/]/,
+              },
             ],
           },
+
           ...(isProd
             ? {
               minify: {
