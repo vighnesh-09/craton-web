@@ -25,10 +25,8 @@ coverage
 .env.production
 .env.development
 
-# Cursor — ignore local/agent cache; keep project rules versioned
-.cursor/*
-!.cursor/rules/
-!.cursor/rules/**
+# Cursor — local only (rules, cache, agent state)
+.cursor/
 
 # Editor / IDE
 .vscode/*
