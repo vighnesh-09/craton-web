@@ -19,6 +19,7 @@ export function LenisProvider({ children }) {
       smoothWheel: true,
       touchMultiplier: 1.2,
       wheelMultiplier: 0.92,
+      anchors: false,
     })
 
     setLenis(instance)
@@ -28,7 +29,14 @@ export function LenisProvider({ children }) {
     }
     frame.update(update, true)
 
+    // Keep native scroll listeners in sync for UI that reads scrollY
+    const onLenisScroll = () => {
+      window.dispatchEvent(new Event('scroll'))
+    }
+    instance.on('scroll', onLenisScroll)
+
     return () => {
+      instance.off('scroll', onLenisScroll)
       cancelFrame(update)
       instance.destroy()
       setLenis(null)

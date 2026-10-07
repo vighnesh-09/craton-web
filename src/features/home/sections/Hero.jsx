@@ -5,8 +5,10 @@ import { ArrowRight } from 'lucide-react'
 import HeroSculpture from '@/components/effects/HeroSculpture'
 import SignalFlowBackground from '@/components/effects/SignalFlowBackground'
 import SiteContainer from '@/components/layout/SiteContainer'
+import { useLenis } from '@/components/providers/LenisProvider'
 import { env } from '@/config/env'
 import { site } from '@/config/site'
+import { scrollToId } from '@/lib/scroll'
 
 /** Soft, premium ease — no bounce */
 const ease = [0.22, 1, 0.36, 1]
@@ -47,8 +49,13 @@ function RevealLine({
 
 export default function Hero() {
   const reduced = useReducedMotion()
+  const lenis = useLenis()
 
   const t = (i) => (reduced ? 0 : 0.08 + i * STAGGER)
+  const go = (href) => (event) => {
+    event.preventDefault()
+    scrollToId(href, lenis)
+  }
 
   return (
     <section
@@ -84,7 +91,7 @@ export default function Hero() {
       />
 
       {/* v2 sculpture — right side, above funnel */}
-      <HeroSculpture className="z-[3] right-[-4%] top-20 bottom-8 w-[62%]" />
+      <HeroSculpture className="z-[3] right-[0%] top-0 bottom-8 w-[50%]" />
 
       <SiteContainer className="relative z-[4] flex flex-1 flex-col justify-center px-6 pb-8 pt-28 sm:px-8 lg:pb-10">
         <div className="w-full max-w-xl lg:max-w-[46%]">
@@ -126,7 +133,8 @@ export default function Hero() {
             <RevealLine delay={t(6)} reduced={reduced}>
               <span className="inline-flex flex-wrap items-center gap-3 sm:gap-4">
                 <a
-                  href="#work"
+                  href="#products"
+                  onClick={go('#products')}
                   className="group inline-flex min-h-11 items-center gap-2.5 rounded-full bg-hero-cta px-6 text-[13px] font-semibold text-craton transition-all duration-200 hover:-translate-y-0.5 hover:brightness-110"
                 >
                   Explore products
@@ -136,7 +144,8 @@ export default function Hero() {
                   />
                 </a>
                 <a
-                  href="/#contact"
+                  href="#contact"
+                  onClick={go('#contact')}
                   className="inline-flex min-h-11 items-center rounded-full border border-line-on-dark px-5 text-[13px] font-medium text-hero-cta transition-all duration-200 hover:-translate-y-0.5 hover:border-hero-fg/35 hover:bg-hero-fg/[0.04]"
                 >
                   Get in touch

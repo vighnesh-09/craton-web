@@ -1,7 +1,7 @@
 'use client'
 
 import { Component } from 'react'
-import { env } from '@/config/env'
+import BrandMark from '@/components/ui/BrandMark'
 
 export default class ErrorBoundary extends Component {
   state = { hasError: false }
@@ -24,9 +24,7 @@ export default class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className="flex min-h-screen flex-col items-center justify-center bg-foam px-6 text-center">
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-lagoon">
-            {env.appName}
-          </p>
+          <BrandMark href="/" tone="on-light" size="sm" className="justify-center" />
           <h1 className="mt-4 font-display text-3xl font-bold text-ink md:text-4xl">
             Something went off track
           </h1>

@@ -1,8 +1,9 @@
 export {
+  Approach,
+  Company,
   Contact,
-  Features,
   Hero,
+  Mindset,
+  Products,
   ProofBand,
-  Showcase,
-  Studio,
 } from '@/features/home/sections'

@@ -1,11 +1,34 @@
-/** Primary site navigation — single source for header / mobile menus. */
+/** Primary site navigation — mirrors craton-v2 header. */
 export const primaryNav = Object.freeze([
-  { label: 'Work', href: '/#work' },
-  { label: 'Approach', href: '/#approach' },
-  { label: 'Studio', href: '/#studio' },
+  { label: 'Products', href: '#products' },
+  { label: 'Approach', href: '#approach' },
+  { label: 'Company', href: '#company' },
+  { label: 'Contact', href: '#contact' },
 ])
 
+export const headerCta = Object.freeze({
+  label: 'Get in touch',
+  href: '#contact',
+})
+
 export const footerNav = Object.freeze([
-  { label: 'Home', href: '/' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Company', href: '#company' },
+  { label: 'RAccelerator', href: '#products' },
+  { label: 'ReviewsIntel', href: '#products' },
+  { label: 'Contact', href: '#contact' },
+])
+
+export const footerMetaNav = Object.freeze([
+  { label: 'Approach', href: '#approach' },
+  { label: 'Products', href: '#products' },
+  { label: 'Contact', href: '#contact' },
+])
+
+/** Section ids whose surface is dark under the fixed navbar */
+export const darkNavSections = Object.freeze([
+  'top',
+  'proof',
+  'products',
+  'contact',
+  'footer',
 ])

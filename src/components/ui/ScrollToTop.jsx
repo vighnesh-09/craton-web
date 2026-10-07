@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useLenis } from '@/components/providers/LenisProvider'
+import { scrollToId } from '@/lib/scroll'
 
 export default function ScrollToTop() {
   const pathname = usePathname()
@@ -12,17 +13,13 @@ export default function ScrollToTop() {
     const hash = typeof window !== 'undefined' ? window.location.hash : ''
 
     if (hash) {
-      const id = hash.replace('#', '')
-      const el = document.getElementById(id)
-      if (el) {
-        if (lenis) lenis.scrollTo(el, { offset: -80 })
-        else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        return
-      }
+      // Defer until layout is ready (Lenis + sections mounted)
+      const t = window.setTimeout(() => scrollToId(hash, lenis), 50)
+      return () => window.clearTimeout(t)
     }
 
-    if (lenis) lenis.scrollTo(0, { immediate: false })
-    else window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    if (lenis) lenis.scrollTo(0, { immediate: true })
+    else window.scrollTo({ top: 0, left: 0 })
   }, [pathname, lenis])
 
   return null

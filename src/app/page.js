@@ -1,10 +1,11 @@
 import {
+  Approach,
+  Company,
   Contact,
-  Features,
   Hero,
+  Mindset,
+  Products,
   ProofBand,
-  Showcase,
-  Studio,
 } from '@/features/home'
 import { pages } from '@/content/pages'
 
@@ -30,9 +31,10 @@ export default function HomePage() {
     <>
       <Hero />
       <ProofBand />
-      <Features />
-      <Showcase />
-      <Studio />
+      <Mindset />
+      <Products />
+      <Approach />
+      <Company />
       <Contact />
     </>
   )

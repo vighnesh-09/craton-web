@@ -3,16 +3,15 @@
 import { useEffect, useRef, useState } from 'react'
 
 const INTERACTIVE =
-  'a, button, [role="button"], input, textarea, select, label, summary, [data-cursor="hover"]'
+  'a,button,[role="button"],input,textarea,select,label,summary,[data-cursor="hover"]'
 
-/** Higher = snappier follow; keep below ~0.9 to avoid jitter */
-const RING_LERP = 0.28
-const DOT_LERP = 0.8
-const SCALE_LERP = 0.22
+/** Settle thresholds — stop the frame loop when idle */
+const POS_EPS = 0.08
+const SCALE_EPS = 0.002
+const VIS_EPS = 0.01
 
 export default function CustomCursor() {
   const [active, setActive] = useState(false)
-  const rootRef = useRef(null)
   const tipRef = useRef(null)
   const ringRef = useRef(null)
   const state = useRef({
@@ -27,7 +26,9 @@ export default function CustomCursor() {
     visible: 0,
     targetVisible: 0,
     primed: false,
+    hovering: false,
     raf: 0,
+    running: false,
   })
 
   useEffect(() => {
@@ -56,8 +57,60 @@ export default function CustomCursor() {
     const s = state.current
     const tip = tipRef.current
     const ring = ringRef.current
-    const root = rootRef.current
-    if (!tip || !ring || !root) return undefined
+    if (!tip || !ring) return undefined
+
+    const paint = () => {
+      tip.style.transform = `translate3d(${s.dx}px,${s.dy}px,0) translate(-50%,-50%)`
+      tip.style.opacity = String(s.visible)
+      ring.style.transform = `translate3d(${s.rx}px,${s.ry}px,0) translate(-50%,-50%) scale(${s.scale})`
+      ring.style.opacity = String(s.visible * 0.9)
+    }
+
+    const stop = () => {
+      if (s.raf) cancelAnimationFrame(s.raf)
+      s.raf = 0
+      s.running = false
+    }
+
+    const tick = () => {
+      s.dx += (s.mx - s.dx) * 0.55
+      s.dy += (s.my - s.dy) * 0.55
+      s.rx += (s.mx - s.rx) * 0.22
+      s.ry += (s.my - s.ry) * 0.22
+      s.scale += (s.targetScale - s.scale) * 0.18
+      s.visible += (s.targetVisible - s.visible) * 0.2
+
+      paint()
+
+      const moving =
+        Math.abs(s.mx - s.dx) > POS_EPS ||
+        Math.abs(s.my - s.dy) > POS_EPS ||
+        Math.abs(s.mx - s.rx) > POS_EPS ||
+        Math.abs(s.my - s.ry) > POS_EPS ||
+        Math.abs(s.targetScale - s.scale) > SCALE_EPS ||
+        Math.abs(s.targetVisible - s.visible) > VIS_EPS
+
+      if (moving) {
+        s.raf = requestAnimationFrame(tick)
+      } else {
+        // Snap to final values so we don't leave a tiny error
+        s.dx = s.mx
+        s.dy = s.my
+        s.rx = s.mx
+        s.ry = s.my
+        s.scale = s.targetScale
+        s.visible = s.targetVisible
+        paint()
+        s.running = false
+        s.raf = 0
+      }
+    }
+
+    const kick = () => {
+      if (s.running) return
+      s.running = true
+      s.raf = requestAnimationFrame(tick)
+    }
 
     const onMove = (e) => {
       s.mx = e.clientX
@@ -71,72 +124,71 @@ export default function CustomCursor() {
         s.ry = s.my
         s.visible = 1
         s.primed = true
+        paint()
       }
+
+      const el = e.target
+      if (el instanceof Element) {
+        const next = Boolean(el.closest(INTERACTIVE))
+        if (next !== s.hovering) {
+          s.hovering = next
+          s.targetScale = next ? 1.45 : 1
+        }
+      }
+
+      kick()
     }
 
     const onLeave = () => {
       s.targetVisible = 0
+      kick()
     }
 
     const onEnter = () => {
-      if (s.primed) s.targetVisible = 1
-    }
-
-    const onOver = (e) => {
-      const el = e.target
-      if (!(el instanceof Element)) return
-      s.targetScale = el.closest(INTERACTIVE) ? 1.55 : 1
-    }
-
-    const tick = () => {
-      s.dx += (s.mx - s.dx) * DOT_LERP
-      s.dy += (s.my - s.dy) * DOT_LERP
-      s.rx += (s.mx - s.rx) * RING_LERP
-      s.ry += (s.my - s.ry) * RING_LERP
-      s.scale += (s.targetScale - s.scale) * SCALE_LERP
-      s.visible += (s.targetVisible - s.visible) * 0.18
-
-      tip.style.transform = `translate3d(${s.dx}px, ${s.dy}px, 0) translate(-50%, -50%)`
-      ring.style.transform = `translate3d(${s.rx}px, ${s.ry}px, 0) translate(-50%, -50%) scale(${s.scale})`
-      root.style.opacity = String(s.visible)
-
-      s.raf = requestAnimationFrame(tick)
+      if (s.primed) {
+        s.targetVisible = 1
+        kick()
+      }
     }
 
     window.addEventListener('pointermove', onMove, { passive: true })
     document.documentElement.addEventListener('mouseleave', onLeave)
     document.documentElement.addEventListener('mouseenter', onEnter)
-    document.addEventListener('mouseover', onOver, { passive: true })
-    s.raf = requestAnimationFrame(tick)
 
     return () => {
-      cancelAnimationFrame(s.raf)
+      stop()
       window.removeEventListener('pointermove', onMove)
       document.documentElement.removeEventListener('mouseleave', onLeave)
       document.documentElement.removeEventListener('mouseenter', onEnter)
-      document.removeEventListener('mouseover', onOver)
     }
   }, [active])
 
   if (!active) return null
 
   return (
-    <div
-      ref={rootRef}
-      aria-hidden
-      className="pointer-events-none fixed inset-0 z-[10000] mix-blend-difference"
-      style={{ opacity: 0 }}
-    >
+    <>
       <div
         ref={ringRef}
-        className="absolute top-0 left-0 size-9 rounded-full border border-cursor will-change-transform"
-        style={{ transform: 'translate3d(-100px,-100px,0) translate(-50%,-50%)' }}
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[10000] size-8 rounded-full border border-cursor"
+        style={{
+          opacity: 0,
+          transform: 'translate3d(-100px,-100px,0) translate(-50%,-50%)',
+          willChange: 'transform, opacity',
+          contain: 'layout style paint',
+        }}
       />
       <div
         ref={tipRef}
-        className="absolute top-0 left-0 size-[7px] rounded-full bg-cursor will-change-transform"
-        style={{ transform: 'translate3d(-100px,-100px,0) translate(-50%,-50%)' }}
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-[10001] size-1.5 rounded-full bg-cursor"
+        style={{
+          opacity: 0,
+          transform: 'translate3d(-100px,-100px,0) translate(-50%,-50%)',
+          willChange: 'transform, opacity',
+          contain: 'layout style paint',
+        }}
       />
-    </div>
+    </>
   )
 }
