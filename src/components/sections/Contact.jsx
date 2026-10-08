@@ -141,7 +141,7 @@ export default function Contact() {
           <Reveal delay={reduced ? 0 : 0.08}>
             <form
               onSubmit={onSubmit}
-              className="rounded-[1.5rem] border border-line bg-[var(--glass-bg)] p-5 shadow-[var(--glass-shadow)] backdrop-blur-xl sm:p-6"
+              className="glass-panel glass-panel--strong rounded-[1.5rem] p-5 sm:p-6"
               noValidate
             >
               <div className="grid gap-3.5 sm:grid-cols-2">

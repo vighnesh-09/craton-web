@@ -85,9 +85,9 @@ export default function Header() {
               scrolled &&
               'border-white/10 bg-[#0f1621]/60 backdrop-blur-md',
             lightSolid &&
-              'rounded-full border border-[#1e2a3a]/12 bg-white px-4 py-2.5 text-[#1e2a3a] shadow-[0_12px_40px_-16px_rgba(15,22,33,0.18)] sm:px-5',
+              'glass-panel rounded-full px-4 py-2.5 text-[#1e2a3a] sm:px-5',
             darkSolid &&
-              'rounded-full border border-white/12 bg-[#0f1621]/95 px-4 py-2.5 text-[#e8eef5] shadow-[0_16px_48px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:px-5',
+              'glass-panel rounded-full px-4 py-2.5 text-[#e8eef5] sm:px-5',
           )}
         >
           <a href="#top" aria-label={site.name}>
@@ -131,7 +131,7 @@ export default function Header() {
               type="button"
               onClick={cycleTheme}
               className={cn(
-                'inline-flex size-10 items-center justify-center rounded-full border transition',
+                'jelly inline-flex size-10 items-center justify-center rounded-full border',
                 overHero &&
                   'border-white/15 bg-white/[0.06] text-[#e8eef5] hover:bg-white/12',
                 lightSolid &&
@@ -150,7 +150,7 @@ export default function Header() {
             <Button
               href="#contact"
               className={cn(
-                'hidden !min-h-10 !rounded-sm !bg-[image:none] !px-4 !shadow-none hover:!translate-y-0 sm:inline-flex',
+                'hidden !min-h-10 !rounded-sm !bg-[image:none] !px-4 !shadow-none sm:inline-flex',
                 (overHero || darkSolid) &&
                   '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]',
                 lightSolid &&
@@ -163,7 +163,7 @@ export default function Header() {
             <button
               type="button"
               className={cn(
-                'inline-flex size-10 items-center justify-center rounded-full border lg:hidden',
+                'jelly inline-flex size-10 items-center justify-center rounded-full border lg:hidden',
                 overHero &&
                   'border-white/15 bg-white/[0.06] text-[#e8eef5]',
                 lightSolid &&
@@ -186,11 +186,10 @@ export default function Header() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               className={cn(
-                'shell mt-2 rounded-[1.5rem] border p-5 backdrop-blur-xl lg:hidden',
-                overHero && 'border-white/10 bg-[#0f1621]/95 text-[#e8eef5]',
-                lightSolid &&
-                  'border-[#1e2a3a]/10 bg-white text-[#1e2a3a]',
-                darkSolid && 'border-white/10 bg-[#0f1621]/95 text-[#e8eef5]',
+                'shell mt-2 rounded-[1.5rem] p-5 lg:hidden',
+                overHero && 'border border-white/10 bg-[#0f1621]/95 text-[#e8eef5] backdrop-blur-xl',
+                lightSolid && 'glass-panel glass-panel--strong text-[#1e2a3a]',
+                darkSolid && 'glass-panel glass-panel--strong text-[#e8eef5]',
               )}
             >
               <div className="flex flex-col gap-4">

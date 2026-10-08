@@ -103,7 +103,7 @@ export default function FilmStrip() {
           {FRAMES.map((frame, i) => (
             <li
               key={frame.n}
-              className="relative w-[min(86vw,520px)] shrink-0 overflow-hidden rounded-[1.75rem] border border-line bg-[var(--glass-bg)] p-7 shadow-[var(--glass-shadow)] backdrop-blur-xl sm:w-[560px] sm:p-9"
+              className="glass-panel glass-panel--strong jelly relative w-[min(86vw,520px)] shrink-0 overflow-hidden rounded-[1.75rem] p-7 sm:w-[560px] sm:p-9"
             >
               <div
                 aria-hidden

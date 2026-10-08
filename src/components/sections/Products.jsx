@@ -282,6 +282,7 @@ function ProductCard({ product, chapter, cta, visual, active }) {
     >
       <Glass
         strong
+        lift
         className="relative flex h-full min-h-0 flex-col p-3 sm:p-4 [&>div]:flex [&>div]:h-full [&>div]:min-h-0 [&>div]:flex-col"
       >
         <span

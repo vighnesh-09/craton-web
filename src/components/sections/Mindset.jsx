@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 import useGsapContext from '@/hooks/useGsapContext'
 import { site } from '@/config/site'
-import { cn } from '@/lib/cn'
 
-const WIDE_QUERY = '(min-width: 1024px) and (min-height: 760px)'
+const WIDE_QUERY = '(min-width: 1024px)'
 
 function useWideStage() {
   const [wide, setWide] = useState(() =>
@@ -22,168 +21,134 @@ function useWideStage() {
 }
 
 /**
- * Typographic pass. Beliefs are large lines on a shared track. Scroll
- * scrubs the track so the active line sits in the center at full navy,
- * then travels up as the next line takes that seat. No card stack.
+ * Compact belief stage. A cyan focus frame and index scrub across three
+ * cards while the section travels. No pin spacer — that held a short stage
+ * at the top and left a blank viewport under the beliefs.
  */
 export default function Mindset() {
-  const [beliefN, setBeliefN] = useState(1)
-  const [pinOk, setPinOk] = useState(true)
   const wide = useWideStage()
-  const total = site.beliefs.length
-
-  useEffect(() => {
-    setPinOk(true)
-  }, [wide])
 
   const { rootRef, reduced } = useGsapContext(({ gsap, ScrollTrigger, root }) => {
+    if (!wide) return undefined
+
     const stage = root.querySelector('[data-stage]')
-    const head = root.querySelector('[data-head]')
-    const pass = root.querySelector('[data-pass]')
-    const track = root.querySelector('[data-track]')
-    const lines = gsap.utils.toArray(root.querySelectorAll('[data-line]'))
-    const body = root.querySelector('[data-body]')
-    const bar = root.querySelector('[data-bar]')
-    if (!stage || !pass || !track || !lines.length || !body) return
-
-    const release = () => {
-      stage.style.height = ''
-      stage.style.maxHeight = ''
-      stage.style.display = ''
-      stage.style.flexDirection = ''
-      stage.style.justifyContent = ''
-      pass.style.height = ''
-      pass.style.position = ''
-      track.style.position = ''
-      track.style.left = ''
-      track.style.right = ''
-      track.style.top = ''
-      body.style.position = ''
-      body.style.top = ''
-      body.style.left = ''
-      body.style.width = ''
-      body.style.minHeight = ''
-      lines.forEach((line) => {
-        line.style.position = ''
-        line.style.left = ''
-        line.style.top = ''
-        line.style.height = ''
-        const title = line.querySelector('[data-title]')
-        if (title) gsap.set(title, { clearProps: 'transform,opacity' })
-      })
-      gsap.set(track, { clearProps: 'transform' })
-      if (bar) gsap.set(bar, { clearProps: 'transform' })
-    }
-
-    const titles = lines.map((line) => line.querySelector('[data-title]'))
-    const titleH = Math.max(...titles.map((title) => title?.offsetHeight || 0), 1)
-    body.style.width = 'min(100%, 52rem)'
-    const probe = body.textContent
-    let bodyH = 0
-    site.beliefs.forEach((item) => {
-      body.textContent = item.body
-      bodyH = Math.max(bodyH, body.offsetHeight)
-    })
-    body.textContent = probe
-    const gap = 12
-    const slot = titleH + gap + bodyH + 14
-    const n = lines.length
-    const headroom = (n - 1) * slot
-    const passH = headroom + (n - 1) * slot + titleH
-
-    const cs = getComputedStyle(stage)
-    const padY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) || 0
-    const needed = Math.max(head?.offsetHeight || 0, passH) + padY + 24
-    if (needed > window.innerHeight) {
-      release()
-      setPinOk(false)
+    const rail = root.querySelector('[data-rail]')
+    const frame = root.querySelector('[data-frame]')
+    const index = root.querySelector('[data-index]')
+    const count = root.querySelector('[data-count]')
+    const cards = gsap.utils.toArray(root.querySelectorAll('[data-card]'))
+    const bodies = cards.map((card) => card.querySelector('[data-body]'))
+    if (!stage || !rail || !frame || !cards.length || bodies.some((body) => !body)) {
       return undefined
     }
 
-    stage.style.height = '100svh'
-    stage.style.maxHeight = '100svh'
-    stage.style.display = 'flex'
-    stage.style.flexDirection = 'column'
-    stage.style.justifyContent = 'center'
+    const measureBodies = () =>
+      bodies.map((body) => {
+        body.classList.remove('line-clamp-1')
+        body.style.height = 'auto'
+        body.style.overflow = 'visible'
+        const full = body.offsetHeight
+        const line = parseFloat(getComputedStyle(body).lineHeight) || full
+        return { full, line: Math.min(line, full) }
+      })
 
-    pass.style.position = 'relative'
-    pass.style.height = `${passH}px`
-    track.style.position = 'absolute'
-    track.style.left = '0'
-    track.style.right = '0'
-    track.style.top = '0'
-    lines.forEach((line, i) => {
-      line.style.position = 'absolute'
-      line.style.left = '0'
-      line.style.top = `${i * slot}px`
-      line.style.height = `${titleH}px`
+    const lockRail = () => {
+      const height = rail.offsetHeight
+      rail.style.minHeight = `${height}px`
+    }
+
+    let metrics = measureBodies()
+    bodies.forEach((body, i) => {
+      body.style.height = `${metrics[i].full}px`
     })
-    body.style.position = 'absolute'
-    body.style.left = '0'
-    body.style.width = 'min(100%, 52rem)'
-    body.style.minHeight = `${bodyH}px`
-    body.style.top = `${headroom + titleH + gap}px`
+    lockRail()
 
-    let current = 0
+    const n = cards.length
 
     const apply = (progress) => {
       const x = gsap.utils.clamp(0, n - 1, progress * (n - 1))
-      gsap.set(track, { y: headroom - x * slot })
 
-      lines.forEach((line, i) => {
-        const focus = 1 - Math.min(Math.abs(i - x), 1)
-        const title = line.querySelector('[data-title]')
-        if (!title) return
-        gsap.set(title, {
-          scale: 0.72 + focus * 0.28,
-          opacity: 0.68 + focus * 0.32,
-          transformOrigin: '0% 50%',
-        })
+      bodies.forEach((body, i) => {
+        const { full, line } = metrics[i]
+        const open = 1 - Math.min(Math.abs(i - x), 1)
+        if (open > 0.97) {
+          body.classList.remove('line-clamp-1')
+          body.style.height = 'auto'
+          body.style.overflow = 'visible'
+        } else if (open < 0.04) {
+          body.classList.add('line-clamp-1')
+          body.style.height = ''
+          body.style.overflow = ''
+        } else {
+          body.classList.remove('line-clamp-1')
+          const h = line + open * (full - line)
+          body.style.height = `${h}px`
+          body.style.overflow = 'hidden'
+        }
       })
 
-      if (bar) {
-        gsap.set(bar, {
-          scaleX: (x + 1) / n,
-          transformOrigin: 'left center',
-        })
-      }
+      const i0 = Math.floor(x)
+      const i1 = Math.min(n - 1, i0 + 1)
+      const t = x - i0
+      const a = cards[i0]
+      const b = cards[i1]
+      const inset = -3
+      gsap.set(frame, {
+        x: a.offsetLeft + (b.offsetLeft - a.offsetLeft) * t + inset,
+        y: a.offsetTop + (b.offsetTop - a.offsetTop) * t + inset,
+        width: a.offsetWidth + (b.offsetWidth - a.offsetWidth) * t - inset * 2,
+        height: a.offsetHeight + (b.offsetHeight - a.offsetHeight) * t - inset * 2,
+        opacity: 1,
+      })
 
-      const index = Math.min(n - 1, Math.max(0, Math.round(x)))
-      if (index === current) return
-      current = index
-      setBeliefN(index + 1)
+      const nearest = Math.min(n - 1, Math.max(0, Math.round(x)))
+      const label = String(nearest + 1).padStart(2, '0')
+      if (index) index.textContent = label
+      if (count) count.textContent = label
+      cards.forEach((card, i) => {
+        const on = i === nearest
+        card.setAttribute('data-active', on ? 'true' : 'false')
+        if (on) card.setAttribute('aria-current', 'true')
+        else card.removeAttribute('aria-current')
+      })
     }
 
     apply(0)
 
+    // Scrub distance stays inside the time the cards are still on screen.
+    // A pin spacer was holding this short stage still and leaving a blank
+    // viewport under the beliefs, so the frame travels with the section.
     const st = ScrollTrigger.create({
       trigger: root,
-      start: 'top top',
-      end: () => `+=${Math.round(window.innerHeight * (n - 1) * 0.78)}`,
-      pin: stage,
-      pinSpacing: true,
+      start: 'top 5.75rem',
+      end: '+=18%',
       scrub: true,
-      anticipatePin: 1,
       invalidateOnRefresh: true,
       onUpdate: (self) => apply(self.progress),
-      onRefresh: (self) => apply(self.progress),
+      onRefresh: (self) => {
+        metrics = measureBodies()
+        bodies.forEach((body, i) => {
+          body.style.height = `${metrics[i].full}px`
+          body.style.overflow = 'visible'
+          body.classList.remove('line-clamp-1')
+        })
+        lockRail()
+        apply(self.progress)
+      },
     })
 
     return () => {
       st.kill()
-      release()
+      bodies.forEach((body) => {
+        body.classList.remove('line-clamp-1')
+        body.style.height = ''
+        body.style.overflow = ''
+      })
+      rail.style.minHeight = ''
     }
-  }, [wide, pinOk])
+  }, [wide, 'focus-frame-v4'])
 
-  if (reduced) {
-    return <BeliefCards layout="row" />
-  }
-
-  if (!wide || !pinOk) {
-    return <BeliefCards layout="stack" />
-  }
-
-  const belief = site.beliefs[beliefN - 1]
+  const motionOn = wide && !reduced
 
   return (
     <section
@@ -194,96 +159,59 @@ export default function Mindset() {
     >
       <div
         data-stage
-        className="flex flex-col justify-center pad-x pb-10 pt-[5.5rem]"
+        className="pad-x py-[clamp(2.5rem,4vw,4rem)]"
       >
-        <div className="shell grid w-full items-start gap-x-12 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
-          <div data-head className="max-w-[34rem]">
+        <div className="shell grid items-start gap-6 lg:grid-cols-[minmax(0,35%)_minmax(0,1fr)] lg:items-center lg:gap-10">
+          <div className="max-w-[22rem] lg:max-w-none">
             <p className="mono-label text-accent">01 / The Craton mindset</p>
-            <h2 className="mt-3 text-[clamp(1.85rem,3.2vw,2.7rem)] font-normal leading-[1.05] tracking-[-0.04em]">
+            <h2 className="mt-3 text-[clamp(1.75rem,2.7vw,2.45rem)] font-normal leading-[1.08] tracking-[-0.04em] text-cream">
               The next breakthrough starts with a{' '}
               <span className="serif text-accent">better question.</span>
             </h2>
-            <div className="mt-6 flex items-center gap-3">
-              <div className="h-px w-14 overflow-hidden bg-line">
-                <div
-                  data-bar
-                  className="h-full w-full origin-left scale-x-[0.34] bg-accent will-change-transform"
-                />
-              </div>
-              <p className="font-mono text-[11px] tracking-[0.16em] text-muted">
-                {String(beliefN).padStart(2, '0')} / {String(total).padStart(2, '0')}
-              </p>
-            </div>
-          </div>
-
-          <div data-pass className="relative">
-            <div data-track>
-              {site.beliefs.map((item, i) => (
-                <div key={item.title} data-line className="flex items-center">
-                  <h3
-                    data-title
-                    className="max-w-[22ch] text-[clamp(2.15rem,3.4vw,2.95rem)] font-medium leading-[1.08] tracking-[-0.045em] text-[#1E2A3A]"
-                  >
-                    {item.title}
-                  </h3>
-                </div>
-              ))}
-            </div>
-            <p
-              data-body
-              className="max-w-[62ch] text-[15.5px] leading-[1.7] text-muted"
-            >
-              {belief.body}
+            <p className="mt-4 font-mono text-[11px] tracking-[0.16em] text-muted">
+              <span data-count>01</span>
+              <span> / {String(site.beliefs.length).padStart(2, '0')}</span>
             </p>
           </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
-function BeliefCards({ layout }) {
-  return (
-    <section
-      id="mindset"
-      className="pad-x relative py-[clamp(2.75rem,5vw,4.5rem)]"
-      aria-label="The Craton mindset"
-    >
-      <div className="shell">
-        <p className="mono-label text-accent">01 / The Craton mindset</p>
-        <h2 className="mt-3 max-w-[36rem] text-[clamp(1.85rem,3.4vw,2.9rem)] font-normal leading-[1.05] tracking-[-0.04em]">
-          The next breakthrough starts with a{' '}
-          <span className="serif text-accent">better question.</span>
-        </h2>
-        <ol
-          className={cn(
-            'mt-8 grid gap-4',
-            layout === 'row' && 'md:grid-cols-3',
-          )}
-        >
-          {site.beliefs.map((belief, i) => (
-            <li
-              key={belief.title}
-              className="glass-panel glass-panel--strong rounded-2xl border border-line bg-white p-6 sm:p-8"
-            >
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="serif text-[clamp(2.5rem,5vw,3.5rem)] leading-none text-accent/40">
-                  “
-                </span>
-                <span className="font-mono text-[11px] tracking-[0.14em] text-muted">
-                  0{i + 1} / 03
+          <div data-rail className="relative min-w-0 pt-4">
+            <ol className="grid grid-cols-1 items-start gap-3 lg:grid-cols-3">
+              {site.beliefs.map((belief, i) => (
+                <li
+                  key={belief.title}
+                  data-card
+                  data-active={i === 0 ? 'true' : 'false'}
+                  className="min-w-0 rounded-2xl border border-line bg-white px-4 py-4 data-[active=true]:border-transparent"
+                >
+                  <h3 className="text-[1.0625rem] font-medium leading-snug tracking-[-0.03em] text-[#1E2A3A]">
+                    {belief.title}
+                  </h3>
+                  <p
+                    data-body
+                    className="mt-2 text-[13.5px] leading-[1.55] text-[#3A6D8C] [text-wrap:wrap]"
+                  >
+                    {belief.body}
+                  </p>
+                </li>
+              ))}
+            </ol>
+
+            {motionOn ? (
+              <div
+                data-frame
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 z-10 rounded-[1.15rem] border-2 border-accent opacity-0 shadow-[0_0_0_4px_rgba(0,168,196,0.14)] will-change-transform"
+              >
+                <span
+                  data-index
+                  className="absolute -top-2.5 left-3 bg-ink px-1.5 font-mono text-[11px] font-medium tracking-[0.18em] text-accent"
+                >
+                  01
                 </span>
               </div>
-              <h3 className="-mt-1 text-[clamp(1.25rem,2vw,1.5rem)] font-medium leading-snug tracking-tight">
-                {belief.title}
-              </h3>
-              <p className="mt-3 text-[14px] leading-[1.7] text-muted">{belief.body}</p>
-              <footer className="mono-label mt-6 text-accent">
-                Belief 0{i + 1} · Craton method
-              </footer>
-            </li>
-          ))}
-        </ol>
+            ) : null}
+          </div>
+        </div>
       </div>
     </section>
   )

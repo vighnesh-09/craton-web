@@ -19,8 +19,7 @@ export default function Button({
   return (
     <Comp
       className={cn(
-        'inline-flex min-h-11 items-center justify-center gap-2.5 rounded-md px-5 text-[0.8125rem] font-semibold tracking-[-0.01em] transition-all duration-300 ease-out',
-        'hover:-translate-y-0.5 active:scale-[0.98]',
+        'jelly inline-flex min-h-11 items-center justify-center gap-2.5 rounded-md px-5 text-[0.8125rem] font-semibold tracking-[-0.01em]',
         variant === 'light' && 'bg-[image:var(--btn-face)]',
         variants[variant],
         className,

@@ -185,9 +185,9 @@ export default function DomainScroll() {
 
           <div
             data-frame
-            className="relative h-[min(440px,52vh)] min-w-0 overflow-hidden rounded-[1.75rem] border border-line bg-white"
-            style={{ boxShadow: 'var(--glass-shadow), var(--glass-glow)' }}
+            className="glass-panel glass-panel--strong relative h-[min(440px,52vh)] min-w-0 overflow-hidden rounded-[1.75rem]"
           >
+            <span aria-hidden className="glass-fluted" />
             <span
               data-numeral
               aria-hidden
@@ -249,7 +249,14 @@ function StackedDomain() {
         </h2>
         <div className="mt-7 grid gap-4 md:grid-cols-2">
           {chapters.map((chapter, i) => (
-            <Glass key={chapter.kicker} className="p-6 sm:p-7" glow={i === 0}>
+            <Glass
+              key={chapter.kicker}
+              className="p-6 sm:p-7"
+              strong
+              glow={i === 0}
+              fluted={i === 0}
+              lift
+            >
               <CardInner chapter={chapter} index={i} />
             </Glass>
           ))}

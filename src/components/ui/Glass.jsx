@@ -8,6 +8,8 @@ const Glass = forwardRef(function Glass(
     glow = false,
     strong = false,
     inset = false,
+    fluted = false,
+    lift = false,
     children,
     ...props
   },
@@ -21,12 +23,14 @@ const Glass = forwardRef(function Glass(
         strong && 'glass-panel--strong',
         glow && 'glass-panel--glow',
         inset && 'glass-panel--inset',
+        lift && 'jelly',
         className,
       )}
       {...props}
     >
       <span aria-hidden className="glass-shine" />
       <span aria-hidden className="glass-satin" />
+      {fluted ? <span aria-hidden className="glass-fluted" /> : null}
       <div className="relative z-10 h-full min-h-0">{children}</div>
     </Comp>
   )
