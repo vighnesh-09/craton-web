@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { ArrowUpRight } from 'lucide-react'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { products } from '@/content/home'
+import { jsonLdString, softwareApplicationJsonLd } from '@/lib/seo'
 
 export function getProduct(id) {
   return products.items.find((item) => item.id === id) ?? null
@@ -15,6 +16,12 @@ export default function ProductView({ id }) {
 
   return (
     <article className="bg-foam px-6 pb-24 pt-28 text-ink sm:px-8 md:pb-32 md:pt-36">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLdString(softwareApplicationJsonLd(item)),
+        }}
+      />
       <SiteContainer>
         <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45">
           <Link href="/#products" className="transition-colors hover:text-ink">

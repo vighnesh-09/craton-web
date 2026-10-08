@@ -1,14 +1,9 @@
 import LegalDocument from '@/components/layout/LegalDocument'
 import { terms } from '@/content/legal'
 import { pages } from '@/content/pages'
+import { pageMetadata } from '@/lib/seo'
 
-const meta = pages.terms
-
-export const metadata = {
-  title: meta.title,
-  description: meta.description,
-  alternates: { canonical: meta.path },
-}
+export const metadata = pageMetadata(pages.terms)
 
 export default function TermsPage() {
   return (

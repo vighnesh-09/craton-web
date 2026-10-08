@@ -7,7 +7,6 @@ import SignalFlowBackground from '@/components/effects/SignalFlowBackground'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { useLenis } from '@/components/providers/LenisProvider'
 import { env } from '@/config/env'
-import { site } from '@/config/site'
 import { scrollToId } from '@/lib/scroll'
 
 /** Soft, premium ease — no bounce */
@@ -73,9 +72,9 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           WebkitMaskImage:
-            'linear-gradient(90deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 52%, transparent 68%)',
+            'linear-gradient(90deg, var(--craton) 0%, var(--craton) 38%, color-mix(in srgb, var(--craton) 45%, transparent) 52%, transparent 68%)',
           maskImage:
-            'linear-gradient(90deg, #000 0%, #000 38%, rgba(0,0,0,0.45) 52%, transparent 68%)',
+            'linear-gradient(90deg, var(--craton) 0%, var(--craton) 38%, color-mix(in srgb, var(--craton) 45%, transparent) 52%, transparent 68%)',
         }}
       >
         <SignalFlowBackground />
@@ -155,7 +154,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <span className="sr-only">{site.name}</span>
+        <span className="sr-only">{env.appName}</span>
       </SiteContainer>
     </section>
   )

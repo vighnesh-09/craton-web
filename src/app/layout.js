@@ -1,22 +1,35 @@
-import { organizationJsonLd, websiteJsonLd } from '@/lib/seo'
+import { env } from '@/config/env'
 import { site } from '@/config/site'
+import { fontVariableClassName } from '@/lib/fonts'
+import {
+  jsonLdString,
+  organizationJsonLd,
+  shareImage,
+  websiteJsonLd,
+} from '@/lib/seo'
 import Providers from './providers'
 import '@/styles/index.css'
 
 export const metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(env.appUrl),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s · ${site.name}`,
+    default: `${env.appName} — ${site.tagline}`,
+    template: `%s · ${env.appName}`,
   },
   description: site.description,
-  authors: [{ name: site.name }],
+  authors: [{ name: env.appName }],
   robots: {
     index: true,
     follow: true,
+    'max-image-preview': 'large',
+    'max-snippet': -1,
+    'max-video-preview': -1,
     googleBot: {
       index: true,
       follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
     },
   },
   icons: {
@@ -26,27 +39,24 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: site.locale,
-    url: site.url,
-    siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
+    url: env.appUrl,
+    siteName: env.appName,
+    title: `${env.appName} — ${site.tagline}`,
     description:
       'We invent, protect, and ship AI-enabled products for trust-critical work — from a stable core, across many domains.',
-    images: [{ url: site.ogImage }],
+    images: [shareImage],
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${site.name} — ${site.tagline}`,
+    title: `${env.appName} — ${site.tagline}`,
     description:
       'We invent, protect, and ship AI-enabled products for trust-critical work — from a stable core, across many domains.',
-    images: [site.ogImage],
-  },
-  alternates: {
-    canonical: '/',
+    images: [shareImage.url],
   },
 }
 
 export const viewport = {
-  themeColor: '#1E2A3A',
+  themeColor: site.themeColor,
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -57,21 +67,15 @@ export default function RootLayout({ children }) {
   const jsonLd = [organizationJsonLd(), websiteJsonLd()]
 
   return (
-    <html lang={site.language} suppressHydrationWarning>
+    <html
+      lang={site.language}
+      className={fontVariableClassName}
+      suppressHydrationWarning
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Syne:wght@500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: jsonLdString(jsonLd) }}
         />
       </head>
       <body>

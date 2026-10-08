@@ -39,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Project structure
 
 ```
-public/                 # Static assets (robots, sitemap, og, hero media)
+public/                 # Static assets (og, brand, hero media)
 src/
   app/                  # Next.js App Router (layout, page, not-found)
   components/
@@ -60,9 +60,9 @@ Path alias: `@/` → `src/`
 
 ## SEO
 
-- Metadata API in `src/app/layout.js` and `src/app/page.js`
-- JSON-LD injected in the root layout
-- `public/robots.txt` + `public/sitemap.xml`
+- Metadata API in `src/app/layout.js` and each route, via `src/lib/seo.js`
+- JSON-LD in the root layout, plus SoftwareApplication on product pages
+- `src/app/robots.js` and `src/app/sitemap.js` (do not add `public/robots.txt` or `public/sitemap.xml`; those would shadow the App Router files)
 - Site identity in `src/config/site.js` and `src/content/pages.js`
 
 ## Security & env
@@ -73,7 +73,7 @@ Path alias: `@/` → `src/`
 
 ```env
 NEXT_PUBLIC_APP_NAME=Craton Technologies
-NEXT_PUBLIC_APP_URL=https://craton.io
+NEXT_PUBLIC_APP_URL=https://craton-web-v3.netlify.app
 NEXT_PUBLIC_CONTACT_EMAIL=hello@craton.io
 ```
 

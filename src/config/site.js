@@ -1,6 +1,8 @@
 /**
  * Canonical site identity used for SEO, structured data, and share cards.
- * Keep NEXT_PUBLIC_* overrides in env.js — this file is the content/SEO source of truth.
+ * `name`, `url`, and `contactEmail` are fallbacks when the matching NEXT_PUBLIC_*
+ * value is unset. Runtime readers use src/config/env.js. This file does not
+ * import env.js (env.js imports this module).
  */
 export const site = Object.freeze({
   name: 'Craton Technologies',

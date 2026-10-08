@@ -1,9 +1,10 @@
+import { env } from '@/config/env'
 import { site } from '@/config/site'
 
 export const privacy = Object.freeze({
   path: '/privacy',
   title: 'Privacy',
-  description: `How ${site.name} handles information on this website, and what a pilot covers separately.`,
+  description: `How ${env.appName} handles information on this website, and what a pilot covers separately.`,
   kicker: 'Privacy',
   updated: 'Updated 8 October 2026',
   lede: `${site.legalName} is in ${site.foundingLocation.locality}, ${site.foundingLocation.region}. This page covers the public website only. A pilot or any other engagement is governed by what we agree in writing, not by this page.`,
@@ -18,7 +19,7 @@ export const privacy = Object.freeze({
     {
       title: 'The contact form',
       body: [
-        `Send message does not post your words to a Craton server. It opens a draft in your own email app, addressed to ${site.contactEmail}, with the name, email, company, topic, and message you typed.`,
+        `Send message does not post your words to a Craton server. It opens a draft in your own email app, addressed to ${env.contactEmail}, with the name, email, company, topic, and message you typed.`,
         'From that moment your mail provider delivers the message. We receive it as email. We use it to reply, and to route you to the right conversation. We do not use it to train a model.',
       ],
     },
@@ -32,7 +33,7 @@ export const privacy = Object.freeze({
     {
       title: 'Asking us',
       body: [
-        `Questions about this page, or a request to delete an email you sent us, go to ${site.contactEmail}.`,
+        `Questions about this page, or a request to delete an email you sent us, go to ${env.contactEmail}.`,
       ],
     },
   ],
@@ -41,10 +42,10 @@ export const privacy = Object.freeze({
 export const terms = Object.freeze({
   path: '/terms',
   title: 'Terms',
-  description: `Terms for using the ${site.name} website. The products do not make the final decision.`,
+  description: `Terms for using the ${env.appName} website. The products do not make the final decision.`,
   kicker: 'Terms',
   updated: 'Updated 8 October 2026',
-  lede: `These terms cover your use of the ${site.name} website. They are not a contract for a pilot, a license to a product, or a regulatory opinion.`,
+  lede: `These terms cover your use of the ${env.appName} website. They are not a contract for a pilot, a license to a product, or a regulatory opinion.`,
   sections: [
     {
       title: 'The site',
@@ -76,7 +77,7 @@ export const terms = Object.freeze({
       title: 'Liability',
       body: [
         'The site is provided as published. We do not warrant that it is complete or free of error. To the extent the law allows, we are not liable for decisions you make from reading it.',
-        `Questions go to ${site.contactEmail}. ${site.legalName} is based in ${site.foundingLocation.locality}, ${site.foundingLocation.region}, ${site.foundingLocation.country}.`,
+        `Questions go to ${env.contactEmail}. ${site.legalName} is based in ${site.foundingLocation.locality}, ${site.foundingLocation.region}, ${site.foundingLocation.country}.`,
       ],
     },
   ],

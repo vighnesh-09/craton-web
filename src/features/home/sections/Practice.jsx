@@ -50,7 +50,7 @@ function Panel({ item, index }) {
           </p>
         </div>
 
-        <div className="flex min-h-[16rem] flex-col overflow-hidden rounded-[1.35rem] border border-line bg-white shadow-[0_18px_50px_rgba(30,42,58,0.08)] lg:min-h-0">
+        <div className="flex min-h-[16rem] flex-col overflow-hidden rounded-[1.35rem] border border-line bg-mist shadow-[0_18px_50px_color-mix(in_srgb,var(--craton)_8%,transparent)] lg:min-h-0">
           <div className="relative min-h-[12rem] flex-1">
             <Image
               src={item.image.src}
@@ -58,13 +58,12 @@ function Panel({ item, index }) {
               fill
               sizes="(max-width: 1024px) 92vw, 58vw"
               className="object-cover object-center"
-              priority={index === 0}
             />
           </div>
 
           <ul className="grid gap-px bg-line sm:grid-cols-3">
             {item.beats.map((beat) => (
-              <li key={beat.title} className="bg-white px-4 py-3.5">
+              <li key={beat.title} className="bg-mist px-4 py-3.5">
                 <p className="font-display text-[13.5px] font-semibold leading-snug tracking-[-0.02em] text-ink">
                   {beat.title}
                 </p>

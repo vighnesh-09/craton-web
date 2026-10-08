@@ -1,13 +1,8 @@
 import Link from 'next/link'
+import { pages } from '@/content/pages'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata = {
-  title: 'Page not found',
-  description: 'The page you requested could not be found on Craton Technologies.',
-  robots: {
-    index: false,
-    follow: true,
-  },
-}
+export const metadata = pageMetadata(pages.notFound, { index: false })
 
 export default function NotFound() {
   return (

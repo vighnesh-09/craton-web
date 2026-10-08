@@ -14,6 +14,7 @@ import {
   Vector3,
   WebGLRenderer,
 } from 'three'
+import { themes } from '@/config/theme'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { cn } from '@/lib/cn'
 
@@ -42,17 +43,17 @@ const CONFIG = Object.freeze({
   trailLength: 10,
 })
 
-function readCssColor(name, fallback) {
+function readCssColor(name) {
   const value = getComputedStyle(document.documentElement)
     .getPropertyValue(name)
     .trim()
-  return value || fallback
+  return value || themes.light.vars[name]
 }
 
 function themeSignalColors() {
   return {
-    colorLine: readCssColor('--signal-line', '#373f48'),
-    colorSignal: readCssColor('--signal-pulse', '#ff9a45'),
+    colorLine: readCssColor('--signal-line'),
+    colorSignal: readCssColor('--signal-pulse'),
   }
 }
 
@@ -183,7 +184,8 @@ export default function SignalFlowBackground({ className }) {
       }
     }
 
-    window.addEventListener('craton:themechange', syncThemeColors)
+    const themeRoot = document.documentElement
+    themeRoot.addEventListener('craton:themechange', syncThemeColors)
 
     let isVisible = true
     let raf = 0
@@ -372,7 +374,7 @@ export default function SignalFlowBackground({ className }) {
       resizeObserver.disconnect()
       visibilityObserver.disconnect()
       document.removeEventListener('visibilitychange', onVisibility)
-      window.removeEventListener('craton:themechange', syncThemeColors)
+      themeRoot.removeEventListener('craton:themechange', syncThemeColors)
       lines.forEach((line) => line.geometry.dispose())
       signals.forEach((sig) => sig.mesh.geometry.dispose())
       lineMaterial.dispose()

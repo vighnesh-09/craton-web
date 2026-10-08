@@ -9,23 +9,23 @@ export default function LegalDocument({
   sections,
 }) {
   return (
-    <article className="bg-foam px-6 pb-24 pt-28 text-ink sm:px-8 md:pb-32 md:pt-36">
+    <article className="bg-foam px-6 pb-24 pt-28 text-center text-ink sm:px-8 md:pb-32 md:pt-36">
       <SiteContainer>
         <p className="inline-flex items-center gap-3 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-lagoon">
           <span aria-hidden className="inline-block h-px w-7 bg-copper" />
           {kicker}
         </p>
-        <h1 className="mt-5 max-w-[14ch] font-display text-[clamp(2.5rem,5vw,4.25rem)] font-semibold leading-[1.02] tracking-[-0.045em]">
+        <h1 className="mx-auto mt-5 max-w-[14ch] font-display text-[clamp(2.5rem,5vw,4.25rem)] font-semibold leading-[1.02] tracking-[-0.045em]">
           {title}
         </h1>
         <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
           {updated}
         </p>
-        <p className="mt-8 max-w-[62ch] font-body text-[16px] leading-[1.7] text-ink/70">
+        <p className="mx-auto mt-8 max-w-[62ch] font-body text-[16px] leading-[1.7] text-ink/70">
           {lede}
         </p>
 
-        <div className="mt-14 max-w-[68ch] space-y-10 border-t border-line pt-10">
+        <div className="mx-auto mt-14 max-w-[68ch] space-y-10 border-t border-line pt-10">
           {sections.map((section) => (
             <section key={section.title}>
               <h2 className="font-display text-[1.35rem] font-semibold tracking-[-0.03em] text-ink">

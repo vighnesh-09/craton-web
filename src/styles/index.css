@@ -5,13 +5,21 @@
   Colors are CSS variables — values come from ThemeProvider / :root.
   Never hardcode brand hex in components; use these Tailwind names.
 */
-@theme {
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+/*
+  next/font sets --font-syne, --font-dm-sans, --font-instrument-serif,
+  and --font-jetbrains-mono on <html>. `inline` so utilities read those
+  variables directly. Token names stay --font-display / body / serif / mono.
+*/
+@theme inline {
+  --font-display: var(--font-syne), sans-serif;
+  --font-body: var(--font-dm-sans), sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, 'Times New Roman', serif;
   --font-mono:
-    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+}
 
+@theme {
   /* Site content column — use max-w-site / <SiteContainer> everywhere */
   --max-width-site: 100rem;
 

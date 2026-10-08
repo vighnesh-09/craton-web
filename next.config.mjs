@@ -50,6 +50,16 @@ const nextConfig = {
           { key: 'X-DNS-Prefetch-Control', value: 'off' },
         ],
       },
+      {
+        // Unhashed files in /public. Do not match /_next (those stay immutable).
+        source: '/:path((?!_next/).+\\.(?:png|jpg|jpeg|webp|avif|svg|ico))',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=604800, stale-while-revalidate=2592000',
+          },
+        ],
+      },
     ]
   },
 }

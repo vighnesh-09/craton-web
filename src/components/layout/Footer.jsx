@@ -4,6 +4,7 @@ import { ArrowUp } from 'lucide-react'
 import BrandMark from '@/components/ui/BrandMark'
 import FooterWordmark from '@/components/ui/FooterWordmark'
 import SiteContainer from '@/components/layout/SiteContainer'
+import { env } from '@/config/env'
 import { site } from '@/config/site'
 import { footerCopy } from '@/content/home'
 import {
@@ -32,7 +33,7 @@ export default function Footer() {
               <BrandMark
                 href="#top"
                 tone="on-dark"
-                ariaLabel="Craton Technologies — back to top"
+                ariaLabel={`${env.appName} — back to top`}
                 onClick={go('#top')}
               />
               <p className="mt-6 max-w-[40ch] font-body text-[14px] leading-[1.75] text-hero-body">
@@ -106,10 +107,10 @@ export default function Footer() {
                 <ul className="mt-4 space-y-3">
                   <li>
                     <a
-                      href={`mailto:${site.contactEmail}`}
+                      href={`mailto:${env.contactEmail}`}
                       className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
                     >
-                      {site.contactEmail}
+                      {env.contactEmail}
                     </a>
                   </li>
                   <li>

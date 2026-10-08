@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { env } from '@/config/env'
 import { cn } from '@/lib/cn'
 
 /**
@@ -9,7 +10,7 @@ export default function BrandMark({
   tone = 'on-dark',
   size = 'md',
   className,
-  ariaLabel = 'Craton Technologies — home',
+  ariaLabel = `${env.appName} — home`,
   onClick,
   showWord = true,
 }) {
@@ -37,7 +38,7 @@ export default function BrandMark({
         alt=""
         width={88}
         height={88}
-        priority
+        loading="eager"
         className={cn('shrink-0 object-contain', s.mark)}
       />
       {showWord ? (

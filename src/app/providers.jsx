@@ -7,6 +7,7 @@ import Navbar from '@/components/layout/Navbar'
 import { LenisProvider } from '@/components/providers/LenisProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 // import CustomCursor from '@/components/ui/CustomCursor'
+import BackToTop from '@/components/ui/BackToTop'
 import ErrorBoundary from '@/components/ui/ErrorBoundary'
 import ScrollProgress from '@/components/ui/ScrollProgress'
 import ScrollToTop from '@/components/ui/ScrollToTop'
@@ -23,6 +24,7 @@ export default function Providers({ children }) {
               <SkipLink />
               <ScrollToTop />
               <ScrollProgress />
+              <BackToTop />
               {/* <CustomCursor /> */}
               <Navbar />
               <main id="main-content" tabIndex={-1} className="outline-none">

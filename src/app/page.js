@@ -11,23 +11,9 @@ import {
   Security,
 } from '@/features/home'
 import { pages } from '@/content/pages'
+import { pageMetadata } from '@/lib/seo'
 
-const meta = pages.home
-
-export const metadata = {
-  title: {
-    absolute: `${meta.ogTitle}`,
-  },
-  description: meta.description,
-  alternates: {
-    canonical: meta.path,
-  },
-  openGraph: {
-    title: meta.ogTitle,
-    description: meta.ogDescription,
-    url: meta.path,
-  },
-}
+export const metadata = pageMetadata(pages.home)
 
 export default function HomePage() {
   return (

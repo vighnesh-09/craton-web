@@ -2,6 +2,7 @@
  * Home page narrative — written for this site.
  * Craton invents, protects, and ships AI products for trust-critical work.
  */
+import { env } from '@/config/env'
 
 export const mindset = Object.freeze({
   id: 'mindset',
@@ -392,7 +393,7 @@ export const security = Object.freeze({
     },
     {
       title: 'This website stores no message.',
-      copy: 'Send message opens a draft in your email app, addressed to hello@craton.io. Your mail provider delivers it. The site does not keep a copy, and it does not run a marketing or analytics script.',
+      copy: `Send message opens a draft in your email app, addressed to ${env.contactEmail}. Your mail provider delivers it. The site does not keep a copy, and it does not run a marketing or analytics script.`,
     },
     {
       title: 'No seal we have not earned.',

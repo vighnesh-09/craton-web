@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { themes } from '@/config/theme'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { cn } from '@/lib/cn'
 import {
@@ -38,6 +39,56 @@ function ease(x) {
   return x < 0 ? 0 : x > 1 ? 1 : x * x * (3 - 2 * x)
 }
 
+function readToken(name) {
+  const value = getComputedStyle(document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+  return value || themes.light.vars[name]
+}
+
+let colorProbe
+function rgbChannels(color) {
+  if (!colorProbe) {
+    const probe = document.createElement('canvas')
+    probe.width = probe.height = 1
+    colorProbe = probe.getContext('2d', { willReadFrequently: true })
+  }
+  colorProbe.clearRect(0, 0, 1, 1)
+  colorProbe.fillStyle = color
+  colorProbe.fillRect(0, 0, 1, 1)
+  const [r, g, b] = colorProbe.getImageData(0, 0, 1, 1).data
+  return [r, g, b]
+}
+
+function mixChannels(a, b, t) {
+  return [
+    Math.round(a[0] + (b[0] - a[0]) * t),
+    Math.round(a[1] + (b[1] - a[1]) * t),
+    Math.round(a[2] + (b[2] - a[2]) * t),
+  ]
+}
+
+function channelsToTriplet(rgb) {
+  return `${rgb[0]},${rgb[1]},${rgb[2]}`
+}
+
+/** Body particles follow hero-soft; accent particles follow copper. */
+function readSculpturePalette() {
+  const soft = rgbChannels(readToken('--hero-soft'))
+  const muted = rgbChannels(readToken('--hero-muted'))
+  const copper = rgbChannels(readToken('--copper'))
+  const craton = rgbChannels(readToken('--craton'))
+  return {
+    plat: channelsToTriplet(soft),
+    platDim: channelsToTriplet(muted),
+    cop: channelsToTriplet(copper),
+    copDim: channelsToTriplet(mixChannels(copper, craton, 0.5)),
+    glow: channelsToTriplet(mixChannels(copper, soft, 0.4)),
+    wordMain: readToken('--hero-soft'),
+    wordSub: readToken('--copper'),
+  }
+}
+
 /**
  * Right-side particle sculpture over the existing hero background.
  */
@@ -64,10 +115,17 @@ export default function HeroSculpture({ className }) {
     const N = mobile ? 900 : 2000
     const { shapes: base, jit, C } = buildShapes(N, 3)
     const shapes = [...base, new Float32Array(N * 3)]
-    let wm = buildWordmark(N, C, 9, shapes[4])
+    let palette = readSculpturePalette()
+    let wm = buildWordmark(N, C, 9, shapes[4], {
+      main: palette.wordMain,
+      sub: palette.wordSub,
+    })
 
     const rebuildWordmark = () => {
-      wm = buildWordmark(N, C, 9, shapes[4])
+      wm = buildWordmark(N, C, 9, shapes[4], {
+        main: palette.wordMain,
+        sub: palette.wordSub,
+      })
     }
     if (document.fonts?.ready) {
       document.fonts.ready.then(rebuildWordmark).catch(() => {})
@@ -98,11 +156,21 @@ export default function HeroSculpture({ className }) {
     const bucketNext = new Int32Array(N)
     for (let i = 0; i < N; i++) order[i] = i
 
-    const spPlat = makeSprite('214,216,204')
-    const spPlatDim = makeSprite('120,124,110')
-    const spCop = makeSprite('232,168,110')
-    const spCopDim = makeSprite('150,98,60')
-    const spGlow = makeSprite('255,226,180')
+    let spPlat = makeSprite(palette.plat)
+    let spPlatDim = makeSprite(palette.platDim)
+    let spCop = makeSprite(palette.cop)
+    let spCopDim = makeSprite(palette.copDim)
+    let spGlow = makeSprite(palette.glow)
+
+    function applyThemeColors() {
+      palette = readSculpturePalette()
+      spPlat = makeSprite(palette.plat)
+      spPlatDim = makeSprite(palette.platDim)
+      spCop = makeSprite(palette.cop)
+      spCopDim = makeSprite(palette.copDim)
+      spGlow = makeSprite(palette.glow)
+      rebuildWordmark()
+    }
 
     function resize() {
       const r = wrap.getBoundingClientRect()
@@ -240,9 +308,9 @@ export default function HeroSculpture({ className }) {
           fil[1],
           r,
         )
-        g.addColorStop(0, `rgba(255,214,160,${0.5 * shine})`)
-        g.addColorStop(0.3, `rgba(226,160,104,${0.2 * shine})`)
-        g.addColorStop(1, 'rgba(216,160,117,0)')
+        g.addColorStop(0, `rgba(${palette.glow},${0.5 * shine})`)
+        g.addColorStop(0.3, `rgba(${palette.cop},${0.2 * shine})`)
+        g.addColorStop(1, `rgba(${palette.cop},0)`)
         ctx.fillStyle = g
         ctx.fillRect(fil[0] - r, fil[1] - r, r * 2, r * 2)
       }
@@ -391,16 +459,17 @@ export default function HeroSculpture({ className }) {
     })
 
     const onTheme = () => {
-      rebuildWordmark()
+      applyThemeColors()
       paintStill()
     }
-    window.addEventListener('craton:themechange', onTheme)
+    const themeRoot = document.documentElement
+    themeRoot.addEventListener('craton:themechange', onTheme)
 
     return () => {
       stop()
       ro.disconnect()
       io?.disconnect()
-      window.removeEventListener('craton:themechange', onTheme)
+      themeRoot.removeEventListener('craton:themechange', onTheme)
     }
   }, [reduced])
 

@@ -1,14 +1,9 @@
 import LegalDocument from '@/components/layout/LegalDocument'
 import { privacy } from '@/content/legal'
 import { pages } from '@/content/pages'
+import { pageMetadata } from '@/lib/seo'
 
-const meta = pages.privacy
-
-export const metadata = {
-  title: meta.title,
-  description: meta.description,
-  alternates: { canonical: meta.path },
-}
+export const metadata = pageMetadata(pages.privacy)
 
 export default function PrivacyPage() {
   return (

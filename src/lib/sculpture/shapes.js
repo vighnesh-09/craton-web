@@ -1,5 +1,17 @@
 /** Point-cloud shape builders — ported from craton-v2.html hero sculpture. */
 
+import { themes } from '@/config/theme'
+
+function themeColor(name) {
+  if (typeof document !== 'undefined') {
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim()
+    if (value) return value
+  }
+  return themes.light.vars[name]
+}
+
 export const TAU = Math.PI * 2
 
 export function mulberry(seed) {
@@ -166,25 +178,27 @@ function textCanvas(font, ls, text, y, color) {
 }
 
 /**
- * Wordmark shape — platinum points spell "craton", copper spells "TECHNOLOGIES".
- * Uses site fonts (Syne + JetBrains Mono).
+ * Wordmark shape — hero-soft points spell "craton", copper spells "TECHNOLOGIES".
+ * Uses site fonts (Syne + JetBrains Mono). Colors come from the active theme.
  */
-export function buildWordmark(N, C, seed, out) {
+export function buildWordmark(N, C, seed, out, colors = {}) {
   const R = mulberry(seed)
   const u = WM.u
+  const mainColor = colors.main || themeColor('--hero-soft')
+  const subColor = colors.sub || themeColor('--copper')
   const main = textCanvas(
     `600 ${172 * u}px Syne, system-ui, sans-serif`,
     `${-10 * u}px`,
     'craton',
     128 * u,
-    '#d6d8cc',
+    mainColor,
   )
   const sub = textCanvas(
     `500 ${34 * u}px "JetBrains Mono", ui-monospace, monospace`,
     `${11 * u}px`,
     'TECHNOLOGIES',
     258 * u,
-    '#e2a874',
+    subColor,
   )
 
   const ink = (cv) => {
