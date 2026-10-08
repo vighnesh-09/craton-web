@@ -5,9 +5,10 @@
 @font-face {
   font-family: "Plus Jakarta Sans Fallback";
   src: local("Arial");
-  size-adjust: 107%;
-  ascent-override: 92%;
-  descent-override: 24%;
+  /* Uppercase headline width matches Plus Jakarta at 88px (~1021px). */
+  size-adjust: 100%;
+  ascent-override: 95%;
+  descent-override: 22%;
   line-gap-override: 0%;
 }
 
@@ -178,6 +179,13 @@ html[data-mode='dark'] {
     scroll-padding-top: 5.5rem;
     text-size-adjust: 100%;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Desktop-only gutter. Mobile overlay scrollbars stay at CLS 0. */
+  @media (min-width: 1024px) {
+    html {
+      scrollbar-gutter: stable;
+    }
   }
 
   html.lenis,

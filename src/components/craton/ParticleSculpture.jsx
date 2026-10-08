@@ -379,11 +379,19 @@ export default function ParticleSculpture({
       setPhase(id)
     }
 
-    function resize() {
+    function readSize() {
       const r = host.getBoundingClientRect()
-      W = Math.max(1, r.width)
-      H = Math.max(1, r.height)
-      dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.5)
+      return {
+        width: Math.max(1, r.width),
+        height: Math.max(1, r.height),
+        nextDpr: Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.5),
+      }
+    }
+
+    function applySize(width, height, nextDpr) {
+      W = width
+      H = height
+      dpr = nextDpr
       canvas.width = Math.round(W * dpr)
       canvas.height = Math.round(H * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
@@ -620,18 +628,24 @@ export default function ParticleSculpture({
       getPaused: () => runningPaused,
     }
 
-    resize()
+    const bootRaf = requestAnimationFrame(() => {
+      const first = readSize()
+      applySize(first.width, first.height, first.nextDpr)
+      if (reduced) {
+        time = 3 * SEG
+        rotY = -0.35
+        compute(time)
+        draw()
+      } else {
+        compute(0)
+        draw()
+        start()
+      }
+    })
     const onResize = () => {
-      const rect = host.getBoundingClientRect()
-      const width = Math.max(1, rect.width)
-      const height = Math.max(1, rect.height)
+      const next = readSize()
       requestAnimationFrame(() => {
-        W = width
-        H = height
-        dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.5)
-        canvas.width = Math.round(W * dpr)
-        canvas.height = Math.round(H * dpr)
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        applySize(next.width, next.height, next.nextDpr)
         if (!interacting) {
           compute(time)
           draw()
@@ -656,16 +670,6 @@ export default function ParticleSculpture({
     window.addEventListener('keydown', pauseForInput)
     window.addEventListener('keyup', resumeAfterInput)
 
-    if (reduced) {
-      time = 3 * SEG
-      rotY = -0.35
-      compute(time)
-      draw()
-    } else {
-      compute(0)
-      draw()
-      start()
-    }
     setReady(true)
 
     let io
@@ -691,6 +695,7 @@ export default function ParticleSculpture({
     document.addEventListener('visibilitychange', onVisibility)
 
     return () => {
+      cancelAnimationFrame(bootRaf)
       stop()
       window.removeEventListener('resize', onResize)
       window.removeEventListener('pointerdown', pauseForInput)

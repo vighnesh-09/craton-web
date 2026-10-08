@@ -70,7 +70,12 @@ export default function Header() {
   const darkSolid = !overHero && !isLight
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 w-full pt-3">
+    <header
+      className={cn(
+        'fixed inset-x-0 top-0 z-50 w-full pt-3',
+        overHero && 'bg-[#040c0a]',
+      )}
+    >
       <div className="pad-x w-full">
         <div
           className={cn(
@@ -93,7 +98,7 @@ export default function Header() {
           <nav
             className={cn(
               'hidden items-center gap-5 text-[13px] xl:gap-6 lg:flex',
-              overHero || darkSolid ? 'text-[#c9d8e8]/90' : 'text-[#2f3f54]',
+              overHero || darkSolid ? 'text-[#d5e0ea]' : 'text-[#2f3f54]',
             )}
             aria-label="Primary"
           >
@@ -117,7 +122,7 @@ export default function Header() {
             <span
               className={cn(
                 'mono-label hidden text-[7.5px] xl:block',
-                overHero || darkSolid ? 'text-[#8aa0b8]' : 'text-[#3a6d8c]',
+                overHero || darkSolid ? 'text-[#d5e0ea]' : 'text-[#1e4d66]',
               )}
             >
               {site.location}

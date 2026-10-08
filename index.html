@@ -31,7 +31,13 @@
     <link rel="canonical" href="https://craton-web-v2.netlify.app/" />
     <link rel="icon" type="image/webp" href="/brand/craton-logo.webp" />
     <link rel="apple-touch-icon" href="/brand/craton-logo.webp" />
-    <link rel="preload" as="image" href="/hero/foundation.webp" fetchpriority="high" />
+    <link
+      rel="preload"
+      as="image"
+      href="/hero/foundation.webp"
+      media="(min-width: 1024px)"
+      fetchpriority="high"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -46,6 +52,19 @@
       body {
         margin: 0;
         background: #040c0a;
+      }
+      @media (min-width: 1024px) {
+        html {
+          scrollbar-gutter: stable;
+        }
+      }
+      @font-face {
+        font-family: "Plus Jakarta Sans Fallback";
+        src: local("Arial");
+        size-adjust: 100%;
+        ascent-override: 95%;
+        descent-override: 22%;
+        line-gap-override: 0%;
       }
       #boot-hero {
         position: fixed;
@@ -102,6 +121,7 @@
       #boot-hero h1 {
         margin: 1rem 0 0;
         max-width: 18ch;
+        min-height: 0.94em;
         color: #f4f7fb;
         font-size: clamp(2.15rem, 7.4vw, 5.5rem);
         font-weight: 600;
@@ -109,6 +129,13 @@
         letter-spacing: -0.04em;
         text-transform: uppercase;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+      }
+      @media (min-width: 1024px) {
+        #boot-hero h1 {
+          max-width: none;
+          white-space: nowrap;
+          font-size: clamp(2.6rem, 6.4vw, 5.5rem);
+        }
       }
       #boot-hero .boot-sub {
         margin: 1.25rem 0 0;
@@ -142,14 +169,6 @@
   <body>
     <div id="boot-hero" aria-hidden="true">
       <div class="boot-media">
-        <img
-          src="/hero/foundation.webp"
-          alt=""
-          width="2400"
-          height="1602"
-          fetchpriority="high"
-          decoding="sync"
-        />
         <div class="boot-shade"></div>
       </div>
       <div class="boot-copy">

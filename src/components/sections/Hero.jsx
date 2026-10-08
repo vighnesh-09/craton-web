@@ -22,6 +22,7 @@ export default function Hero() {
   const ref = useRef(null)
   const reduced = useReducedMotion()
   const [showField, setShowField] = useState(false)
+  const [desktopPhoto, setDesktopPhoto] = useState(false)
 
   useEffect(() => {
     const boot = document.getElementById('boot-hero')
@@ -44,14 +45,25 @@ export default function Hero() {
         if (link.media !== 'all') link.media = 'all'
         ready()
       }
-      if (link.sheet) finish()
+      const finishNext = () => {
+        requestAnimationFrame(() => finish())
+      }
+      if (link.sheet) finishNext()
       else {
-        link.addEventListener('load', finish, { once: true })
-        link.addEventListener('error', finish, { once: true })
+        link.addEventListener('load', finishNext, { once: true })
+        link.addEventListener('error', finishNext, { once: true })
       }
     })
     const backup = window.setTimeout(dropBoot, 2000)
     return () => window.clearTimeout(backup)
+  }, [])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)')
+    const apply = () => setDesktopPhoto(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
   }, [])
 
   useEffect(() => {
@@ -83,26 +95,27 @@ export default function Hero() {
       ref={ref}
       id="top"
       data-hero-mode="cinematic"
-      className="relative flex h-[100svh] max-h-[100svh] flex-col overflow-hidden text-[#eef8f4]"
+      className="relative flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-[#040c0a] text-[#eef8f4]"
     >
       <motion.div
         aria-hidden
         className="absolute inset-0"
         style={reduced ? undefined : { scale: mediaScale, y: mediaY }}
       >
-        <div className="cover-clip absolute inset-0" style={{ '--ar': '1.498127' }}>
-          <img
-            src="/hero/foundation.webp"
-            alt=""
-            width={2400}
-            height={1602}
-            sizes="100vw"
-            decoding="sync"
-            loading="eager"
-            fetchPriority="high"
-            className="cover-img cover-img--center"
-          />
-        </div>
+        {desktopPhoto ? (
+          <div className="cover-clip absolute inset-0" style={{ '--ar': '1.498127' }}>
+            <img
+              src="/hero/foundation.webp"
+              alt=""
+              width={2400}
+              height={1602}
+              sizes="100vw"
+              decoding="async"
+              fetchPriority="high"
+              className="cover-img cover-img--center"
+            />
+          </div>
+        ) : null}
         {/* Crush photo whites (windows) into forest ink — hero never reads as a white wall */}
         <div className="absolute inset-0 bg-[#040c0a]/72" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,12,10,0.88)_0%,rgba(6,16,14,0.55)_36%,rgba(6,16,14,0.62)_58%,rgba(3,10,8,0.96)_100%)]" />
@@ -164,7 +177,7 @@ export default function Hero() {
 
         <motion.h1
           initial={false}
-          className="mt-4 max-w-[18ch] text-[clamp(2.15rem,7.4vw,5.5rem)] font-semibold uppercase leading-[0.94] tracking-[-0.04em] !text-[#f4f7fb] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_0_1px_rgba(255,255,255,0.35)]"
+          className="mt-4 min-h-[0.94em] max-w-[18ch] text-[clamp(2.15rem,7.4vw,5.5rem)] font-semibold uppercase leading-[0.94] tracking-[-0.04em] !text-[#f4f7fb] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_0_1px_rgba(255,255,255,0.35)] min-[1024px]:max-w-none min-[1024px]:whitespace-nowrap min-[1024px]:text-[clamp(2.6rem,6.4vw,5.5rem)]"
         >
           Craton Technologies
         </motion.h1>
@@ -200,12 +213,12 @@ export default function Hero() {
           'relative z-10 pad-x flex items-end justify-between gap-4 border-t border-white/10 pb-5 pt-4 text-[11px] uppercase tracking-[0.12em] text-[#8aa0b8] sm:pb-7',
         )}
       >
-        <span className="font-mono text-[10px] opacity-80 sm:text-[11px]">
+        <span className="font-mono text-[12px] text-[#d5e0ea]">
           01 — The foundation
         </span>
         <a
           href="#proof"
-          className="inline-flex items-center gap-2 normal-case tracking-[0.04em] text-[#e8eef5]/75 transition hover:text-[#e8eef5]"
+          className="inline-flex min-h-6 items-center gap-2 normal-case tracking-[0.04em] text-[#e8eef5] transition hover:text-white"
         >
           <ArrowDown size={14} className="opacity-70" />
           <span className="hidden sm:inline">From complexity to clarity</span>

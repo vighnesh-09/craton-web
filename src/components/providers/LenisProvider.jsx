@@ -22,10 +22,16 @@ export function LenisProvider({ children }) {
     if (mq.matches) return undefined
 
     const { ScrollTrigger, gsap } = ensureGsap()
+    let instance
+    let refreshSoon = 0
+    let refreshTimer = 0
+    let ticker = () => {}
+    let detach = () => {}
 
+    const boot = window.requestAnimationFrame(() => {
     // lerp (not duration) so wheel/touch samples damp every frame.
     // Duration+easing wins in Lenis 1.3 and ignores lerp, which feels stepped.
-    const instance = new Lenis({
+    instance = new Lenis({
       // Per-frame follow (no duration ease). ~0.06 lets the page ease into
       // the wheel instead of tracking each tick. Touch lerp is a touch
       // lower so a flick glides about 1.1s before it settles.
@@ -42,7 +48,7 @@ export function LenisProvider({ children }) {
 
     instance.on('scroll', ScrollTrigger.update)
 
-    const ticker = (time) => {
+    ticker = (time) => {
       instance.raf(time * 1000)
     }
     gsap.ticker.add(ticker)
@@ -51,10 +57,10 @@ export function LenisProvider({ children }) {
     setLenis(instance)
     // Remeasure pins after the first paint so startup does not force layout
     // in the same turn as the click or the first frame.
-    const refreshSoon = window.requestAnimationFrame(() => {
+    refreshSoon = window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => ScrollTrigger.refresh())
     })
-    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 400)
+    refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 400)
 
     const onChange = () => {
       if (mq.matches) {
@@ -95,15 +101,20 @@ export function LenisProvider({ children }) {
       }, 0)
     }
     document.addEventListener('click', onAnchorClick)
-
-    return () => {
-      window.cancelAnimationFrame(refreshSoon)
-      window.clearTimeout(refreshTimer)
+    detach = () => {
       mq.removeEventListener('change', onChange)
       window.removeEventListener('resize', onResize)
       document.removeEventListener('click', onAnchorClick)
+    }
+    })
+
+    return () => {
+      window.cancelAnimationFrame(boot)
+      window.cancelAnimationFrame(refreshSoon)
+      window.clearTimeout(refreshTimer)
+      detach()
       gsap.ticker.remove(ticker)
-      instance.destroy()
+      instance?.destroy()
       setLenis(null)
       ScrollTrigger.getAll().forEach((t) => t.kill())
     }
