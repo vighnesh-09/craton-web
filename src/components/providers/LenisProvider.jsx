@@ -26,12 +26,15 @@ export function LenisProvider({ children }) {
     // lerp (not duration) so wheel/touch samples damp every frame.
     // Duration+easing wins in Lenis 1.3 and ignores lerp, which feels stepped.
     const instance = new Lenis({
-      lerp: 0.09,
+      // Per-frame follow (no duration ease). ~0.06 lets the page ease into
+      // the wheel instead of tracking each tick. Touch lerp is a touch
+      // lower so a flick glides about 1.1s before it settles.
+      lerp: 0.06,
       smoothWheel: true,
       wheelMultiplier: 1,
       touchMultiplier: 1,
       syncTouch: true,
-      syncTouchLerp: 0.085,
+      syncTouchLerp: 0.055,
       touchInertiaExponent: 1.7,
       autoRaf: false,
       respectReducedMotion: true,
