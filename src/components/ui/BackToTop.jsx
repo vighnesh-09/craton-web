@@ -50,16 +50,17 @@ export default function BackToTop() {
       tabIndex={visible ? 0 : -1}
       onClick={() => scrollToId('#top', lenis)}
       className={cn(
-        'fixed right-5 bottom-6 z-40 grid size-11 place-items-center rounded-full border-2 border-hero-fg bg-ink text-foam',
-        'shadow-[0_8px_24px_-6px_color-mix(in_srgb,var(--craton)_42%,transparent)]',
-        'motion-safe:transition-[opacity,transform] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]',
-        'hover:bg-ink-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lagoon',
+        'fixed right-5 bottom-6 z-40 grid size-11 cursor-pointer place-items-center rounded-full border border-line bg-hero-cta text-craton',
+        'shadow-[0_8px_18px_-8px_color-mix(in_srgb,var(--craton)_36%,transparent)]',
+        'motion-safe:transition-[opacity,transform,background-color,box-shadow] motion-safe:duration-300 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)]',
+        'hover:-translate-y-0.5 hover:bg-hero-soft hover:shadow-[0_12px_22px_-8px_color-mix(in_srgb,var(--craton)_44%,transparent)]',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lagoon',
         visible
           ? 'translate-y-0 opacity-100'
-          : 'pointer-events-none translate-y-3 opacity-0',
+          : 'pointer-events-none translate-y-2 opacity-0',
       )}
     >
-      <ArrowUp size={18} strokeWidth={2.25} aria-hidden />
+      <ArrowUp size={16} strokeWidth={2} aria-hidden />
     </button>
   )
 }

@@ -4,7 +4,7 @@
  * Ease-out cubic keeps the approach visible for the whole duration.
  * Lenis's own exponential ease spends most of the distance in the first half-second.
  */
-export const SECTION_SCROLL_DURATION = 1.85
+export const SECTION_SCROLL_DURATION = 2.1
 
 export function sectionScrollEasing(t) {
   return 1 - (1 - t) ** 3
