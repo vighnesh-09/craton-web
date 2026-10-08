@@ -1,12 +1,9 @@
 import {
-  Approach,
   Company,
   Contact,
   Domains,
   Faq,
   Hero,
-  Mindset,
-  Patents,
   Pilot,
   Practice,
   Products,
@@ -42,11 +39,8 @@ export default function HomePage() {
       <Practice />
       <Security />
       <Pilot />
-      <Faq />
-      <Mindset />
-      <Approach />
-      <Patents />
       <Company />
+      <Faq />
       <Contact />
     </>
   )

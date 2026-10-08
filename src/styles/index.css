@@ -117,7 +117,8 @@
 
   /* Clear fixed header when jumping to in-page sections */
   section[id],
-  footer[id] {
+  footer[id],
+  [id='patents'] {
     scroll-margin-top: 4.25rem;
   }
 

@@ -17,7 +17,7 @@ export const footerNav = Object.freeze([
   { label: 'Security', href: '#security' },
   { label: 'A pilot', href: '#pilot' },
   { label: 'Questions', href: '#faq' },
-  { label: 'How we work', href: '#approach' },
+  { label: 'How we work', href: '#practice' },
   { label: 'Patents', href: '#patents' },
   { label: 'Company', href: '#company' },
   { label: 'Contact', href: '#contact' },

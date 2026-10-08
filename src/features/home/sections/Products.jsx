@@ -10,6 +10,10 @@ import { SectionEyebrow } from '@/features/home/components/SectionHeading'
 import { cn } from '@/lib/cn'
 
 const STACK_SURFACE = 'bg-craton'
+/** Park the stack below the navbar. Later cards stop lower so the one underneath still shows. */
+const STICK_TOP = 6.25
+const PEEK = 1.75
+const OVERLAP = 3
 
 function StackCard({ item, index, total, sticky }) {
   const isLast = index === total - 1
@@ -20,7 +24,7 @@ function StackCard({ item, index, total, sticky }) {
       style={
         sticky
           ? {
-              top: 0,
+              top: `${STICK_TOP + index * (PEEK + OVERLAP)}rem`,
               zIndex: index + 1,
             }
           : undefined
@@ -28,13 +32,13 @@ function StackCard({ item, index, total, sticky }) {
     >
       <div
         className={cn(
-          index > 0 && sticky && '-mt-8 md:-mt-12',
+          index > 0 && sticky && '-mt-12',
           !sticky && index > 0 && 'mt-6',
         )}
       >
         <article
           className={cn(
-            'relative flex h-[100svh] min-h-[36rem] flex-col overflow-hidden text-hero-fg',
+            'relative flex h-[calc(100svh-10rem)] min-h-[28rem] flex-col overflow-hidden text-hero-fg',
             STACK_SURFACE,
             'rounded-t-2xl md:rounded-t-[1.5rem]',
             isLast ? 'rounded-b-2xl md:rounded-b-[1.5rem]' : 'rounded-b-none',
@@ -171,9 +175,7 @@ export default function Products() {
               sticky={!reduced}
             />
           ))}
-          {!reduced ? (
-            <div aria-hidden className="h-[20vh] md:h-[28vh]" />
-          ) : null}
+          {!reduced ? <div aria-hidden className="h-[10vh]" /> : null}
         </div>
       </SiteContainer>
     </section>

@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import SiteContainer from '@/components/layout/SiteContainer'
-import { company } from '@/content/home'
+import { company, mindset, patents } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -119,6 +119,65 @@ export default function Company() {
               ))}
             </div>
           </motion.div>
+        </div>
+
+        <div className="mt-16 border-t border-line pt-12 md:mt-20">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45">
+            Why we exist
+          </p>
+          <ul className="mt-8 grid gap-8 md:grid-cols-3">
+            {mindset.beliefs.map((belief) => (
+              <li key={belief.title}>
+                <h3 className="font-display text-[1.15rem] font-semibold tracking-[-0.03em] text-ink">
+                  {belief.title}
+                </h3>
+                <p className="mt-2 max-w-[36ch] font-body text-[14.5px] leading-[1.7] text-ink/65">
+                  {belief.copy}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div id={patents.id} className="mt-16 border-t border-line pt-12 md:mt-20">
+          <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45">
+            Patents
+          </p>
+          <h3 className="mt-4 max-w-[16ch] font-display text-[clamp(1.8rem,3vw,2.6rem)] font-semibold leading-[1.05] tracking-[-0.04em] text-ink">
+            {patents.title}{' '}
+            <span className="font-serif font-normal italic text-ink-soft">
+              {patents.titleAccent}
+            </span>
+          </h3>
+          <p className="mt-4 max-w-[52ch] font-body text-[15px] leading-[1.7] text-ink/65">
+            {patents.lead}
+          </p>
+
+          <ul className="mt-10 grid gap-8 sm:grid-cols-3">
+            {patents.figures.map((figure) => (
+              <li key={figure.label}>
+                <p className="font-display text-[clamp(1.8rem,3vw,2.6rem)] font-semibold leading-none tracking-[-0.045em] text-ink">
+                  {figure.value}
+                </p>
+                <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
+                  {figure.label}
+                </p>
+              </li>
+            ))}
+          </ul>
+
+          <ul className="mt-10 grid gap-8 md:grid-cols-3">
+            {patents.notes.map((note) => (
+              <li key={note.title}>
+                <h3 className="font-display text-[1.05rem] font-semibold tracking-[-0.03em] text-ink">
+                  {note.title}
+                </h3>
+                <p className="mt-2 font-body text-[14.5px] leading-[1.7] text-ink/65">
+                  {note.copy}
+                </p>
+              </li>
+            ))}
+          </ul>
         </div>
       </SiteContainer>
     </section>

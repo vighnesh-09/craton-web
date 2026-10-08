@@ -283,7 +283,7 @@ export const approach = Object.freeze({
 
 export const company = Object.freeze({
   id: 'company',
-  eyebrow: { num: '10', label: 'Company' },
+  eyebrow: { num: '06', label: 'Company' },
   title: 'A stable core for',
   titleAccent: 'restless products.',
   story: [
@@ -434,7 +434,7 @@ export const pilot = Object.freeze({
 
 export const faq = Object.freeze({
   id: 'faq',
-  eyebrow: { num: '06', label: 'Questions' },
+  eyebrow: { num: '07', label: 'Questions' },
   title: 'Asked before',
   titleAccent: 'the first call.',
   items: [
