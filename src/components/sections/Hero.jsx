@@ -38,7 +38,6 @@ export default function Hero() {
       data-hero-mode="cinematic"
       className="relative flex min-h-[100svh] flex-col overflow-hidden text-[#eef8f4]"
     >
-      {/* Full-bleed foundation — always dark/forest grade (no mint-white wash) */}
       <motion.div
         aria-hidden
         className="absolute inset-0"
