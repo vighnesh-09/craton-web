@@ -23,14 +23,18 @@ export function LenisProvider({ children }) {
 
     const { ScrollTrigger, gsap } = ensureGsap()
 
+    // lerp (not duration) so wheel/touch samples damp every frame.
+    // Duration+easing wins in Lenis 1.3 and ignores lerp, which feels stepped.
     const instance = new Lenis({
-      duration: 1.05,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      lerp: 0.09,
       smoothWheel: true,
-      wheelMultiplier: 0.92,
-      touchMultiplier: 1.2,
-      syncTouch: false,
+      wheelMultiplier: 1,
+      touchMultiplier: 1,
+      syncTouch: true,
+      syncTouchLerp: 0.085,
+      touchInertiaExponent: 1.7,
       autoRaf: false,
+      respectReducedMotion: true,
     })
 
     instance.on('scroll', ScrollTrigger.update)

@@ -318,11 +318,11 @@ export default function ParticleSculpture({
     const mobile = window.matchMedia('(max-width: 900px)').matches
     const N = heroScale
       ? mobile
-        ? 2000
-        : 3400
+        ? 720
+        : 1400
       : mobile
-        ? 1500
-        : 2800
+        ? 600
+        : 1100
     const { shapes, jit, C } = buildShapes(N, 3)
     // Only allocate wordmark target shape outside hero (phases 0–3 only when heroScale)
     if (!heroScale) shapes.push(new Float32Array(N * 3))
@@ -381,7 +381,7 @@ export default function ParticleSculpture({
       const r = host.getBoundingClientRect()
       W = Math.max(1, r.width)
       H = Math.max(1, r.height)
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.5)
       canvas.width = Math.round(W * dpr)
       canvas.height = Math.round(H * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
@@ -629,7 +629,7 @@ export default function ParticleSculpture({
         (entries) => {
           entries.forEach((en) => {
             onScreen = en.isIntersecting
-            if (en.isIntersecting) {
+            if (en.isIntersecting && !document.hidden) {
               if (!runningPaused) start()
             } else stop()
           })
@@ -639,9 +639,16 @@ export default function ParticleSculpture({
       io.observe(wrap)
     }
 
+    const onVisibility = () => {
+      if (document.hidden || !onScreen || runningPaused) stop()
+      else start()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
     return () => {
       stop()
       window.removeEventListener('resize', onResize)
+      document.removeEventListener('visibilitychange', onVisibility)
       io?.disconnect()
       apiRef.current = null
     }
@@ -671,7 +678,7 @@ export default function ParticleSculpture({
         <div
           aria-hidden
           className={cn(
-            'pointer-events-none absolute inset-[6%] z-0 rounded-[40%] blur-3xl',
+            'pointer-events-none absolute inset-[6%] z-0 rounded-[40%]',
             themeMode === 'light'
               ? 'bg-[radial-gradient(ellipse_at_center,rgba(244,247,245,0.4),transparent_70%)]'
               : 'bg-[radial-gradient(ellipse_at_center,rgba(10,20,18,0.5),transparent_72%)]',

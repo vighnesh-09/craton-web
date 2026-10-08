@@ -24,47 +24,23 @@ export default function Header() {
     const readScroll = () =>
       typeof lenis?.scroll === 'number' ? lenis.scroll : window.scrollY || 0
 
+    // Hero is 100svh, so scroll position is enough — no layout read per frame.
     const sync = () => {
-      const hero = document.getElementById('top')
       const y = readScroll()
       setScrolled(y > 8)
-
-      if (!hero) {
-        setOverHero(false)
-        return
-      }
-
-      const rect = hero.getBoundingClientRect()
-      // Still covering the top band of the viewport
-      const covering = rect.bottom > window.innerHeight * 0.42
-      setOverHero(covering && y < hero.offsetHeight * 0.85)
+      setOverHero(y < window.innerHeight * 0.72)
     }
 
     sync()
 
-    // Hero mounts after lazy HomePage — keep syncing until present
-    let boots = 0
-    const boot = window.setInterval(() => {
-      sync()
-      boots += 1
-      if (document.getElementById('top') || boots > 50) {
-        window.clearInterval(boot)
-      }
-    }, 80)
-
     if (lenis) {
-      const onScroll = () => sync()
-      lenis.on('scroll', onScroll)
-      return () => {
-        window.clearInterval(boot)
-        lenis.off('scroll', onScroll)
-      }
+      lenis.on('scroll', sync)
+      return () => lenis.off('scroll', sync)
     }
 
     window.addEventListener('scroll', sync, { passive: true })
     window.addEventListener('resize', sync)
     return () => {
-      window.clearInterval(boot)
       window.removeEventListener('scroll', sync)
       window.removeEventListener('resize', sync)
     }

@@ -2,7 +2,7 @@ import { cn } from '@/lib/cn'
 
 /**
  * Craton mark — lightbulb + circuit brain + navy chevrons.
- * Asset: /brand/craton-logo.png (from Logo-3D-04242026-v2)
+ * Asset: /brand/craton-logo.webp (from Logo-3D-04242026-v2)
  */
 export default function BrandLogo({
   className,
@@ -21,7 +21,7 @@ export default function BrandLogo({
   return (
     <span className={cn('inline-flex items-center', s.gap, className)}>
       <img
-        src="/brand/craton-logo.png"
+        src="/brand/craton-logo.webp"
         alt=""
         width={48}
         height={48}
@@ -31,6 +31,7 @@ export default function BrandLogo({
           imgClassName,
         )}
         decoding="async"
+        fetchPriority="low"
       />
       {showWordmark ? (
         <span className="flex flex-col gap-0.5">

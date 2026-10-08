@@ -16,7 +16,7 @@ export default function Seo({
       legalName: site.legalName,
       url: site.url,
       email: site.email,
-      logo: `${env.appUrl.replace(/\/$/, '')}/brand/craton-logo.png`,
+      logo: `${env.appUrl.replace(/\/$/, '')}/brand/craton-logo.webp`,
       description: site.seo.description,
       foundingLocation: {
         '@type': 'Place',

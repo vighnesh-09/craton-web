@@ -23,11 +23,8 @@ export default function Footer() {
           <a href="#about" className="hover:text-on-navy-strong">
             Company
           </a>
-          <a href="#raccelerator" className="hover:text-on-navy-strong">
-            RAccelerator
-          </a>
-          <a href="#reviewsintel" className="hover:text-on-navy-strong">
-            ReviewsIntel
+          <a href="#products" className="hover:text-on-navy-strong">
+            Product
           </a>
           <a href="#contact" className="text-accent hover:text-on-navy-strong">
             Contact

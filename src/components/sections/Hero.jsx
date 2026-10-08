@@ -44,10 +44,15 @@ export default function Hero() {
         style={reduced ? undefined : { scale: mediaScale, y: mediaY }}
       >
         <img
-          src="/hero/foundation.jpg"
+          src="/hero/foundation.webp"
           alt=""
-          className="h-full w-full object-cover object-center"
+          width={2400}
+          height={1602}
+          sizes="100vw"
+          decoding="async"
+          loading="eager"
           fetchPriority="high"
+          className="h-full w-full object-cover object-center"
         />
         {/* Crush photo whites (windows) into forest ink — hero never reads as a white wall */}
         <div className="absolute inset-0 bg-[#040c0a]/72" />

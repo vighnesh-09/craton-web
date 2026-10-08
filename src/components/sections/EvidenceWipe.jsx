@@ -9,14 +9,10 @@ export default function EvidenceWipe() {
     const stage = root.querySelector('[data-stage]')
     const after = root.querySelector('[data-after]')
     const bar = root.querySelector('[data-bar]')
-    const photoBack = root.querySelector('[data-photo-back]')
-    const photoFront = root.querySelector('[data-photo-front]')
     if (!stage || !after) return
 
     gsap.set(after, { clipPath: 'inset(0 100% 0 0)' })
     if (bar) gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' })
-    if (photoFront) gsap.set(photoFront, { clipPath: 'inset(0 0 0 100%)' })
-    if (photoBack) gsap.set(photoBack, { x: 0 })
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -33,10 +29,6 @@ export default function EvidenceWipe() {
 
     tl.to(after, { clipPath: 'inset(0 0% 0 0)', ease: 'none', duration: 1 }, 0)
     if (bar) tl.to(bar, { scaleX: 1, ease: 'none', duration: 1 }, 0)
-    if (photoFront) {
-      tl.to(photoFront, { clipPath: 'inset(0 0 0 0%)', ease: 'none', duration: 1 }, 0)
-    }
-    if (photoBack) tl.to(photoBack, { x: 24, ease: 'none', duration: 1 }, 0)
   }, [])
 
   if (reduced) return <EvidenceStatic />
@@ -68,21 +60,14 @@ export default function EvidenceWipe() {
             className="media-xl pointer-events-none relative overflow-hidden max-[799px]:h-[280px] max-[799px]:w-full! min-[800px]:absolute min-[800px]:top-0 min-[800px]:right-0 min-[800px]:bottom-0 min-[800px]:h-full"
           >
             <img
-              data-photo-back
-              src="/burden-right-back.jpg"
-              alt=""
-              aria-hidden="true"
+              src="/evidence-map.webp"
+              alt="Glass technical file with a cyan path from GSPR through Annex I evidence to a human-review mark."
               width={1280}
               height={720}
+              sizes="(min-width: 800px) 50vw, 100vw"
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 block h-full w-full object-cover object-center"
-            />
-            <img
-              data-photo-front
-              src="/burden-right-front.jpg"
-              alt="Illustrative technical file, pages resolving into mapped evidence."
-              width={1280}
-              height={720}
-              className="absolute inset-0 block h-full w-full object-cover object-center [clip-path:inset(0_0_0_100%)]"
             />
           </div>
         </div>
@@ -129,7 +114,7 @@ export default function EvidenceWipe() {
 
 function EvidenceStatic() {
   return (
-    <section id="wipe" className="section-pad bg-white" aria-label="From burden to evidence">
+    <section id="wipe" className="section-pad bg-canvas" aria-label="From burden to evidence">
       <div className="shell grid gap-4 md:grid-cols-2">
         <div className="rounded-[var(--radius)] bg-[#1E2A3A] p-6 text-[#f4f7fa] sm:p-7">
           <p className="kicker">The burden</p>
@@ -140,13 +125,6 @@ function EvidenceStatic() {
             GSPR gap assessment and classification still force teams to rebuild
             the argument by hand — every submission cycle.
           </p>
-          <img
-            src="/burden-right-front.jpg"
-            alt="Illustrative technical file, pages resolving into mapped evidence."
-            width={1280}
-            height={720}
-            className="mt-5 block h-auto w-full"
-          />
         </div>
         <div className="rounded-[var(--radius)] border border-[var(--hairline)] bg-[#f7f8fa] p-6 sm:p-7">
           <p className="kicker">The Craton cut</p>

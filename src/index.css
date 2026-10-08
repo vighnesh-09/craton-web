@@ -485,6 +485,11 @@ html[data-mode='dark'] {
   animation: voice-ken 7s ease-in-out infinite;
 }
 
+/* Wordmarks are navy ink. Lift them on the dark paper field. */
+html[data-mode='dark'] .voice-logo {
+  filter: brightness(0) invert(1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .voice-ken {
     animation: none;

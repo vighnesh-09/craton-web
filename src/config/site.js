@@ -4,7 +4,7 @@ export const site = {
   url: 'https://craton.io',
   email: 'hello@craton.io',
   // location: 'Frisco, Texas',
-  logo: '/brand/craton-logo.png',
+  logo: '/brand/craton-logo.webp',
   founder: {
     name: 'Sheik Ahamed Ali',
     role: 'Founder & CEO',
@@ -21,8 +21,7 @@ export const site = {
   },
   nav: [
     { label: 'Domain', href: '#domain' },
-    { label: 'RAccelerator', href: '#raccelerator' },
-    { label: 'ReviewsIntel', href: '#reviewsintel' },
+    { label: 'Product', href: '#products' },
     { label: 'How it works', href: '#approach' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
@@ -48,7 +47,7 @@ export const site = {
       role: 'VP, Regulatory Affairs · illustrative',
       quote:
         'We do not need another black-box score. We need every GSPR row tied to a document we can defend in a Notified Body meeting — with the expert still in the loop. My only regret is waiting this long to demand evidence-first tooling.',
-      image: '/voices/elena.jpg',
+      image: '/voices/elena.webp',
       glow: 'rgba(196,93,74,0.28)',
     },
     {
@@ -59,7 +58,7 @@ export const site = {
       role: 'Head of Quality · illustrative',
       quote:
         'Classification and gap assessment still burn months of senior time. If the argument is visible — rule, evidence, exception — we can review in days instead of rebuilding the file by hand.',
-      image: '/voices/marcus.jpg',
+      image: '/voices/marcus.webp',
       glow: 'rgba(30,42,58,0.22)',
     },
     {
@@ -70,7 +69,7 @@ export const site = {
       role: 'Director, Product Trust · illustrative',
       quote:
         'When an agent recommends a purchase, the rationale has to travel with it. Independent review evidence before checkout is the difference between automation and liability.',
-      image: '/voices/priya.jpg',
+      image: '/voices/priya.webp',
       glow: 'rgba(0,122,150,0.28)',
     },
     {
@@ -81,7 +80,7 @@ export const site = {
       role: 'Director, Regulatory · illustrative',
       quote:
         'Enterprise evaluation only moves when the system shows its work. Traceable mapping beats a polished demo every time — especially when a wrong citation costs months.',
-      image: '/voices/jonas.jpg',
+      image: '/voices/jonas.webp',
       glow: 'rgba(47,63,84,0.25)',
     },
     {
@@ -92,7 +91,7 @@ export const site = {
       role: 'Program Lead · illustrative',
       quote:
         'We bought time for the experts — not another dashboard. The gap list has to be something a reviewer can own in a meeting, with human judgment still central.',
-      image: '/voices/amira.jpg',
+      image: '/voices/amira.webp',
       glow: 'rgba(58,109,140,0.28)',
     },
     {
@@ -103,7 +102,7 @@ export const site = {
       role: 'Head of Platform · illustrative',
       quote:
         'Agents will buy. The question is whether the evidence arrives with the cart — or after the chargeback. That is the bar for trust systems in agentic commerce.',
-      image: '/voices/derek.jpg',
+      image: '/voices/derek.webp',
       glow: 'rgba(0,168,196,0.28)',
     },
   ],

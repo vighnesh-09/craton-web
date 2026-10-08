@@ -7,18 +7,20 @@ export default function ScrollToTop() {
   const lenis = useLenis()
 
   useEffect(() => {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
     if (hash) {
       const id = hash.replace('#', '')
       const el = document.getElementById(id)
       if (el) {
-        if (lenis) lenis.scrollTo(el, { offset: -80 })
-        else el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        if (lenis) lenis.scrollTo(el, { offset: -80, immediate: reduced })
+        else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' })
         return
       }
     }
 
-    if (lenis) lenis.scrollTo(0, { immediate: false })
-    else window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+    if (lenis) lenis.scrollTo(0, { immediate: reduced })
+    else window.scrollTo({ top: 0, left: 0, behavior: reduced ? 'auto' : 'smooth' })
   }, [pathname, hash, lenis])
 
   return null

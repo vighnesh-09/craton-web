@@ -118,7 +118,11 @@ export default function Voices() {
                     <img
                       src={v.logo}
                       alt={v.logoAlt}
-                      className="h-10 w-auto max-w-[14rem] object-contain object-left sm:h-14"
+                      width={240}
+                      height={56}
+                      loading="lazy"
+                      decoding="async"
+                      className="voice-logo h-10 w-auto max-w-[14rem] object-contain object-left sm:h-14"
                     />
                     <p className="mt-4 text-[clamp(1.25rem,1.05rem+0.7vw,1.65rem)] font-medium tracking-[-0.02em] text-cream sm:mt-6">
                       {v.name}
@@ -211,6 +215,10 @@ export default function Voices() {
               <img
                 src={active.image}
                 alt=""
+                width={1024}
+                height={1024}
+                loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover object-top"
               />
             </div>
@@ -263,8 +271,11 @@ function VoiceMedia({ voice, isLive, onToggleLive, onExpand }) {
         <img
           src={voice.image}
           alt={voice.name}
+          width={1024}
+          height={1024}
           loading="lazy"
           decoding="async"
+          fetchPriority="low"
           className={`absolute inset-0 h-full w-full object-cover object-top transition-[opacity,transform] duration-[1400ms] ease-out ${
             inView || isLive
               ? ken
