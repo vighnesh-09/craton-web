@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import BrandLogo from '@/components/ui/BrandLogo'
 import Button from '@/components/ui/Button'
 import { useLenis } from '@/components/providers/LenisProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
@@ -82,38 +83,21 @@ export default function Header() {
               'rounded-full border border-transparent bg-transparent px-3 py-2.5 text-[#eef8f4] shadow-none sm:px-4',
             overHero &&
               scrolled &&
-              'border-white/10 bg-[#040c0a]/55 backdrop-blur-md',
+              'border-white/10 bg-[#0f1621]/60 backdrop-blur-md',
             lightSolid &&
-              'rounded-full border border-[#152821]/12 bg-white px-4 py-2.5 text-[#152821] shadow-[0_12px_40px_-16px_rgba(21,40,33,0.18)] sm:px-5',
+              'rounded-full border border-[#1e2a3a]/12 bg-white px-4 py-2.5 text-[#1e2a3a] shadow-[0_12px_40px_-16px_rgba(15,22,33,0.18)] sm:px-5',
             darkSolid &&
-              'rounded-full border border-white/12 bg-[#0f1c18]/95 px-4 py-2.5 text-[#eef8f4] shadow-[0_16px_48px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:px-5',
+              'rounded-full border border-white/12 bg-[#0f1621]/95 px-4 py-2.5 text-[#e8eef5] shadow-[0_16px_48px_-20px_rgba(0,0,0,0.65)] backdrop-blur-xl sm:px-5',
           )}
         >
-          <a href="#top" className="flex flex-col gap-0.5" aria-label={site.name}>
-            <span className="text-[1.35rem] font-semibold leading-none tracking-[-0.06em]">
-              craton
-              <span
-                className={cn(
-                  overHero || darkSolid ? 'text-[#3ecfba]' : 'text-[#0f8f7b]',
-                )}
-              >
-                .
-              </span>
-            </span>
-            <span
-              className={cn(
-                'mono-label text-[7.5px]',
-                overHero || darkSolid ? 'text-[#8ebdb0]' : 'text-[#3d6b5f]',
-              )}
-            >
-              Innovation-first. Evidence-led.
-            </span>
+          <a href="#top" aria-label={site.name}>
+            <BrandLogo inverted={overHero || darkSolid} />
           </a>
 
           <nav
             className={cn(
               'hidden items-center gap-5 text-[13px] xl:gap-6 lg:flex',
-              overHero || darkSolid ? 'text-[#cfe8df]/90' : 'text-[#2f564c]',
+              overHero || darkSolid ? 'text-[#c9d8e8]/90' : 'text-[#2f3f54]',
             )}
             aria-label="Primary"
           >
@@ -125,7 +109,7 @@ export default function Header() {
                   'transition-colors',
                   overHero || darkSolid
                     ? 'hover:text-white'
-                    : 'hover:text-[#0a1412]',
+                    : 'hover:text-[#0f1621]',
                 )}
               >
                 {item.label}
@@ -137,7 +121,7 @@ export default function Header() {
             <span
               className={cn(
                 'mono-label hidden text-[7.5px] xl:block',
-                overHero || darkSolid ? 'text-[#8ebdb0]' : 'text-[#3d6b5f]',
+                overHero || darkSolid ? 'text-[#8aa0b8]' : 'text-[#3a6d8c]',
               )}
             >
               {site.location}
@@ -149,11 +133,11 @@ export default function Header() {
               className={cn(
                 'inline-flex size-10 items-center justify-center rounded-full border transition',
                 overHero &&
-                  'border-white/15 bg-white/[0.06] text-[#eef8f4] hover:bg-white/12',
+                  'border-white/15 bg-white/[0.06] text-[#e8eef5] hover:bg-white/12',
                 lightSolid &&
-                  'border-[#152821]/12 bg-[#f4f7f5] text-[#152821] hover:bg-[#e8f0ec]',
+                  'border-[#1e2a3a]/12 bg-[#f4f5f7] text-[#1e2a3a] hover:bg-[#e8ecf1]',
                 darkSolid &&
-                  'border-white/12 bg-white/[0.06] text-[#eef8f4] hover:bg-white/10',
+                  'border-white/12 bg-white/[0.06] text-[#e8eef5] hover:bg-white/10',
               )}
               aria-label={
                 isLight ? 'Switch to dark mode' : 'Switch to light mode'
@@ -168,9 +152,9 @@ export default function Header() {
               className={cn(
                 'hidden !min-h-10 !rounded-sm !bg-[image:none] !px-4 !shadow-none hover:!translate-y-0 sm:inline-flex',
                 (overHero || darkSolid) &&
-                  '!bg-[#0f8f7b] !text-[#04100d] hover:!bg-[#3ecfba]',
+                  '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]',
                 lightSolid &&
-                  '!bg-[#0f8f7b] !text-white hover:!bg-[#0b6f60]',
+                  '!bg-[#00a8c4] !text-white hover:!bg-[#007a96]',
               )}
             >
               Request a pilot
@@ -181,11 +165,11 @@ export default function Header() {
               className={cn(
                 'inline-flex size-10 items-center justify-center rounded-full border lg:hidden',
                 overHero &&
-                  'border-white/15 bg-white/[0.06] text-[#eef8f4]',
+                  'border-white/15 bg-white/[0.06] text-[#e8eef5]',
                 lightSolid &&
-                  'border-[#152821]/12 bg-[#f4f7f5] text-[#152821]',
+                  'border-[#1e2a3a]/12 bg-[#f4f5f7] text-[#1e2a3a]',
                 darkSolid &&
-                  'border-white/12 bg-white/[0.06] text-[#eef8f4]',
+                  'border-white/12 bg-white/[0.06] text-[#e8eef5]',
               )}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
@@ -203,10 +187,10 @@ export default function Header() {
               exit={{ opacity: 0, y: -6 }}
               className={cn(
                 'shell mt-2 rounded-[1.5rem] border p-5 backdrop-blur-xl lg:hidden',
-                overHero && 'border-white/10 bg-[#0a1412]/95 text-[#eef8f4]',
+                overHero && 'border-white/10 bg-[#0f1621]/95 text-[#e8eef5]',
                 lightSolid &&
-                  'border-[#152821]/10 bg-white text-[#152821]',
-                darkSolid && 'border-white/10 bg-[#0f1c18]/95 text-[#eef8f4]',
+                  'border-[#1e2a3a]/10 bg-white text-[#1e2a3a]',
+                darkSolid && 'border-white/10 bg-[#0f1621]/95 text-[#e8eef5]',
               )}
             >
               <div className="flex flex-col gap-4">

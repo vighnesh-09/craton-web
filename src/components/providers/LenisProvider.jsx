@@ -1,8 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import Lenis from 'lenis'
+import { ensureGsap } from '@/lib/gsap'
 
 const LenisContext = createContext(null)
 
+/** Product card ids live inside the pinned #products stage — scroll the stage. */
+const HASH_ALIASES = {
+  raccelerator: 'products',
+  reviewsintel: 'products',
+}
+
+/**
+ * Smooth scroll (Lenis) synced with GSAP ScrollTrigger —
+ * same pairing used on award-site / GSAP demos.
+ */
 export function LenisProvider({ children }) {
   const [lenis, setLenis] = useState(null)
 
@@ -10,41 +21,73 @@ export function LenisProvider({ children }) {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
     if (mq.matches) return undefined
 
+    const { ScrollTrigger, gsap } = ensureGsap()
+
     const instance = new Lenis({
-      // Whyphy / Cohere-like pacing: long ease, intentional wheel response
-      duration: 1.25,
-      easing: (t) => 1 - Math.pow(1 - t, 4),
+      duration: 1.05,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.25,
+      wheelMultiplier: 0.92,
+      touchMultiplier: 1.2,
       syncTouch: false,
-      // Keep native scroll position in sync for Framer / IntersectionObserver
       autoRaf: false,
     })
 
-    setLenis(instance)
+    instance.on('scroll', ScrollTrigger.update)
 
-    let rafId = 0
-    const raf = (time) => {
-      instance.raf(time)
-      rafId = requestAnimationFrame(raf)
+    const ticker = (time) => {
+      instance.raf(time * 1000)
     }
-    rafId = requestAnimationFrame(raf)
+    gsap.ticker.add(ticker)
+    gsap.ticker.lagSmoothing(0)
+
+    setLenis(instance)
+    // After layout + fonts, remeasure pins so scrub ranges stay honest
+    ScrollTrigger.refresh()
+    const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 400)
 
     const onChange = () => {
       if (mq.matches) {
+        gsap.ticker.remove(ticker)
         instance.destroy()
         setLenis(null)
-        cancelAnimationFrame(rafId)
       }
     }
     mq.addEventListener('change', onChange)
 
+    const onResize = () => ScrollTrigger.refresh()
+    window.addEventListener('resize', onResize)
+
+    // Native <a href="#…"> bypasses Lenis and desyncs ScrollTrigger pins
+    const onAnchorClick = (event) => {
+      const anchor = event.target.closest?.('a[href^="#"]')
+      if (!anchor || event.defaultPrevented || event.metaKey || event.ctrlKey)
+        return
+      const raw = anchor.getAttribute('href')?.slice(1)
+      if (!raw) return
+      const id = HASH_ALIASES[raw] || raw
+      const el = document.getElementById(id)
+      if (!el) return
+      event.preventDefault()
+      instance.scrollTo(el, { offset: -12, immediate: false })
+      if (raw !== id) {
+        history.pushState(null, '', `#${raw}`)
+      } else {
+        history.pushState(null, '', `#${id}`)
+      }
+      window.setTimeout(() => ScrollTrigger.refresh(), 50)
+    }
+    document.addEventListener('click', onAnchorClick)
+
     return () => {
+      window.clearTimeout(refreshTimer)
       mq.removeEventListener('change', onChange)
-      cancelAnimationFrame(rafId)
+      window.removeEventListener('resize', onResize)
+      document.removeEventListener('click', onAnchorClick)
+      gsap.ticker.remove(ticker)
       instance.destroy()
       setLenis(null)
+      ScrollTrigger.getAll().forEach((t) => t.kill())
     }
   }, [])
 

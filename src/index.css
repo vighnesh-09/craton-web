@@ -25,41 +25,41 @@
   --color-danger: var(--danger);
 }
 
-/* Default = Light (teal + warm cream, not grey) */
+/* Default = Light (logo navy + electric cyan) */
 :root {
-  --ink: #f4f7f5;
-  --ink-2: #e8f0ec;
-  --ink-3: #d9e8e2;
+  --ink: #f4f5f7;
+  --ink-2: #e8ecf1;
+  --ink-3: #dce3ec;
   --paper: #ffffff;
-  --cream: #152821;
-  --paper-2: #faf8f4;
-  --muted: #3d6b5f;
-  --muted-ink: #2f564c;
-  --accent: #0f8f7b;
-  --accent-deep: #0b6f60;
-  --sage: #4aa896;
-  --sage-deep: #2f7d6d;
-  --line: rgba(21, 40, 33, 0.1);
-  --line-ink: rgba(21, 40, 33, 0.1);
-  --glow: rgba(15, 143, 123, 0.28);
-  --ember: #e09a5f;
+  --cream: #1e2a3a;
+  --paper-2: #f7f8fa;
+  --muted: #3a6d8c;
+  --muted-ink: #2f3f54;
+  --accent: #00a8c4;
+  --accent-deep: #007a96;
+  --sage: #4a8fa8;
+  --sage-deep: #00a8c4;
+  --line: rgba(30, 42, 58, 0.12);
+  --line-ink: rgba(30, 42, 58, 0.12);
+  --glow: rgba(0, 229, 255, 0.28);
+  --ember: #a8adb8;
   --success: #2f9e6b;
   --danger: #c45d4a;
-  --glass-bg: rgba(255, 255, 255, 0.88);
-  --glass-bg-strong: rgba(255, 255, 255, 0.96);
-  --glass-border: rgba(255, 255, 255, 0.88);
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-bg-strong: rgba(255, 255, 255, 0.97);
+  --glass-border: rgba(255, 255, 255, 0.92);
   --glass-highlight: rgba(255, 255, 255, 0.98);
   --glass-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 -1px 0 rgba(15, 143, 123, 0.08) inset,
-    0 20px 48px -22px rgba(15, 100, 90, 0.28),
-    8px 10px 24px rgba(45, 120, 100, 0.1),
+    0 -1px 0 rgba(0, 168, 196, 0.08) inset,
+    0 20px 48px -22px rgba(15, 22, 33, 0.22),
+    8px 10px 24px rgba(58, 109, 140, 0.1),
     -6px -6px 18px rgba(255, 255, 255, 0.9);
-  --glass-glow: 0 0 44px -10px rgba(15, 143, 123, 0.35);
-  --btn-face: linear-gradient(145deg, #2bb89f 0%, #0f8f7b 48%, #0b6f60 100%);
-  --scene-a: rgba(120, 210, 195, 0.42);
-  --scene-b: rgba(255, 210, 170, 0.38);
-  --scene-c: rgba(170, 220, 190, 0.32);
+  --glass-glow: 0 0 44px -10px rgba(0, 229, 255, 0.35);
+  --btn-face: linear-gradient(145deg, #5cfbff 0%, #00a8c4 48%, #007a96 100%);
+  --scene-a: rgba(0, 229, 255, 0.28);
+  --scene-b: rgba(168, 173, 184, 0.35);
+  --scene-c: rgba(58, 109, 140, 0.28);
   /* Fluid page gutters — mobile-safe, denser vertical rhythm */
   --pad: clamp(0.875rem, 2.2vw, 2rem);
   --section-y: clamp(2.5rem, 4vw, 4rem);
@@ -82,6 +82,9 @@
   body {
     @apply m-0 min-h-screen bg-ink font-sans text-cream antialiased;
     overflow-x: clip;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 10% -10%, rgba(0, 229, 255, 0.08), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% 0%, rgba(58, 109, 140, 0.1), transparent 50%);
     transition:
       background-color 0.35s ease,
       color 0.35s ease;
@@ -249,5 +252,28 @@
   }
   to {
     transform: scaleX(1);
+  }
+}
+
+/* Soft live-portrait ken burns (respects prefers-reduced-motion below) */
+@keyframes voice-ken {
+  0% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+}
+
+.voice-ken {
+  animation: voice-ken 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-ken {
+    animation: none;
   }
 }

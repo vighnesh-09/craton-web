@@ -1,10 +1,4 @@
-import { useRef } from 'react'
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import useGsapContext from '@/hooks/useGsapContext'
 
 const FRAMES = [
   {
@@ -29,21 +23,39 @@ const FRAMES = [
   },
 ]
 
-/** Horizontal film scrubbed by vertical scroll — unique motion beat. */
+/** GSAP horizontal scrub — vertical scroll drives the film track. */
 export default function FilmStrip() {
-  const ref = useRef(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end end'],
-  })
+  const { rootRef, reduced } = useGsapContext(({ gsap, root }) => {
+    const stage = root.querySelector('[data-stage]')
+    const track = root.querySelector('[data-track]')
+    if (!stage || !track) return
 
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-58%'])
-  const glow = useTransform(scrollYProgress, [0, 0.5, 1], [0.55, 1, 0.7])
+    const getTravel = () => {
+      const max = track.scrollWidth - window.innerWidth + 48
+      return Math.max(0, max)
+    }
+
+    gsap.to(track, {
+      x: () => -getTravel(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: root,
+        start: 'top top',
+        end: () => `+=${Math.max(window.innerHeight * 1.9, getTravel())}`,
+        pin: stage,
+        scrub: 0.75,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+      },
+    })
+  }, [])
 
   if (reduced) {
     return (
-      <section aria-label="RAccelerator flow" className="pad-x py-[clamp(2.5rem,4vw,4rem)]">
+      <section
+        aria-label="RAccelerator flow"
+        className="pad-x py-[clamp(2.5rem,4vw,4rem)]"
+      >
         <p className="mono-label text-accent">RAccelerator flow</p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {FRAMES.map((f) => (
@@ -60,13 +72,16 @@ export default function FilmStrip() {
 
   return (
     <section
-      ref={ref}
+      ref={rootRef}
       id="film"
-      className="relative h-[170vh]"
+      className="relative"
       aria-label="RAccelerator flow"
     >
-      <div className="sticky top-0 flex h-[100svh] flex-col justify-center overflow-hidden py-8 sm:py-10">
-        <div className="pad-x mb-5 shrink-0">
+      <div
+        data-stage
+        className="flex h-[100svh] flex-col justify-center overflow-hidden py-8 sm:py-10"
+      >
+        <div className="pad-x mb-6 shrink-0">
           <div className="shell flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="mono-label text-accent">RAccelerator · film strip</p>
@@ -75,17 +90,14 @@ export default function FilmStrip() {
                 <span className="serif text-accent">evidence path.</span>
               </h2>
             </div>
-            <motion.p
-              style={{ opacity: glow }}
-              className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted"
-            >
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-muted">
               Vertical scroll → horizontal story
-            </motion.p>
+            </p>
           </div>
         </div>
 
-        <motion.ul
-          style={{ x }}
+        <ul
+          data-track
           className="flex w-max gap-5 px-[var(--pad)] will-change-transform sm:gap-7"
         >
           {FRAMES.map((frame, i) => (
@@ -116,14 +128,14 @@ export default function FilmStrip() {
                   <div
                     className="h-full w-full opacity-80"
                     style={{
-                      backgroundImage: `linear-gradient(120deg, transparent 20%, rgba(62,207,186,0.25) 45%, transparent 70%), repeating-linear-gradient(90deg, rgba(238,248,244,0.06) 0 1px, transparent 1px 18px)`,
+                      backgroundImage: `linear-gradient(120deg, transparent 20%, rgba(0,229,255,0.28) 45%, transparent 70%), repeating-linear-gradient(90deg, rgba(232,238,245,0.08) 0 1px, transparent 1px 18px)`,
                     }}
                   />
                 </div>
               </div>
             </li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
     </section>
   )

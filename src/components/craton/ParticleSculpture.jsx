@@ -15,30 +15,30 @@ const P = PHASES.length
 const SEG = HOLD + TRANS
 const CYCLE = SEG * P
 
-/** Brand particle sprites — teal + ember; wordmark follows theme. */
+/** Brand particle sprites — logo cyan + navy/silver. */
 const PALETTES = {
   dark: {
-    teal: '110,232,214',
-    tealDim: '46,180,160',
-    ember: '255,196,140',
-    emberDim: '232,160,100',
-    glow: '255,230,190',
-    haloHot: '255,220,170',
-    haloMid: '240,178,122',
-    wordMain: '#eef8f4',
-    wordSub: '#f0b27a',
+    teal: '0,229,255',
+    tealDim: '0,168,196',
+    ember: '168,173,184',
+    emberDim: '120,130,148',
+    glow: '92,251,255',
+    haloHot: '0,229,255',
+    haloMid: '58,109,140',
+    wordMain: '#e8eef5',
+    wordSub: '#00e5ff',
     alphaBoost: 1.35,
   },
   light: {
-    teal: '11,111,96',
-    tealDim: '15,143,123',
-    ember: '180,110,55',
-    emberDim: '140,90,45',
-    glow: '210,140,80',
-    haloHot: '200,130,70',
-    haloMid: '15,143,123',
-    wordMain: '#152821',
-    wordSub: '#0b6f60',
+    teal: '0,168,196',
+    tealDim: '0,122,150',
+    ember: '120,130,148',
+    emberDim: '90,100,120',
+    glow: '0,200,224',
+    haloHot: '0,168,196',
+    haloMid: '58,109,140',
+    wordMain: '#1e2a3a',
+    wordSub: '#00a8c4',
     alphaBoost: 1.15,
   },
 }

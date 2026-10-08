@@ -1,35 +1,39 @@
-import { useRef } from 'react'
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import useGsapContext from '@/hooks/useGsapContext'
 
-/**
- * Unique sticky wipe: problem → clarity revealed by a scroll-driven clip.
- */
+/** GSAP sticky wipe — burden → clarity with clip scrub. */
 export default function EvidenceWipe() {
-  const ref = useRef(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end end'],
-  })
+  const { rootRef, reduced } = useGsapContext(({ gsap, root }) => {
+    const stage = root.querySelector('[data-stage]')
+    const after = root.querySelector('[data-after]')
+    const bar = root.querySelector('[data-bar]')
+    if (!stage || !after) return
 
-  const clip = useTransform(
-    scrollYProgress,
-    [0.1, 0.85],
-    ['inset(0 100% 0 0)', 'inset(0 0% 0 0)'],
-  )
-  const label = useTransform(scrollYProgress, [0, 0.45, 0.55, 1], [0, 0, 1, 1])
-  const bar = useTransform(scrollYProgress, [0.1, 0.85], ['0%', '100%'])
+    gsap.set(after, { clipPath: 'inset(0 100% 0 0)' })
+    gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: root,
+        start: 'top top',
+        end: '+=160%',
+        pin: stage,
+        scrub: 0.7,
+        anticipatePin: 1,
+      },
+    })
+
+    tl.to(after, { clipPath: 'inset(0 0% 0 0)', ease: 'none', duration: 1 }, 0).to(
+      bar,
+      { scaleX: 1, ease: 'none', duration: 1 },
+      0,
+    )
+  }, [])
 
   if (reduced) {
     return (
       <section
         aria-label="From burden to evidence"
-        className="pad-x grid gap-6 py-[clamp(2.5rem,4vw,4rem)] md:grid-cols-2"
+        className="pad-x grid gap-8 py-16 md:grid-cols-2"
       >
         <div className="rounded-2xl border border-line bg-ink-2 p-8">
           <p className="mono-label text-muted">Before</p>
@@ -49,40 +53,35 @@ export default function EvidenceWipe() {
 
   return (
     <section
-      ref={ref}
+      ref={rootRef}
       id="wipe"
-      className="relative h-[150vh]"
+      className="relative"
       aria-label="From burden to evidence"
     >
-      <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
-        <div className="absolute inset-0 flex items-center bg-[#0a1412] pad-x">
+      <div data-stage className="relative h-[100svh] overflow-hidden">
+        <div className="absolute inset-0 flex items-center bg-[#0f1621] pad-x">
           <div className="shell w-full">
-            <p className="mono-label text-[#8ebdb0]">The burden</p>
-            <h2 className="mt-5 max-w-[16ch] text-[clamp(2.4rem,6vw,4.8rem)] font-normal leading-[1.02] tracking-[-0.045em] text-[#eef8f4]">
+            <p className="mono-label text-[#8aa0b8]">The burden</p>
+            <h2 className="mt-5 max-w-[16ch] text-[clamp(2.4rem,6vw,4.8rem)] font-normal leading-[1.02] tracking-[-0.045em] text-[#e8eef5]">
               Thousands of pages.
               <br />
               Manual mapping.
               <br />
-              <span className="text-[#8ebdb0]">Deadline pressure.</span>
+              <span className="text-[#8aa0b8]">Deadline pressure.</span>
             </h2>
-            <p className="mt-6 max-w-[40ch] text-[15px] leading-relaxed text-[#8ebdb0]">
+            <p className="mt-6 max-w-[40ch] text-[15px] leading-relaxed text-[#8aa0b8]">
               GSPR gap assessment and classification still force teams to rebuild
               the argument by hand — every submission cycle.
             </p>
           </div>
         </div>
 
-        <motion.div
-          style={{ clipPath: clip }}
-          className="absolute inset-0 flex items-center bg-[linear-gradient(135deg,#0f8f7b_0%,#0b6f60_48%,#152821_100%)] pad-x"
+        <div
+          data-after
+          className="absolute inset-0 flex items-center bg-[linear-gradient(135deg,#00a8c4_0%,#007a96_45%,#1e2a3a_100%)] pad-x"
         >
           <div className="shell w-full">
-            <motion.p
-              style={{ opacity: label }}
-              className="mono-label text-white/80"
-            >
-              The Craton cut
-            </motion.p>
+            <p className="mono-label text-white/80">The Craton cut</p>
             <h2 className="mt-5 max-w-[16ch] text-[clamp(2.4rem,6vw,4.8rem)] font-normal leading-[1.02] tracking-[-0.045em] text-white">
               Requirement.
               <br />
@@ -95,7 +94,7 @@ export default function EvidenceWipe() {
               document-linked, ready for expert review.
             </p>
           </div>
-        </motion.div>
+        </div>
 
         <div className="pointer-events-none absolute inset-x-0 bottom-6 pad-x sm:bottom-8">
           <div className="shell flex items-center gap-4">
@@ -103,7 +102,7 @@ export default function EvidenceWipe() {
               Wipe
             </span>
             <div className="h-px flex-1 overflow-hidden bg-white/20">
-              <motion.div className="h-full bg-white" style={{ width: bar }} />
+              <div data-bar className="h-full origin-left bg-white" />
             </div>
             <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/50">
               Clarity

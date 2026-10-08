@@ -4,6 +4,7 @@ export const site = {
   url: 'https://craton.io',
   email: 'hello@craton.io',
   location: 'Frisco, Texas',
+  logo: '/brand/craton-logo.png',
   founder: {
     name: 'Sheik Ahamed Ali',
     role: 'Founder & CEO',
@@ -32,6 +33,79 @@ export const site = {
     { value: '3 · 9', label: 'US patents granted · pending (Aug 2026)' },
     { value: 'Sept 2026', label: 'First RAccelerator enterprise evaluation' },
     { value: 'Frisco, TX', label: 'Founder-funded product company' },
+  ],
+
+  /**
+   * Illustrative diligence voices (Whyphy-style proof rows + expand media).
+   * Not named customer endorsements — swap when partners consent.
+   */
+  voices: [
+    {
+      id: 'elena',
+      logo: '/voices/logos/clarityra.svg',
+      logoAlt: 'ClarityRA',
+      name: 'Elena Voss',
+      role: 'VP, Regulatory Affairs · illustrative',
+      quote:
+        'We do not need another black-box score. We need every GSPR row tied to a document we can defend in a Notified Body meeting — with the expert still in the loop. My only regret is waiting this long to demand evidence-first tooling.',
+      image: '/voices/elena.jpg',
+      glow: 'rgba(196,93,74,0.28)',
+    },
+    {
+      id: 'marcus',
+      logo: '/voices/logos/axiom.svg',
+      logoAlt: 'Axiom IVD',
+      name: 'Marcus Chen',
+      role: 'Head of Quality · illustrative',
+      quote:
+        'Classification and gap assessment still burn months of senior time. If the argument is visible — rule, evidence, exception — we can review in days instead of rebuilding the file by hand.',
+      image: '/voices/marcus.jpg',
+      glow: 'rgba(30,42,58,0.22)',
+    },
+    {
+      id: 'priya',
+      logo: '/voices/logos/trustlane.svg',
+      logoAlt: 'TrustLane',
+      name: 'Priya Nair',
+      role: 'Director, Product Trust · illustrative',
+      quote:
+        'When an agent recommends a purchase, the rationale has to travel with it. Independent review evidence before checkout is the difference between automation and liability.',
+      image: '/voices/priya.jpg',
+      glow: 'rgba(0,122,150,0.28)',
+    },
+    {
+      id: 'jonas',
+      logo: '/voices/logos/northform.svg',
+      logoAlt: 'Northform',
+      name: 'Jonas Berger',
+      role: 'Director, Regulatory · illustrative',
+      quote:
+        'Enterprise evaluation only moves when the system shows its work. Traceable mapping beats a polished demo every time — especially when a wrong citation costs months.',
+      image: '/voices/jonas.jpg',
+      glow: 'rgba(47,63,84,0.25)',
+    },
+    {
+      id: 'amira',
+      logo: '/voices/logos/lumen.svg',
+      logoAlt: 'Lumen Devices',
+      name: 'Amira Solé',
+      role: 'Program Lead · illustrative',
+      quote:
+        'We bought time for the experts — not another dashboard. The gap list has to be something a reviewer can own in a meeting, with human judgment still central.',
+      image: '/voices/amira.jpg',
+      glow: 'rgba(58,109,140,0.28)',
+    },
+    {
+      id: 'derek',
+      logo: '/voices/logos/harbor.svg',
+      logoAlt: 'Harbor Cart',
+      name: 'Derek Mills',
+      role: 'Head of Platform · illustrative',
+      quote:
+        'Agents will buy. The question is whether the evidence arrives with the cart — or after the chargeback. That is the bar for trust systems in agentic commerce.',
+      image: '/voices/derek.jpg',
+      glow: 'rgba(0,168,196,0.28)',
+    },
   ],
   beliefs: [
     {

@@ -1,10 +1,4 @@
-import { useRef } from 'react'
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import useGsapContext from '@/hooks/useGsapContext'
 
 const LINES = [
   { text: 'Invent.', accent: false },
@@ -13,22 +7,50 @@ const LINES = [
   { text: 'Ship.', accent: true },
 ]
 
-/** Giant scrubbed method words — high-impact scroll beat. */
+/** GSAP pinned kinetic words — one peaks per scrub segment. */
 export default function ScaleWords() {
-  const ref = useRef(null)
-  const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start start', 'end end'],
-  })
+  const { rootRef, reduced } = useGsapContext(({ gsap, root }) => {
+    const stage = root.querySelector('[data-stage]')
+    const words = root.querySelectorAll('[data-word]')
+    if (!stage || !words.length) return
+
+    gsap.set(words, { opacity: 0.18, scale: 0.9, y: 20 })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: root,
+        start: 'top top',
+        end: '+=160%',
+        pin: stage,
+        scrub: 0.7,
+        anticipatePin: 1,
+      },
+    })
+
+    words.forEach((word, i) => {
+      const start = i / words.length
+      tl.to(
+        word,
+        { opacity: 1, scale: 1.06, y: 0, ease: 'none', duration: 0.2 },
+        start,
+      )
+      if (i < words.length - 1) {
+        tl.to(
+          word,
+          { opacity: 0.22, scale: 0.96, ease: 'none', duration: 0.15 },
+          start + 0.18,
+        )
+      }
+    })
+  }, [])
 
   if (reduced) {
     return (
       <section
         aria-label="Craton method words"
-        className="pad-x py-[clamp(2.5rem,4vw,4rem)] text-center"
+        className="pad-x border-y border-line py-[clamp(2.5rem,5vw,4rem)] text-center"
       >
-        <p className="text-[clamp(2rem,6vw,4rem)] tracking-tight">
+        <p className="text-[clamp(1.8rem,5vw,3.2rem)] tracking-tight">
           Invent. Protect. Assemble. Ship.
         </p>
       </section>
@@ -36,57 +58,28 @@ export default function ScaleWords() {
   }
 
   return (
-    <section
-      ref={ref}
-      className="relative h-[140vh]"
-      aria-label="Craton method words"
-    >
-      <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden pad-x">
-        <ul className="w-full space-y-1.5 text-center sm:space-y-2">
-          {LINES.map((line, i) => (
-            <ScaleLine
+    <section ref={rootRef} className="relative" aria-label="Craton method words">
+      <div
+        data-stage
+        className="flex h-[100svh] flex-col items-center justify-center overflow-hidden pad-x"
+      >
+        <p className="mono-label mb-6 text-accent">Method in four words</p>
+        <ul className="w-full max-w-[56rem] space-y-1 text-center">
+          {LINES.map((line) => (
+            <li
               key={line.text}
-              line={line}
-              index={i}
-              total={LINES.length}
-              progress={scrollYProgress}
-            />
+              data-word
+              className={
+                line.accent
+                  ? 'serif text-[clamp(2.6rem,8vw,6rem)] leading-[0.95] tracking-[-0.04em] text-accent will-change-transform'
+                  : 'text-[clamp(2.4rem,7.5vw,5.5rem)] font-semibold uppercase leading-[0.95] tracking-[-0.05em] will-change-transform'
+              }
+            >
+              {line.text}
+            </li>
           ))}
         </ul>
       </div>
     </section>
-  )
-}
-
-function ScaleLine({ line, index, total, progress }) {
-  const start = index / total
-  const end = (index + 1) / total
-  const opacity = useTransform(
-    progress,
-    [start, start + 0.15, end - 0.05, end],
-    [0.15, 1, 1, 0.2],
-  )
-  const scale = useTransform(
-    progress,
-    [start, start + 0.2, end],
-    [0.88, 1.04, 0.96],
-  )
-  const x = useTransform(
-    progress,
-    [start, end],
-    [index % 2 === 0 ? -40 : 40, 0],
-  )
-
-  return (
-    <motion.li
-      style={{ opacity, scale, x }}
-      className={
-        line.accent
-          ? 'serif text-[clamp(2.8rem,9vw,7rem)] leading-[0.95] tracking-[-0.04em] text-accent'
-          : 'text-[clamp(2.6rem,8.5vw,6.5rem)] font-semibold uppercase leading-[0.95] tracking-[-0.05em]'
-      }
-    >
-      {line.text}
-    </motion.li>
   )
 }

@@ -1,17 +1,13 @@
 import { Link } from 'react-router-dom'
+import BrandLogo from '@/components/ui/BrandLogo'
 import { site } from '@/config/site'
 
 export default function Footer() {
   return (
     <footer className="pad-x border-t border-line bg-ink pb-6 pt-8 text-cream">
       <div className="shell mb-6 grid gap-6 lg:grid-cols-[1.1fr_1.4fr_0.8fr]">
-        <a href="#top" className="flex items-end gap-2.5 self-start">
-          <span className="text-[1.7rem] font-semibold leading-none tracking-[-0.06em]">
-            craton
-          </span>
-          <span className="mono-label mb-0.5 max-w-[4.5rem] text-[7.5px] leading-tight text-muted">
-            Techno­logies
-          </span>
+        <a href="#top" className="self-start" aria-label={site.name}>
+          <BrandLogo size="lg" />
         </a>
         <p className="max-w-xl text-[14px] leading-relaxed text-cream/65">
           Craton Technologies is an innovation-driven product company based in

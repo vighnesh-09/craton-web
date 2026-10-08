@@ -265,8 +265,8 @@ function Door({ active, title, body, onClick }) {
       className={cn(
         'rounded-xl border p-3.5 text-left transition duration-300',
         active
-          ? 'border-accent/50 bg-accent/10'
-          : 'border-line bg-transparent hover:border-line hover:bg-white/[0.03]',
+          ? 'border-accent/55 bg-accent/12 shadow-[0_0_0_1px_rgba(0,229,255,0.12)]'
+          : 'border-line bg-paper/40 hover:border-accent/30 hover:bg-paper/70',
       )}
     >
       <b className="block text-[14px] font-medium text-cream">{title}</b>

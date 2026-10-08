@@ -1,0 +1,59 @@
+import { cn } from '@/lib/cn'
+
+/**
+ * Craton mark — lightbulb + circuit brain + navy chevrons.
+ * Asset: /brand/craton-logo.png (from Logo-3D-04242026-v2)
+ */
+export default function BrandLogo({
+  className,
+  imgClassName,
+  showWordmark = true,
+  size = 'md',
+  inverted = false,
+}) {
+  const sizes = {
+    sm: { box: 'size-8', word: 'text-[1.1rem]', gap: 'gap-2' },
+    md: { box: 'size-10', word: 'text-[1.35rem]', gap: 'gap-2.5' },
+    lg: { box: 'size-12', word: 'text-[1.55rem]', gap: 'gap-3' },
+  }
+  const s = sizes[size] || sizes.md
+
+  return (
+    <span className={cn('inline-flex items-center', s.gap, className)}>
+      <img
+        src="/brand/craton-logo.png"
+        alt=""
+        width={48}
+        height={48}
+        className={cn(
+          s.box,
+          'shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-black/5',
+          imgClassName,
+        )}
+        decoding="async"
+      />
+      {showWordmark ? (
+        <span className="flex flex-col gap-0.5">
+          <span
+            className={cn(
+              s.word,
+              'font-semibold leading-none tracking-[-0.06em]',
+              inverted ? 'text-[#e8eef5]' : 'text-cream',
+            )}
+          >
+            craton
+            <span className="text-accent">.</span>
+          </span>
+          <span
+            className={cn(
+              'mono-label text-[7.5px]',
+              inverted ? 'text-[#8aa0b8]' : 'text-muted',
+            )}
+          >
+            Innovation-first. Evidence-led.
+          </span>
+        </span>
+      ) : null}
+    </span>
+  )
+}

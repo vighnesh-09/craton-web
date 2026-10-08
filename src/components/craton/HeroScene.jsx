@@ -60,7 +60,7 @@ function EvidenceCore({ scrollRef }) {
       <mesh ref={ring} rotation={[0.7, 0.2, 0]}>
         <torusGeometry args={[1.22, 0.018, 10, 48]} />
         <meshStandardMaterial
-          color="#0f8f7b"
+          color="#00a8c4"
           emissive="#2bb89f"
           emissiveIntensity={0.35}
           metalness={0.45}
@@ -72,8 +72,8 @@ function EvidenceCore({ scrollRef }) {
         <mesh key={i} position={node.position} scale={node.scale}>
           <sphereGeometry args={[1, 12, 12]} />
           <meshStandardMaterial
-            color={i % 2 ? '#e09a5f' : '#3ecfba'}
-            emissive={i % 2 ? '#e09a5f' : '#0f8f7b'}
+            color={i % 2 ? '#a8adb8' : '#00e5ff'}
+            emissive={i % 2 ? '#a8adb8' : '#00a8c4'}
             emissiveIntensity={0.42}
             roughness={0.38}
           />
@@ -124,7 +124,7 @@ export default function HeroScene({ scrollRef }) {
     >
       <ambientLight intensity={0.6} />
       <directionalLight position={[4, 5, 3]} intensity={1.05} />
-      <directionalLight position={[-3, -2, -2]} intensity={0.35} color="#3ecfba" />
+      <directionalLight position={[-3, -2, -2]} intensity={0.35} color="#00e5ff" />
       <EvidenceCore scrollRef={scrollRef} />
     </Canvas>
   )

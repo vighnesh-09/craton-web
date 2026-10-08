@@ -14,6 +14,7 @@ import ScaleWords from '@/components/sections/ScaleWords'
 import ScrollRail from '@/components/sections/ScrollRail'
 import StatementBand from '@/components/sections/StatementBand'
 import Trust from '@/components/sections/Trust'
+import Voices from '@/components/sections/Voices'
 
 export default function HomePage() {
   return (
@@ -33,6 +34,7 @@ export default function HomePage() {
       <Approach />
       <About />
       <Trust />
+      <Voices />
       <Contact />
     </>
   )

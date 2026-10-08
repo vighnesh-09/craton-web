@@ -1,4 +1,5 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { easeOutExpo } from '@/lib/motion'
 
 const motionMap = {
   div: motion.div,
@@ -10,12 +11,12 @@ const motionMap = {
   p: motion.p,
 }
 
-/** Section entrance — calm, scroll-forward (once in view). */
+/** Premium entrance — once in view, expo ease (GSAP-feel). */
 export default function Reveal({
   children,
   className,
   delay = 0,
-  y = 32,
+  y = 28,
   as = 'div',
   ...rest
 }) {
@@ -34,13 +35,13 @@ export default function Reveal({
   return (
     <Motion
       className={className}
-      initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15, margin: '0px 0px -4% 0px' }}
+      initial={{ opacity: 0, y, filter: 'blur(4px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.2, margin: '0px 0px -6% 0px' }}
       transition={{
-        duration: 0.55,
-        delay: Math.min(delay, 0.12),
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.7,
+        delay: Math.min(delay, 0.18),
+        ease: easeOutExpo,
       }}
       {...rest}
     >
