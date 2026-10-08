@@ -355,6 +355,8 @@ export default function ParticleSculpture({
     let solid = 0
     let textK = 0
     let raf = 0
+    let rafTimer = 0
+    let interacting = false
     let runningPaused = reduced
     let onScreen = true
     const fil = [0, 0, 1, 1]
@@ -549,18 +551,29 @@ export default function ParticleSculpture({
     }
 
     function tick(now) {
+      raf = 0
+      if (interacting || runningPaused || !onScreen || document.hidden) return
       if (!last) last = now
       const dt = Math.min(0.05, (now - last) / 1000)
       last = now
-      if (!runningPaused) time += dt
+      time += dt
       rotY = -0.3 + 0.55 * Math.sin(time * 0.21)
+      const started = performance.now()
       compute(time)
       draw()
-      raf = runningPaused ? 0 : requestAnimationFrame(tick)
+      if (performance.now() - started > 8) {
+        rafTimer = window.setTimeout(() => {
+          rafTimer = 0
+          if (!interacting) raf = requestAnimationFrame(tick)
+        }, 32)
+        return
+      }
+      raf = requestAnimationFrame(tick)
     }
 
     function start() {
-      if (!raf && onScreen && !runningPaused) {
+      if (interacting || runningPaused || !onScreen || document.hidden) return
+      if (!raf && !rafTimer) {
         last = 0
         raf = requestAnimationFrame(tick)
       }
@@ -570,6 +583,10 @@ export default function ParticleSculpture({
       if (raf) {
         cancelAnimationFrame(raf)
         raf = 0
+      }
+      if (rafTimer) {
+        window.clearTimeout(rafTimer)
+        rafTimer = 0
       }
     }
 
@@ -605,11 +622,39 @@ export default function ParticleSculpture({
 
     resize()
     const onResize = () => {
-      resize()
-      compute(time)
-      draw()
+      const rect = host.getBoundingClientRect()
+      const width = Math.max(1, rect.width)
+      const height = Math.max(1, rect.height)
+      requestAnimationFrame(() => {
+        W = width
+        H = height
+        dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 1.5)
+        canvas.width = Math.round(W * dpr)
+        canvas.height = Math.round(H * dpr)
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        if (!interacting) {
+          compute(time)
+          draw()
+        }
+      })
     }
     window.addEventListener('resize', onResize)
+
+    const pauseForInput = () => {
+      interacting = true
+      stop()
+    }
+    const resumeAfterInput = () => {
+      interacting = false
+      window.setTimeout(() => {
+        if (!interacting) start()
+      }, 0)
+    }
+    window.addEventListener('pointerdown', pauseForInput, { passive: true })
+    window.addEventListener('pointerup', resumeAfterInput, { passive: true })
+    window.addEventListener('pointercancel', resumeAfterInput, { passive: true })
+    window.addEventListener('keydown', pauseForInput)
+    window.addEventListener('keyup', resumeAfterInput)
 
     if (reduced) {
       time = 3 * SEG
@@ -648,6 +693,11 @@ export default function ParticleSculpture({
     return () => {
       stop()
       window.removeEventListener('resize', onResize)
+      window.removeEventListener('pointerdown', pauseForInput)
+      window.removeEventListener('pointerup', resumeAfterInput)
+      window.removeEventListener('pointercancel', resumeAfterInput)
+      window.removeEventListener('keydown', pauseForInput)
+      window.removeEventListener('keyup', resumeAfterInput)
       document.removeEventListener('visibilitychange', onVisibility)
       io?.disconnect()
       apiRef.current = null
@@ -655,11 +705,12 @@ export default function ParticleSculpture({
   }, [reduced, colors, heroScale, themeMode])
 
   const goPhase = (k) => {
-    apiRef.current?.jumpToPhase(k, reduced || paused)
+    window.setTimeout(() => apiRef.current?.jumpToPhase(k, reduced || paused), 0)
   }
 
   const togglePause = () => {
-    apiRef.current?.setPausedState(!paused)
+    const next = !paused
+    window.setTimeout(() => apiRef.current?.setPausedState(next), 0)
   }
 
   const active = PHASES[phase]

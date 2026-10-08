@@ -31,7 +31,7 @@ export default function LegalPage() {
       <h1 className="mt-4 text-[clamp(2.4rem,5vw,3.8rem)] font-normal tracking-tight">
         {page.title}
       </h1>
-      <p className="mt-6 text-[16px] leading-[1.75] text-cream/70">{page.body}</p>
+      <p className="mt-6 text-[16px] leading-[1.75] text-muted-ink">{page.body}</p>
       <p className="mt-6 text-[14px] text-muted">
         Contact:{' '}
         <a className="text-accent hover:text-cream" href={`mailto:${site.email}`}>

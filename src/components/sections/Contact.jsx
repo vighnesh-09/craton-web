@@ -235,7 +235,7 @@ export default function Contact() {
         .field-input {
           width: 100%;
           min-width: 0;
-          min-height: 46px;
+          min-height: 48px;
           border-radius: 10px;
           border: 1px solid var(--field-border);
           background: var(--field-bg);
@@ -245,9 +245,10 @@ export default function Contact() {
           outline: none;
         }
         textarea.field-input { min-height: 6.5rem; }
-        .field-input:focus {
-          border-color: var(--accent);
-          box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+        .field-input:focus-visible {
+          outline: 2px solid #075e73;
+          outline-offset: 2px;
+          border-color: #075e73;
         }
         .field-input::placeholder { color: var(--field-placeholder); }
         .depth-key {
@@ -286,7 +287,8 @@ export default function Contact() {
           width: 100%;
           text-align: left;
           border-radius: 8px;
-          padding: 0.6rem 0.7rem;
+          min-height: 48px;
+          padding: 0.75rem 0.7rem;
           font-size: 0.9rem;
           color: var(--field-text);
           background: transparent;

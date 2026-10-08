@@ -57,7 +57,8 @@ export default function EvidenceWipe() {
           </div>
           <div
             data-photo
-            className="media-xl pointer-events-none relative overflow-hidden max-[799px]:h-[280px] max-[799px]:w-full! min-[800px]:absolute min-[800px]:top-0 min-[800px]:right-0 min-[800px]:bottom-0 min-[800px]:h-full"
+            className="cover-clip media-xl pointer-events-none relative overflow-hidden max-[799px]:h-[280px] max-[799px]:w-full! min-[800px]:absolute min-[800px]:top-0 min-[800px]:right-0 min-[800px]:bottom-0 min-[800px]:h-full"
+            style={{ '--ar': '1.777778' }}
           >
             <img
               src="/evidence-map.webp"
@@ -67,7 +68,7 @@ export default function EvidenceWipe() {
               sizes="(min-width: 800px) 50vw, 100vw"
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 block h-full w-full object-cover object-center"
+              className="cover-img cover-img--center"
             />
           </div>
         </div>
@@ -77,32 +78,34 @@ export default function EvidenceWipe() {
           className="absolute inset-0 flex items-center bg-[linear-gradient(135deg,#00A8C4_0%,#007A96_42%,#1E2A3A_100%)] px-[var(--pad)] pb-16 pt-[5.5rem]"
         >
           <div className="shell w-full">
-            <p className="font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-white/80">
-              The Craton cut
-            </p>
-            <h2 className="mt-4 max-w-[16ch] text-[clamp(2rem,4.6vw,3.6rem)] font-medium leading-[1.05] tracking-[-0.04em] text-white">
-              Requirement.
-              <br />
-              Evidence.
-              <br />
-              <span className="serif">Human judgment.</span>
-            </h2>
-            <p className="mt-5 max-w-[42ch] text-[15px] leading-relaxed text-white/90">
-              RAccelerator surfaces the defended path — rule-traced,
-              document-linked, ready for expert review.
-            </p>
+            <div className="max-w-[40rem] rounded-md bg-[#071018]/80 p-5 sm:p-6">
+              <p className="font-mono text-[12px] font-medium uppercase tracking-[0.16em] text-[#f4f7fb]">
+                The Craton cut
+              </p>
+              <h2 className="mt-4 max-w-[16ch] text-[clamp(2rem,4.6vw,3.6rem)] font-medium leading-[1.05] tracking-[-0.04em] text-[#f4f7fb]">
+                Requirement.
+                <br />
+                Evidence.
+                <br />
+                <span className="serif">Human judgment.</span>
+              </h2>
+              <p className="mt-5 max-w-[42ch] text-[15px] leading-relaxed text-[#f4f7fb]">
+                RAccelerator surfaces the defended path — rule-traced,
+                document-linked, ready for expert review.
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-6 px-[var(--pad)] sm:bottom-8">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#071018] via-[#071018]/85 to-transparent px-[var(--pad)] pb-6 pt-16 sm:pb-8">
           <div className="shell flex items-center gap-4">
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/70">
+            <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-[#f4f7fb]">
               Burden
             </span>
             <div className="h-px flex-1 overflow-hidden bg-white/25">
               <div data-bar className="h-full origin-left bg-white" />
             </div>
-            <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/70">
+            <span className="font-mono text-[12px] uppercase tracking-[0.16em] text-[#f4f7fb]">
               Clarity
             </span>
           </div>
@@ -130,7 +133,7 @@ function EvidenceStatic() {
           <p className="kicker">The Craton cut</p>
           <h2 className="mt-3 text-[clamp(1.4rem,2.2vw,1.85rem)] font-medium leading-snug tracking-[-0.03em] text-[#1E2A3A]">
             Requirement. Evidence.{' '}
-            <span className="serif text-[#00A8C4]">Human judgment.</span>
+            <span className="serif text-[#075e73]">Human judgment.</span>
           </h2>
           <p className="lede mt-3">
             RAccelerator surfaces the defended path — rule-traced,

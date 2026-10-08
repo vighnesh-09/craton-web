@@ -46,8 +46,11 @@ export function LenisProvider({ children }) {
     gsap.ticker.lagSmoothing(0)
 
     setLenis(instance)
-    // After layout + fonts, remeasure pins so scrub ranges stay honest
-    ScrollTrigger.refresh()
+    // Remeasure pins after the first paint so startup does not force layout
+    // in the same turn as the click or the first frame.
+    const refreshSoon = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => ScrollTrigger.refresh())
+    })
     const refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 400)
 
     const onChange = () => {
@@ -59,7 +62,9 @@ export function LenisProvider({ children }) {
     }
     mq.addEventListener('change', onChange)
 
-    const onResize = () => ScrollTrigger.refresh()
+    const onResize = () => {
+      window.requestAnimationFrame(() => ScrollTrigger.refresh())
+    }
     window.addEventListener('resize', onResize)
 
     // Native <a href="#…"> bypasses Lenis and desyncs ScrollTrigger pins
@@ -73,17 +78,23 @@ export function LenisProvider({ children }) {
       const el = document.getElementById(id)
       if (!el) return
       event.preventDefault()
-      instance.scrollTo(el, { offset: -12, immediate: false })
-      if (raw !== id) {
-        history.pushState(null, '', `#${raw}`)
-      } else {
-        history.pushState(null, '', `#${id}`)
-      }
-      window.setTimeout(() => ScrollTrigger.refresh(), 50)
+      // Paint the click first. Scroll and pin refresh run on a later frame.
+      window.setTimeout(() => {
+        instance.scrollTo(el, { offset: -12, immediate: false })
+        if (raw !== id) {
+          history.pushState(null, '', `#${raw}`)
+        } else {
+          history.pushState(null, '', `#${id}`)
+        }
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => ScrollTrigger.refresh())
+        })
+      }, 0)
     }
     document.addEventListener('click', onAnchorClick)
 
     return () => {
+      window.cancelAnimationFrame(refreshSoon)
       window.clearTimeout(refreshTimer)
       mq.removeEventListener('change', onChange)
       window.removeEventListener('resize', onResize)

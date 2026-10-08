@@ -107,8 +107,8 @@ function ProductCard({ product, chapter, cta, visual, tone }) {
           variant={ink ? 'light' : 'outline'}
           className={
             ink
-              ? '!min-h-10 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-3 !text-[#102033] !shadow-none hover:!bg-[#007A96] hover:!text-white'
-              : '!min-h-10 !rounded-sm !border-[var(--hairline)] !bg-canvas !px-3 !text-cream !shadow-none hover:!border-accent'
+              ? '!min-h-12 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-3 !text-[#102033] !shadow-none hover:!bg-[#007A96] hover:!text-[#102033]'
+              : '!min-h-12 !rounded-sm !border-[var(--hairline)] !bg-canvas !px-3 !text-cream !shadow-none hover:!border-accent'
           }
         >
           {cta}

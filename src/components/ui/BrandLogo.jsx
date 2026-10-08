@@ -20,19 +20,23 @@ export default function BrandLogo({
 
   return (
     <span className={cn('inline-flex items-center', s.gap, className)}>
-      <img
-        src="/brand/craton-logo.webp"
-        alt=""
-        width={48}
-        height={48}
+      <span
         className={cn(
           s.box,
-          'shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-black/5',
+          'inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/5',
           imgClassName,
         )}
-        decoding="async"
-        fetchPriority="low"
-      />
+      >
+        <img
+          src="/brand/craton-logo.webp"
+          alt=""
+          width={184}
+          height={192}
+          className="h-full w-auto max-w-none"
+          decoding="async"
+          fetchPriority="low"
+        />
+      </span>
       {showWordmark ? (
         <span className="flex flex-col gap-0.5">
           <span
@@ -43,7 +47,7 @@ export default function BrandLogo({
             )}
           >
             craton
-            <span className="text-accent">.</span>
+            <span className={inverted ? 'text-[#8fe7f8]' : 'text-[#075e73]'}>.</span>
           </span>
           {/* <span
             className={cn(

@@ -1,0 +1,8 @@
+# Craton Technologies
+
+Craton Technologies is a product and IP company in Frisco, Texas, founded by Sheik Ahamed Ali. It invents and ships AI-enabled products for regulated work. RAccelerator is in development for EU MDR and IVDR technical documentation and GSPR gap assessment. ReviewsIntel is evidence tooling for agentic commerce. The site states 3 US patents granted and 9 pending as of August 2026, and a first RAccelerator enterprise evaluation in September 2026. Illustrative quotes on the site are not customer endorsements.
+
+- [Home](https://craton-web-v2.netlify.app/)
+- [Privacy](https://craton-web-v2.netlify.app/privacy)
+- [Terms](https://craton-web-v2.netlify.app/terms)
+- [Accessibility](https://craton-web-v2.netlify.app/accessibility)

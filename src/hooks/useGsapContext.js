@@ -18,11 +18,14 @@ export default function useGsapContext(setup, deps = []) {
       setup({ gsap, ScrollTrigger, root: rootRef.current })
     }, rootRef)
 
-    ScrollTrigger.refresh()
+    const refreshFrame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => ScrollTrigger.refresh())
+    })
     // Second pass after layout settles (images / pin spacers / Lenis)
     const t = window.setTimeout(() => ScrollTrigger.refresh(), 200)
 
     return () => {
+      window.cancelAnimationFrame(refreshFrame)
       window.clearTimeout(t)
       ctx.revert()
     }

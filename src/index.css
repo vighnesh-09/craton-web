@@ -1,10 +1,38 @@
 @import "tailwindcss";
 @import "lenis/dist/lenis.css";
 
+/* Metric-matched fallbacks so a late webfont swap does not move text. */
+@font-face {
+  font-family: "Plus Jakarta Sans Fallback";
+  src: local("Arial");
+  size-adjust: 107%;
+  ascent-override: 92%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "Instrument Serif Fallback";
+  src: local("Georgia");
+  size-adjust: 94%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: "JetBrains Mono Fallback";
+  src: local("Consolas"), local("Courier New");
+  size-adjust: 102%;
+  ascent-override: 96%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 @theme {
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", "Instrument Serif Fallback", Georgia, serif;
+  --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", ui-monospace, monospace;
 
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
@@ -84,6 +112,7 @@
   --field-line: rgba(30, 42, 58, 0.12);
   --ok: #0b6b43;
   --alert: #8d2c1e;
+  --accent-text: #075e73;
   color-scheme: light;
 }
 
@@ -139,6 +168,7 @@ html[data-mode='dark'] {
   --field-line: rgba(255, 255, 255, 0.12);
   --ok: #8ee0b8;
   --alert: #ffb4a8;
+  --accent-text: #9af3ff;
   color-scheme: dark;
 }
 
@@ -415,11 +445,11 @@ html[data-mode='dark'] {
 
   .kicker {
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent-text);
   }
 
   .display {
@@ -448,7 +478,7 @@ html[data-mode='dark'] {
 
   .mono-label {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 500;
@@ -788,6 +818,10 @@ html[data-mode='dark'] .contact-field {
   color: #1e2a3a;
 }
 
+html:not([data-mode='dark']) .contact-sheet .text-accent-deep {
+  color: #075e73;
+}
+
 html[data-mode='dark'] .contact-sheet {
   background-color: #243447;
   background-image: none;
@@ -815,4 +849,53 @@ html[data-mode='dark'] .contact-sheet {
     opacity: 0.35;
     transform: none;
   }
+}
+
+/* Navy surfaces keep a light cyan for text. Light paper uses --accent-text. */
+.bg-\[\#1E2A3A\],
+.bg-vault,
+footer,
+[data-hero-mode='cinematic'] {
+  --accent-text: #8fe7f8;
+}
+
+html:not([data-mode='dark']) .text-success {
+  color: #0b6b43;
+}
+
+html:not([data-mode='dark']) .text-danger {
+  color: #8d2c1e;
+}
+
+.text-accent {
+  color: var(--accent-text);
+}
+
+.text-\[7\.5px\],
+.text-\[8px\],
+.text-\[9px\],
+.text-\[10px\],
+.text-\[11px\] {
+  font-size: 12px;
+}
+
+.cover-clip {
+  overflow: hidden;
+  container-type: size;
+}
+
+.cover-img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: max(100cqw, calc(100cqh * var(--ar, 1)));
+  height: auto;
+  max-width: none;
+  aspect-ratio: var(--ar, 1);
+  transform: translateX(-50%);
+}
+
+.cover-img--center {
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

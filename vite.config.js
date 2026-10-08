@@ -17,6 +17,22 @@ const SECURITY_HEADERS = {
   'X-DNS-Prefetch-Control': 'off',
 }
 
+function deferCssPlugin() {
+  return {
+    name: 'defer-render-blocking-css',
+    apply: 'build',
+    transformIndexHtml: {
+      order: 'post',
+      handler(html) {
+        return html.replace(
+          /<link rel="stylesheet" crossorigin href="([^"]+\.css)">/g,
+          '<link rel="preload" as="style" href="$1" crossorigin /><link rel="stylesheet" href="$1" crossorigin media="print" data-deferred-css />',
+        )
+      },
+    },
+  }
+}
+
 function securityHeadersPlugin() {
   const apply = (_req, res, next) => {
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
@@ -41,7 +57,7 @@ export default defineConfig(({ mode }) => {
   const isProd = mode === 'production'
 
   return {
-    plugins: [react(), tailwindcss(), securityHeadersPlugin()],
+    plugins: [react(), tailwindcss(), securityHeadersPlugin(), deferCssPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),

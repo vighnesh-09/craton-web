@@ -122,7 +122,7 @@ export default function Voices() {
                       height={56}
                       loading="lazy"
                       decoding="async"
-                      className="voice-logo h-10 w-auto max-w-[14rem] object-contain object-left sm:h-14"
+                      className="voice-logo h-auto w-[min(100%,14rem)] object-left"
                     />
                     <p className="mt-4 text-[clamp(1.25rem,1.05rem+0.7vw,1.65rem)] font-medium tracking-[-0.02em] text-cream sm:mt-6">
                       {v.name}
@@ -207,11 +207,14 @@ export default function Voices() {
               type="button"
               onClick={close}
               aria-label="Close"
-              className="absolute -right-1 -top-12 inline-flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-sm transition hover:bg-white/20 sm:-right-3"
+              className="absolute -right-1 -top-12 inline-flex size-12 items-center justify-center rounded-full border border-white/20 bg-[#1e2a3a] text-white backdrop-blur-sm transition hover:bg-[#0f1621] sm:-right-3"
             >
               <X size={18} />
             </button>
-            <div className="aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+            <div
+              className="cover-clip relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-2xl"
+              style={{ '--ar': '1' }}
+            >
               <img
                 src={active.image}
                 alt=""
@@ -219,14 +222,14 @@ export default function Voices() {
                 height={1024}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover object-top"
+                className="cover-img"
               />
             </div>
             <div className="mt-4 text-center">
               <p id={titleId} className="text-[1.05rem] font-medium text-white">
                 {active.name}
               </p>
-              <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.12em] text-white/70">
+              <p className="mt-1 font-mono text-[12px] uppercase tracking-[0.12em] text-[#f4f7fb]">
                 {active.role}
               </p>
             </div>
@@ -259,7 +262,8 @@ function VoiceMedia({ voice, isLive, onToggleLive, onExpand }) {
     <div className="relative mx-auto w-[min(100%,16rem)] lg:mx-0 lg:w-full">
       <div
         ref={imgRef}
-        className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#1e2a3a] to-[#2a3548]"
+        className="cover-clip relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-[#1e2a3a] to-[#2a3548]"
+        style={{ '--ar': '1' }}
       >
         <div
           aria-hidden
@@ -276,7 +280,7 @@ function VoiceMedia({ voice, isLive, onToggleLive, onExpand }) {
           loading="lazy"
           decoding="async"
           fetchPriority="low"
-          className={`absolute inset-0 h-full w-full object-cover object-top transition-[opacity,transform] duration-[1400ms] ease-out ${
+          className={`cover-img transition-[opacity,transform] duration-[1400ms] ease-out ${
             inView || isLive
               ? ken
                 ? 'scale-105 opacity-100 voice-ken'
@@ -289,7 +293,7 @@ function VoiceMedia({ voice, isLive, onToggleLive, onExpand }) {
           type="button"
           onClick={onToggleLive}
           aria-label={isLive ? 'Mute motion' : 'Tap for sound'}
-          className="absolute bottom-2.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-[#1e2a3a]/75 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-white backdrop-blur-md transition hover:bg-[#1e2a3a]"
+          className="absolute bottom-2.5 left-1/2 z-10 flex min-h-12 -translate-x-1/2 items-center gap-1.5 rounded-full bg-[#1e2a3a] px-4 font-mono text-[12px] uppercase tracking-[0.1em] text-white transition hover:bg-[#0f1621]"
         >
           {isLive ? <Volume2 size={12} /> : <VolumeX size={12} />}
           {isLive ? 'Live' : 'Tap for sound'}
@@ -299,7 +303,7 @@ function VoiceMedia({ voice, isLive, onToggleLive, onExpand }) {
           type="button"
           onClick={onExpand}
           aria-label={`Expand ${voice.name}'s photo`}
-          className="absolute right-2.5 top-2.5 z-10 grid h-8 w-8 place-items-center rounded-full bg-[#1e2a3a]/75 text-white backdrop-blur-md transition-colors duration-300 hover:bg-[#1e2a3a] lg:right-4 lg:top-4 lg:h-9 lg:w-9"
+          className="absolute right-2.5 top-2.5 z-10 grid size-12 place-items-center rounded-full bg-[#1e2a3a] text-white transition-colors duration-300 hover:bg-[#0f1621] lg:right-4 lg:top-4"
         >
           <Expand size={16} strokeWidth={2} />
         </button>

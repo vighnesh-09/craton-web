@@ -65,13 +65,17 @@ export default function ChapterDots() {
           title={c.label}
           aria-label={c.label}
           aria-current={active === c.id ? 'true' : undefined}
-          className={cn(
-            'pointer-events-auto block size-2 rounded-full border transition-all duration-300',
-            active === c.id
-              ? 'scale-125 border-accent bg-accent shadow-[0_0_12px_var(--glow)]'
-              : 'border-[color:var(--cream)]/30 bg-transparent hover:border-accent/60',
-          )}
-        />
+          className="pointer-events-auto grid size-6 place-items-center"
+        >
+          <span
+            className={cn(
+              'block size-2 rounded-full border transition-all duration-300',
+              active === c.id
+                ? 'scale-125 border-accent bg-accent shadow-[0_0_12px_var(--glow)]'
+                : 'border-[color:var(--cream)]/30 bg-transparent',
+            )}
+          />
+        </a>
       ))}
     </nav>
   )

@@ -53,20 +53,9 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     const root = document.documentElement
-    Object.entries(theme.vars).forEach(([key, value]) => {
-      root.style.setProperty(key, value)
-    })
     root.dataset.theme = theme.id
     root.dataset.mode = theme.mode
     root.style.colorScheme = theme.mode
-    const meta = document.querySelector('meta[name="theme-color"]')
-    if (meta) meta.setAttribute('content', theme.mode === 'dark' ? '#121A24' : '#00A8C4')
-    if (!explicitChoice.current) return
-    try {
-      localStorage.setItem(STORAGE_KEY, theme.id)
-    } catch {
-      /* ignore */
-    }
   }, [theme])
 
   useEffect(() => {
@@ -88,7 +77,26 @@ export function ThemeProvider({ children }) {
 
   const cycleTheme = useCallback(() => {
     explicitChoice.current = true
-    setThemeId((id) => (id === 'light' ? 'dark' : 'light'))
+    const root = document.documentElement
+    const next = root.dataset.mode === 'dark' ? 'light' : 'dark'
+    root.dataset.mode = next
+    root.dataset.theme = next
+    root.style.colorScheme = next
+    setThemeId(next)
+    const persist = () => {
+      try {
+        localStorage.setItem(STORAGE_KEY, next)
+      } catch {
+        /* ignore */
+      }
+      const meta = document.querySelector('meta[name="theme-color"]')
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#121A24' : '#00A8C4')
+    }
+    if (typeof window.requestIdleCallback === 'function') {
+      window.requestIdleCallback(persist)
+    } else {
+      window.setTimeout(persist, 0)
+    }
   }, [])
 
   const value = useMemo(

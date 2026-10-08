@@ -14,35 +14,55 @@ import { cn } from '@/lib/cn'
  * Past hero + dark → ink glass pill.
  */
 export default function Header() {
-  const [overHero, setOverHero] = useState(false)
+  const [overHero, setOverHero] = useState(true)
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const { cycleTheme, isLight } = useTheme()
   const lenis = useLenis()
 
   useEffect(() => {
+    let heroLine = window.innerHeight * 0.72
+    let scrolledNow = false
+    let overNow = true
     const readScroll = () =>
       typeof lenis?.scroll === 'number' ? lenis.scroll : window.scrollY || 0
 
-    // Hero is 100svh, so scroll position is enough — no layout read per frame.
+    // Scroll position only. Viewport height is cached so the handler does not reflow.
     const sync = () => {
       const y = readScroll()
-      setScrolled(y > 8)
-      setOverHero(y < window.innerHeight * 0.72)
+      const nextScrolled = y > 8
+      const nextOver = y < heroLine
+      if (nextScrolled !== scrolledNow) {
+        scrolledNow = nextScrolled
+        setScrolled(nextScrolled)
+      }
+      if (nextOver !== overNow) {
+        overNow = nextOver
+        setOverHero(nextOver)
+      }
+    }
+
+    const onResize = () => {
+      heroLine = window.innerHeight * 0.72
+      sync()
     }
 
     sync()
 
     if (lenis) {
       lenis.on('scroll', sync)
-      return () => lenis.off('scroll', sync)
+      window.addEventListener('resize', onResize)
+      return () => {
+        lenis.off('scroll', sync)
+        window.removeEventListener('resize', onResize)
+      }
     }
 
     window.addEventListener('scroll', sync, { passive: true })
-    window.addEventListener('resize', sync)
+    window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('scroll', sync)
-      window.removeEventListener('resize', sync)
+      window.removeEventListener('resize', onResize)
     }
   }, [lenis])
 
@@ -82,7 +102,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'transition-colors',
+                  'inline-flex min-h-12 items-center transition-colors',
                   overHero || darkSolid
                     ? 'hover:text-white'
                     : 'hover:text-[#0f1621]',
@@ -107,7 +127,7 @@ export default function Header() {
               type="button"
               onClick={cycleTheme}
               className={cn(
-                'jelly inline-flex size-10 items-center justify-center rounded-full border',
+                'jelly inline-flex size-12 items-center justify-center rounded-full border',
                 overHero &&
                   'border-white/15 bg-white/[0.06] text-[#e8eef5] hover:bg-white/12',
                 lightSolid &&
@@ -126,7 +146,7 @@ export default function Header() {
             <Button
               href="#contact"
               className={cn(
-                'hidden !min-h-10 !rounded-sm !bg-[image:none] !px-4 !shadow-none sm:inline-flex',
+                'hidden !min-h-12 !rounded-sm !bg-[image:none] !px-4 !shadow-none sm:inline-flex',
                 (overHero || darkSolid) &&
                   '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]',
                 lightSolid &&
@@ -139,7 +159,7 @@ export default function Header() {
             <button
               type="button"
               className={cn(
-                'jelly inline-flex size-10 items-center justify-center rounded-full border lg:hidden',
+                'jelly inline-flex size-12 items-center justify-center rounded-full border lg:hidden',
                 overHero &&
                   'border-white/15 bg-white/[0.06] text-[#e8eef5]',
                 lightSolid &&
@@ -148,6 +168,7 @@ export default function Header() {
                   'border-white/12 bg-white/[0.06] text-[#e8eef5]',
               )}
               aria-expanded={open}
+              aria-label={open ? 'Close menu' : 'Open menu'}
               onClick={() => setOpen((v) => !v)}
             >
               {open ? <X size={18} /> : <Menu size={18} />}
@@ -174,7 +195,7 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="text-base"
+                    className="inline-flex min-h-12 items-center text-base"
                   >
                     {item.label}
                   </a>

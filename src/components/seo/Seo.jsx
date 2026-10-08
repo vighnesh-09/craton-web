@@ -7,7 +7,16 @@ export default function Seo({
   description = site.seo.description,
   path = '/',
 }) {
-  const url = `${env.appUrl.replace(/\/$/, '')}${path}`
+  const fromEnv = env.appUrl.replace(/\/$/, '')
+  const fromWindow =
+    typeof window !== 'undefined' ? window.location.origin : ''
+  const origin =
+    fromEnv && !/localhost|127\.0\.0\.1/.test(fromEnv)
+      ? fromEnv
+      : fromWindow && !/localhost|127\.0\.0\.1/.test(fromWindow)
+        ? fromWindow
+        : 'https://craton-web-v2.netlify.app'
+  const url = `${origin}${path}`
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -16,7 +25,7 @@ export default function Seo({
       legalName: site.legalName,
       url: site.url,
       email: site.email,
-      logo: `${env.appUrl.replace(/\/$/, '')}/brand/craton-logo.webp`,
+      logo: `${origin}/brand/craton-logo.webp`,
       description: site.seo.description,
       foundingLocation: {
         '@type': 'Place',

@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import {
   motion,
   useReducedMotion,
@@ -6,9 +6,10 @@ import {
   useTransform,
 } from 'framer-motion'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
-import ParticleSculpture from '@/components/craton/ParticleSculpture'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/cn'
+
+const ParticleSculpture = lazy(() => import('@/components/craton/ParticleSculpture'))
 
 /** Single soft precision frame — cinematic, not a HUD stack. */
 const FRAME_INSET = 'clamp(1rem, 3.5vw, 3.25rem)'
@@ -20,6 +21,52 @@ const FRAME_INSET = 'clamp(1rem, 3.5vw, 3.25rem)'
 export default function Hero() {
   const ref = useRef(null)
   const reduced = useReducedMotion()
+  const [showField, setShowField] = useState(false)
+
+  useEffect(() => {
+    const boot = document.getElementById('boot-hero')
+    const dropBoot = () => {
+      requestAnimationFrame(() => boot?.remove())
+    }
+    const links = [...document.querySelectorAll('link[data-deferred-css]')]
+    if (!boot) return undefined
+    if (!links.length) {
+      dropBoot()
+      return undefined
+    }
+    let pending = links.length
+    const ready = () => {
+      pending -= 1
+      if (pending <= 0) dropBoot()
+    }
+    links.forEach((link) => {
+      const finish = () => {
+        if (link.media !== 'all') link.media = 'all'
+        ready()
+      }
+      if (link.sheet) finish()
+      else {
+        link.addEventListener('load', finish, { once: true })
+        link.addEventListener('error', finish, { once: true })
+      }
+    })
+    const backup = window.setTimeout(dropBoot, 2000)
+    return () => window.clearTimeout(backup)
+  }, [])
+
+  useEffect(() => {
+    if (reduced) {
+      setShowField(true)
+      return undefined
+    }
+    const start = () => setShowField(true)
+    if (typeof window.requestIdleCallback === 'function') {
+      const id = window.requestIdleCallback(start, { timeout: 1500 })
+      return () => window.cancelIdleCallback(id)
+    }
+    const id = window.setTimeout(start, 400)
+    return () => window.clearTimeout(id)
+  }, [reduced])
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -43,17 +90,19 @@ export default function Hero() {
         className="absolute inset-0"
         style={reduced ? undefined : { scale: mediaScale, y: mediaY }}
       >
-        <img
-          src="/hero/foundation.webp"
-          alt=""
-          width={2400}
-          height={1602}
-          sizes="100vw"
-          decoding="async"
-          loading="eager"
-          fetchPriority="high"
-          className="h-full w-full object-cover object-center"
-        />
+        <div className="cover-clip absolute inset-0" style={{ '--ar': '1.498127' }}>
+          <img
+            src="/hero/foundation.webp"
+            alt=""
+            width={2400}
+            height={1602}
+            sizes="100vw"
+            decoding="sync"
+            loading="eager"
+            fetchPriority="high"
+            className="cover-img cover-img--center"
+          />
+        </div>
         {/* Crush photo whites (windows) into forest ink — hero never reads as a white wall */}
         <div className="absolute inset-0 bg-[#040c0a]/72" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,12,10,0.88)_0%,rgba(6,16,14,0.55)_36%,rgba(6,16,14,0.62)_58%,rgba(3,10,8,0.96)_100%)]" />
@@ -65,13 +114,17 @@ export default function Hero() {
 
       {/* Particle morph — behind type; keep opacity modest so copy stays white */}
       <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-        <ParticleSculpture
-          className="h-full w-full"
-          canvasClassName="inset-[14%] opacity-[0.38] sm:inset-[15%]"
-          showControls={false}
-          heroScale
-          themeMode="dark"
-        />
+        {showField ? (
+          <Suspense fallback={null}>
+            <ParticleSculpture
+              className="h-full w-full"
+              canvasClassName="inset-[14%] opacity-[0.38] sm:inset-[15%]"
+              showControls={false}
+              heroScale
+              themeMode="dark"
+            />
+          </Suspense>
+        ) : null}
       </div>
 
       {/* One precision frame */}
@@ -103,50 +156,37 @@ export default function Hero() {
         className="relative z-20 flex flex-1 flex-col items-center justify-center px-5 pb-20 pt-28 text-center isolate sm:px-8 sm:pb-24"
       >
         <motion.p
-          initial={reduced ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.12 }}
+          initial={false}
           className="serif text-[clamp(1.05rem,2.1vw,1.35rem)] !text-[#e8eef5] [text-shadow:0_1px_2px_rgba(0,0,0,0.65)]"
         >
           Bold ideas. Engineered forward.
         </motion.p>
 
         <motion.h1
-          initial={reduced ? false : { opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, delay: 0.24 }}
+          initial={false}
           className="mt-4 max-w-[18ch] text-[clamp(2.15rem,7.4vw,5.5rem)] font-semibold uppercase leading-[0.94] tracking-[-0.04em] !text-[#f4f7fb] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_0_1px_rgba(255,255,255,0.35)]"
         >
           Craton Technologies
         </motion.h1>
 
         <motion.p
-          initial={reduced ? false : { opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.75, delay: 0.38 }}
+          initial={false}
           className="mt-5 max-w-[36ch] text-[clamp(0.98rem,1.7vw,1.2rem)] font-medium leading-relaxed !text-[#e8eef5] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)]"
         >
           AI for EU MDR and IVDR technical documentation and GSPR gap assessment.
         </motion.p>
 
         <motion.p
-          initial={reduced ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
+          initial={false}
           className="mt-2.5 max-w-[40ch] text-[13px] leading-relaxed !text-[#c9d8e8] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)] sm:text-[14px]"
         >
           Complex requirements. Clearer decisions. Human judgment.
         </motion.p>
 
-        <motion.div
-          initial={reduced ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.62 }}
-          className="mt-8"
-        >
+        <motion.div initial={false} className="mt-8">
           <Button
             href="#contact"
-            className="!min-h-11 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-7 !text-[13px] !font-semibold !text-[#1E2A3A] !shadow-none hover:!translate-y-0 hover:!bg-[#007A96] hover:!text-white hover:!brightness-105"
+            className="!min-h-12 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-7 !text-[13px] !font-semibold !text-[#1E2A3A] !shadow-none hover:!translate-y-0 hover:!bg-[#007A96] hover:!text-[#102033] hover:!brightness-105"
           >
             Request a pilot
             <ArrowUpRight size={15} strokeWidth={2.25} />
