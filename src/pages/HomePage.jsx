@@ -22,19 +22,19 @@ export default function HomePage() {
       <Seo />
       <Hero />
       <ScrollRail />
-      <Proof />
-      <EvidenceWipe />
       <DomainScroll />
-      <StatementBand />
-      <FilmStrip />
       <Products />
+      <EvidenceWipe />
+      <FilmStrip />
+      <Proof />
       <ClipMask />
-      <Mindset />
+      <Voices />
       <ScaleWords />
       <Approach />
+      <Mindset />
       <About />
+      <StatementBand />
       <Trust />
-      <Voices />
       <Contact />
     </>
   )

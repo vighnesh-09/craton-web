@@ -15,7 +15,7 @@ export default function NotFoundPage() {
       </p>
       <Link
         to="/"
-        className="mt-8 inline-flex min-h-12 items-center rounded-full bg-paper px-6 text-[13px] font-medium text-ink transition hover:-translate-y-0.5"
+        className="mt-8 inline-flex min-h-12 items-center rounded-full bg-paper px-6 text-[13px] font-medium text-cream transition hover:-translate-y-0.5"
       >
         Return home
       </Link>

@@ -140,7 +140,7 @@ export default function Header() {
                   'border-white/12 bg-white/[0.06] text-[#e8eef5] hover:bg-white/10',
               )}
               aria-label={
-                isLight ? 'Switch to dark mode' : 'Switch to light mode'
+                isLight ? 'Switch to dark theme' : 'Switch to light theme'
               }
               title={isLight ? 'Dark' : 'Light'}
             >
@@ -154,7 +154,7 @@ export default function Header() {
                 (overHero || darkSolid) &&
                   '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]',
                 lightSolid &&
-                  '!bg-[#00a8c4] !text-white hover:!bg-[#007a96]',
+                  '!bg-[#00a8c4] !text-[#102033] hover:!bg-[#007a96] hover:!text-white',
               )}
             >
               Request a pilot
@@ -203,7 +203,16 @@ export default function Header() {
                     {item.label}
                   </a>
                 ))}
-                <Button href="#contact" onClick={() => setOpen(false)}>
+                <Button
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  className={cn(
+                    '!bg-[image:none] !shadow-none',
+                    overHero || !isLight
+                      ? '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]'
+                      : '!bg-[#00a8c4] !text-[#102033] hover:!bg-[#007a96] hover:!text-white',
+                  )}
+                >
                   Request a pilot
                 </Button>
               </div>

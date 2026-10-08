@@ -1,25 +1,23 @@
 import { useEffect, useId, useRef, useState } from 'react'
-import { useReducedMotion } from 'framer-motion'
 import { ArrowUpRight, Calendar, ChevronDown } from 'lucide-react'
 import Button from '@/components/ui/Button'
-import Reveal from '@/components/ui/Reveal'
 import { env } from '@/config/env'
 import { site } from '@/config/site'
 import { cn } from '@/lib/cn'
 
-const TOPICS = [
-  ...site.doors.map((d) => d.title),
-  'Something else',
-]
+const TOPICS = [...site.doors.map((d) => d.title), 'Something else']
 
-/** Calm contact band — no sticky pin; tighter rhythm than a hero-scale block. */
+const CUSTOMERS = site.doors.filter((d) => d.audience === 'customer')
+const TALENT = site.doors.filter((d) => d.audience === 'talent')
+
+/** One contact panel — content height, no scroll pin. */
 export default function Contact() {
   const [door, setDoor] = useState('Start a pilot')
   const [status, setStatus] = useState('idle')
   const [errors, setErrors] = useState({})
   const booking = env.bookingUrl || site.bookingUrl
   const endpoint = env.formEndpoint || site.formEndpoint
-  const reduced = useReducedMotion()
+  const audience = site.doors.find((d) => d.title === door)?.audience
 
   async function onSubmit(e) {
     e.preventDefault()
@@ -31,14 +29,18 @@ export default function Contact() {
     const topic = String(form.get('topic') || door)
 
     const nextErrors = {}
-    if (name.length < 2) nextErrors.name = true
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) nextErrors.email = true
+    if (name.length < 2) nextErrors.name = 'Enter your name.'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      nextErrors.email = 'Enter a valid work email.'
+    }
     setErrors(nextErrors)
-    if (Object.keys(nextErrors).length) return
-
-    setStatus('sending')
+    if (Object.keys(nextErrors).length) {
+      setStatus('idle')
+      return
+    }
 
     if (endpoint) {
+      setStatus('sending')
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
@@ -59,172 +61,185 @@ export default function Contact() {
     }
 
     const subject = encodeURIComponent(`${topic} — ${company || name}`)
-    const body = encodeURIComponent(
-      `${name}\n${email}\n${company}\n\n${message}`,
-    )
+    const body = encodeURIComponent(`${name}\n${email}\n${company}\n\n${message}`)
+    setStatus('mail')
     window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`
-    setStatus('sent')
   }
 
   return (
     <section
       id="contact"
-      className="pad-x relative py-[clamp(2.5rem,4vw,4rem)] text-cream"
+      className="contact-field section-pad scroll-mt-24"
       aria-label="Contact"
     >
       <div className="shell">
-        <p className="mono-label mb-3 flex items-center gap-3 text-muted">
-          A question worth exploring?
-          <span className="text-accent">+</span>
-        </p>
-        <Reveal
-          as="h2"
-          className="max-w-[18ch] text-[clamp(2rem,4vw,3.6rem)] font-normal leading-[1.05] tracking-[-0.045em]"
-        >
-          The future doesn’t build itself.{' '}
-          <span className="serif text-accent">Let’s move it forward.</span>
-        </Reveal>
+        <div className="relative overflow-visible rounded-[1.75rem] bg-[#1E2A3A] text-[#f4f7fa] shadow-[0_24px_50px_-28px_rgba(15,22,33,0.55)]">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#00A8C4] to-transparent"
+          />
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10 lg:items-start">
-          <Reveal delay={reduced ? 0 : 0.04}>
-            <p className="mb-5 max-w-md text-[14.5px] leading-relaxed text-muted">
+          <div className="px-4 py-6 sm:px-7 sm:py-8 min-[1100px]:px-9 min-[1100px]:py-9">
+            <p className="flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
+              A question worth exploring?
+              <span aria-hidden>+</span>
+            </p>
+            <h2 className="display mt-3 text-[#f4f7fa]">
+              The future doesn’t build itself.{' '}
+              <span className="serif text-accent">Let’s move it forward.</span>
+            </h2>
+            <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-[#d5dee8]">
               Tell us who you are and we’ll route you to the right conversation.
             </p>
 
-            <div className="mb-4">
-              <p className="mono-label mb-2.5 text-accent">
-                For customers & partners
-              </p>
-              <div className="grid gap-2.5 sm:grid-cols-2">
-                {site.doors
-                  .filter((d) => d.audience === 'customer')
-                  .map((d) => (
-                    <Door
-                      key={d.id}
-                      active={door === d.title}
-                      title={d.title}
-                      body={d.body}
-                      onClick={() => setDoor(d.title)}
-                    />
-                  ))}
-              </div>
-            </div>
+            <div className="relative mt-7 grid gap-7 min-[1100px]:mt-8 min-[1100px]:grid-cols-2 min-[1100px]:items-start min-[1100px]:gap-0">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute bottom-0 left-1/2 top-0 hidden w-px -translate-x-1/2 bg-[#00A8C4]/40 min-[1100px]:block"
+              />
 
-            <div>
-              <p className="mono-label mb-2.5 text-muted">
-                Talent (separate path)
-              </p>
-              <div className="grid gap-2.5 sm:grid-cols-2">
-                {site.doors
-                  .filter((d) => d.audience === 'talent')
-                  .map((d) => (
-                    <Door
-                      key={d.id}
-                      active={door === d.title}
-                      title={d.title}
-                      body={d.body}
-                      onClick={() => setDoor(d.title)}
-                    />
-                  ))}
-              </div>
-            </div>
-
-            {booking ? (
-              <a
-                href={booking}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 inline-flex items-center gap-2 text-[13px] font-medium text-accent hover:text-cream"
-              >
-                <Calendar size={15} />
-                Prefer a calendar? Book a pilot call
-                <ArrowUpRight size={14} />
-              </a>
-            ) : null}
-          </Reveal>
-
-          <Reveal delay={reduced ? 0 : 0.08}>
-            <form onSubmit={onSubmit} className="pt-1" noValidate>
-              <div className="grid gap-3.5 sm:grid-cols-2">
-                <Field label="Name" error={errors.name}>
-                  <input
-                    name="name"
-                    autoComplete="name"
-                    required
-                    className="field-input"
-                  />
-                </Field>
-                <Field label="Work email" error={errors.email}>
-                  <input
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    className="field-input"
-                  />
-                </Field>
-                <Field label="Company">
-                  <input
-                    name="company"
-                    autoComplete="organization"
-                    className="field-input"
-                  />
-                </Field>
-                <Field label="Conversation">
-                  <TopicSelect value={door} onChange={setDoor} />
-                </Field>
-              </div>
-
-              <Field label="One line on what you’re working on" className="mt-3.5">
-                <textarea
-                  name="message"
-                  rows={3}
-                  placeholder="e.g. Class IIb device, MDR technical file due Q2"
-                  className="field-input resize-y"
+              <div className="flex min-w-0 flex-col min-[1100px]:pr-8">
+                <PathGroup
+                  label="For customers & partners"
+                  tone="buyer"
+                  doors={CUSTOMERS}
+                  door={door}
+                  onSelect={setDoor}
                 />
-              </Field>
-
-              <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <Button
-                  as="button"
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="contact-press"
-                >
-                  {status === 'sending' ? 'Sending…' : 'Start a conversation'}
-                  <ArrowUpRight size={14} />
-                </Button>
-                <small className="text-[12px] text-muted">
-                  {endpoint
-                    ? 'We reply within two business days.'
-                    : `Configure VITE_FORM_ENDPOINT for direct submit · currently falls back to ${site.email}`}
-                </small>
+                <PathGroup
+                  label="Talent (separate path)"
+                  tone="talent"
+                  doors={TALENT}
+                  door={door}
+                  onSelect={setDoor}
+                />
+                {booking ? (
+                  <a
+                    href={booking}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-[13px] font-medium text-[#e7f8fb] hover:text-white"
+                  >
+                    <Calendar size={15} className="text-accent" />
+                    Prefer a calendar? Book a pilot call
+                    <ArrowUpRight size={14} />
+                  </a>
+                ) : null}
               </div>
 
-              {status === 'sent' ? (
-                <p className="mt-3 text-[13px] text-success" role="status">
-                  Thanks — your message is ready. We’ll reply within two business
-                  days.
-                </p>
-              ) : null}
-              {status === 'error' ? (
-                <p className="mt-3 text-[13px] text-danger" role="status">
-                  Something went wrong. Email us directly at {site.email}.
-                </p>
-              ) : null}
-            </form>
-          </Reveal>
+              <div className="min-w-0 border-t border-[#00A8C4]/35 pt-7 min-[1100px]:border-t-0 min-[1100px]:pl-8 min-[1100px]:pt-0">
+                <form
+                  onSubmit={onSubmit}
+                  className="contact-sheet glass-panel rounded-[1.25rem] p-4 sm:p-5"
+                  noValidate
+                  data-contact-status={status}
+                >
+                  <div className="mb-4 border-b border-[var(--field-line)] pb-3">
+                    <p className="font-mono text-[11px] font-medium uppercase tracking-[0.14em] text-accent-deep">
+                      {audience === 'talent'
+                        ? 'Talent · separate path'
+                        : audience === 'customer'
+                          ? 'Customers & partners'
+                          : 'Conversation'}
+                    </p>
+                    <p className="mt-1 text-[15px] font-medium leading-snug">{door}</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+                    <Field label="Name" error={errors.name}>
+                      <input
+                        name="name"
+                        autoComplete="name"
+                        required
+                        aria-invalid={errors.name ? 'true' : 'false'}
+                        className="field-input"
+                      />
+                    </Field>
+                    <Field label="Work email" error={errors.email}>
+                      <input
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        required
+                        aria-invalid={errors.email ? 'true' : 'false'}
+                        className="field-input"
+                      />
+                    </Field>
+                    <Field label="Company">
+                      <input
+                        name="company"
+                        autoComplete="organization"
+                        className="field-input"
+                      />
+                    </Field>
+                    <Field label="Conversation">
+                      <TopicSelect value={door} onChange={setDoor} />
+                    </Field>
+                  </div>
+
+                  <Field
+                    label="One line on what you’re working on"
+                    className="mt-3.5"
+                  >
+                    <textarea
+                      name="message"
+                      rows={3}
+                      placeholder="e.g. Class IIb device, MDR technical file due Q2"
+                      className="field-input resize-y"
+                    />
+                  </Field>
+
+                  <div className="mt-5">
+                    <Button
+                      as="button"
+                      type="submit"
+                      disabled={status === 'sending'}
+                      className="!h-auto w-full max-w-full !whitespace-normal !bg-[image:none] !bg-[#00A8C4] !px-5 !text-[13px] !font-semibold !text-[#1E2A3A] !shadow-none hover:!bg-[#007A96] hover:!text-white disabled:!cursor-wait disabled:!opacity-70 sm:w-auto"
+                    >
+                      {status === 'sending' ? 'Sending…' : 'Start a conversation'}
+                      <ArrowUpRight size={14} className="shrink-0" />
+                    </Button>
+                    {endpoint ? (
+                      <p className="mt-3 text-[13px] leading-snug text-muted-ink">
+                        We reply within two business days.
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <div className="mt-3" aria-live="polite">
+                    {status === 'sent' ? (
+                      <p className="text-[13px] leading-snug text-[color:var(--ok)]" role="status">
+                        Thanks — we have your note. We’ll reply within two business days.
+                      </p>
+                    ) : null}
+                    {status === 'mail' ? (
+                      <p className="text-[13px] leading-snug text-cream" role="status">
+                        Your email app should open with a draft to {site.email}. We
+                        have not received it until you send that email.
+                      </p>
+                    ) : null}
+                    {status === 'error' ? (
+                      <p className="text-[13px] leading-snug text-[color:var(--alert)]" role="status">
+                        Something went wrong. Email us directly at {site.email}.
+                      </p>
+                    ) : null}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <style>{`
         .field-input {
           width: 100%;
+          min-width: 0;
           min-height: 46px;
           border-radius: 10px;
-          border: 1px solid rgba(30, 42, 58, 0.22);
-          background: var(--paper);
-          color: var(--cream);
+          border: 1px solid var(--field-border);
+          background: var(--field-bg);
+          color: var(--field-text);
           padding: 0.7rem 0.85rem;
           font-size: 0.9375rem;
           outline: none;
@@ -234,7 +249,7 @@ export default function Contact() {
           border-color: var(--accent);
           box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
         }
-        .field-input::placeholder { color: var(--muted); }
+        .field-input::placeholder { color: var(--field-placeholder); }
         .depth-key {
           display: flex;
           align-items: center;
@@ -244,7 +259,7 @@ export default function Contact() {
           cursor: pointer;
         }
         .depth-key:focus-visible {
-          outline: 2px solid var(--accent);
+          outline: 2px solid #00A8C4;
           outline-offset: 2px;
         }
         .depth-menu {
@@ -257,12 +272,11 @@ export default function Contact() {
           padding: 0.3rem;
           list-style: none;
           border-radius: 12px;
-          background: var(--paper);
-          border: 1px solid rgba(30, 42, 58, 0.12);
-          transform: translateY(-2px);
+          background: var(--field-menu);
+          color: var(--field-text);
+          border: 1px solid var(--field-line);
           box-shadow:
             0 1px 0 rgba(255, 255, 255, 0.9),
-            0 6px 0 rgba(30, 42, 58, 0.04),
             0 14px 28px -12px rgba(30, 42, 58, 0.28);
           max-height: min(16rem, 50vh);
           overflow: auto;
@@ -274,7 +288,7 @@ export default function Contact() {
           border-radius: 8px;
           padding: 0.6rem 0.7rem;
           font-size: 0.9rem;
-          color: var(--cream);
+          color: var(--field-text);
           background: transparent;
           border: 0;
           border-left: 3px solid transparent;
@@ -282,17 +296,13 @@ export default function Contact() {
         }
         .depth-option:hover,
         .depth-option[data-active='true'] {
-          background: var(--ink);
+          background: var(--field-hover);
         }
         .depth-option[aria-selected='true'] {
-          border-left-color: var(--accent);
-        }
-        .contact-press:active:not(:disabled) {
-          transform: translateY(2px);
+          border-left-color: #00A8C4;
         }
         @media (prefers-reduced-motion: reduce) {
           .depth-menu { transform: none; }
-          .contact-press:active:not(:disabled) { transform: none; }
         }
       `}</style>
     </section>
@@ -365,7 +375,7 @@ function TopicSelect({ value, onChange }) {
         onKeyDown={onKeyDown}
       >
         <span className="truncate">{value}</span>
-        <ChevronDown size={16} aria-hidden className="shrink-0 text-accent" />
+        <ChevronDown size={16} aria-hidden className="shrink-0 text-accent-deep" />
       </button>
       {open ? (
         <ul id={listId} role="listbox" tabIndex={-1} className="depth-menu">
@@ -391,34 +401,71 @@ function TopicSelect({ value, onChange }) {
   )
 }
 
+function PathGroup({ label, tone, doors, door, onSelect }) {
+  const labelId = useId()
+  return (
+    <div role="group" aria-labelledby={labelId}>
+      <p
+        id={labelId}
+        className={cn(
+          'font-mono text-[11px] font-medium uppercase tracking-[0.14em]',
+          tone === 'buyer' ? 'text-accent' : 'mt-6 text-[#d5dee8]',
+        )}
+      >
+        {label}
+      </p>
+      <ul className="mt-1">
+        {doors.map((d) => (
+          <li key={d.id} className="border-b border-white/15">
+            <Door
+              active={door === d.title}
+              title={d.title}
+              body={d.body}
+              onClick={() => onSelect(d.title)}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 function Door({ active, title, body, onClick }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className={cn(
-        'rounded-xl border p-3.5 text-left transition duration-300',
-        active
-          ? 'border-accent/55 bg-accent/12'
-          : 'border-line bg-paper/40 hover:border-accent/30 hover:bg-paper/70',
-      )}
+      className="w-full py-3.5 text-left"
     >
-      <b className="block text-[14px] font-medium text-cream">{title}</b>
-      <span className="mt-1 block text-[12.5px] leading-relaxed text-muted">
-        {body}
+      <span className="flex items-start justify-between gap-3">
+        <b
+          className={cn(
+            'block text-[14px] font-medium leading-snug',
+            active ? 'text-accent' : 'text-white',
+          )}
+        >
+          {title}
+        </b>
+        {active ? (
+          <span className="shrink-0 pt-0.5 font-mono text-[11px] font-medium uppercase tracking-[0.12em] text-accent">
+            Selected
+          </span>
+        ) : null}
       </span>
+      <span className="mt-1 block text-[13px] leading-relaxed text-[#d5dee8]">{body}</span>
     </button>
   )
 }
 
 function Field({ label, error, className, children }) {
   return (
-    <label className={cn('block', className)}>
-      <span className="mb-1.5 block text-[12px] text-muted-ink">{label}</span>
-      <div className={cn(error && '[&_.field-input]:border-danger')}>
-        {children}
-      </div>
+    <label className={cn('block min-w-0', className)}>
+      <span className="mb-1.5 block text-[13px] font-medium text-muted-ink">{label}</span>
+      <div className={cn(error && '[&_.field-input]:border-[color:var(--alert)]')}>{children}</div>
+      {error ? (
+        <span className="mt-1.5 block text-[13px] leading-snug text-[color:var(--alert)]">{error}</span>
+      ) : null}
     </label>
   )
 }

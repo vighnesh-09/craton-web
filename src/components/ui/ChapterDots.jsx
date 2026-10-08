@@ -4,15 +4,15 @@ import { cn } from '@/lib/cn'
 
 const CHAPTERS = [
   { id: 'top', label: 'Hero' },
-  { id: 'proof', label: 'Proof' },
-  { id: 'wipe', label: 'Wipe' },
   { id: 'domain', label: 'Domain' },
-  { id: 'film', label: 'Film' },
   { id: 'products', label: 'Products' },
-  { id: 'mindset', label: 'Mindset' },
-  { id: 'approach', label: 'Method' },
-  { id: 'about', label: 'About' },
+  { id: 'wipe', label: 'Wipe' },
+  { id: 'film', label: 'Film' },
+  { id: 'proof', label: 'Proof' },
   { id: 'voices', label: 'Voices' },
+  { id: 'approach', label: 'Method' },
+  { id: 'mindset', label: 'Mindset' },
+  { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
 

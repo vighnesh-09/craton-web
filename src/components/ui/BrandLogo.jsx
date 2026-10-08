@@ -44,14 +44,14 @@ export default function BrandLogo({
             craton
             <span className="text-accent">.</span>
           </span>
-          <span
+          {/* <span
             className={cn(
               'mono-label text-[7.5px]',
               inverted ? 'text-[#8aa0b8]' : 'text-muted',
             )}
           >
             Innovation-first. Evidence-led.
-          </span>
+          </span> */}
         </span>
       ) : null}
     </span>

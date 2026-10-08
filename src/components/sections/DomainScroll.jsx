@@ -1,5 +1,3 @@
-import Glass from '@/components/ui/Glass'
-
 const chapters = [
   {
     kicker: 'Domain',
@@ -23,51 +21,39 @@ const chapters = [
   },
 ]
 
-/**
- * Chapters in a grid. The clip-path scrub cut titles off the card
- * ("Map to p") and the pin held an empty stage.
- */
 export default function DomainScroll() {
   return (
-    <section
-      id="domain"
-      className="pad-x relative py-[var(--section-y)]"
-      aria-label="Domain narrative"
-    >
-      <div className="shell">
-        <p className="mono-label text-accent">Scroll the continuum</p>
-        <h2 className="mt-3 max-w-[16ch] text-[clamp(1.7rem,3.2vw,2.85rem)] font-normal leading-[1.05] tracking-[-0.04em]">
-          Built for rooms where a wrong citation costs months.
-        </h2>
-        <p className="mt-3 max-w-[46ch] text-[14.5px] leading-relaxed text-muted">
-          Move through Craton’s world — from regulatory gravity to product
-          clarity — as each chapter follows the scroll.
-        </p>
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
-          {chapters.map((chapter, i) => (
-            <Glass
+    <section id="domain" className="section-pad bg-paper-2" aria-label="Domain narrative">
+      <div className="shell grid grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] min-[900px]:gap-12">
+        <div className="min-w-0 min-[900px]:sticky min-[900px]:top-[6rem] min-[900px]:self-start">
+          <p className="kicker">Domain</p>
+          <h2 className="display mt-4 max-w-[14ch] text-cream">
+            Built for rooms where a wrong citation costs months.
+          </h2>
+          <p className="lede mt-5 max-w-[36ch] border-t border-[var(--hairline)] pt-5">
+            Four chapters. Each one stays fully on the panel.
+          </p>
+        </div>
+
+        <ol className="min-w-0">
+          {chapters.map((chapter, index) => (
+            <li
               key={chapter.kicker}
-              className="min-w-0 p-5 sm:p-6"
-              strong
-              lift
+              className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 border-b border-[var(--hairline)] py-5 first:pt-0 last:border-b-0 last:pb-0"
             >
-              <div className="flex min-w-0 flex-col">
-                <div className="flex items-center justify-between gap-4">
-                  <span className="mono-label text-accent">{chapter.kicker}</span>
-                  <span className="font-mono text-[11px] text-muted">
-                    0{i + 1} / 04
-                  </span>
-                </div>
-                <h3 className="mt-3 text-[clamp(1.25rem,2vw,1.65rem)] font-normal leading-snug tracking-tight">
+              <span className="pt-1 font-mono text-[11px] tracking-[0.14em] text-accent">
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div className="min-w-0">
+                <p className="kicker">{chapter.kicker}</p>
+                <h3 className="mt-2 text-[clamp(1.35rem,2.2vw,1.85rem)] font-medium leading-snug tracking-[-0.03em] text-cream">
                   {chapter.title}
                 </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-muted sm:text-[15px]">
-                  {chapter.body}
-                </p>
+                <p className="lede mt-2">{chapter.body}</p>
               </div>
-            </Glass>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )

@@ -70,7 +70,7 @@ export default function Hero() {
       </div>
 
       {/* One precision frame */}
-      <div
+      {/* <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center"
       >
@@ -82,15 +82,15 @@ export default function Hero() {
           style={{
             inset: FRAME_INSET,
             boxShadow:
-              '0 0 0 1px rgba(0,229,255,0.10), inset 0 0 48px rgba(15,22,33,0.4)',
+              '0 0 0 1px rgba(0,168,196,0.18), inset 0 0 48px rgba(30,42,58,0.4)',
           }}
         >
-          <span className="absolute -left-px -top-px size-2 border-l border-t border-[#00e5ff]/70" />
-          <span className="absolute -right-px -top-px size-2 border-r border-t border-[#00e5ff]/70" />
-          <span className="absolute -bottom-px -left-px size-2 border-b border-l border-[#00e5ff]/70" />
-          <span className="absolute -bottom-px -right-px size-2 border-b border-r border-[#00e5ff]/70" />
+          <span className="absolute -left-px -top-px size-2 border-l border-t border-[#00A8C4]/80" />
+          <span className="absolute -right-px -top-px size-2 border-r border-t border-[#00A8C4]/80" />
+          <span className="absolute -bottom-px -left-px size-2 border-b border-l border-[#00A8C4]/80" />
+          <span className="absolute -bottom-px -right-px size-2 border-b border-r border-[#00A8C4]/80" />
         </motion.div>
-      </div>
+      </div> */}
 
       {/* Center copy — solid light type (no dark blur slab that turns letters black) */}
       <motion.div
@@ -121,7 +121,7 @@ export default function Hero() {
           transition={{ duration: 0.75, delay: 0.38 }}
           className="mt-5 max-w-[36ch] text-[clamp(0.98rem,1.7vw,1.2rem)] font-medium leading-relaxed !text-[#e8eef5] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)]"
         >
-          AI for EU MDR &amp; IVDR regulatory evidence.
+          AI for EU MDR and IVDR technical documentation and GSPR gap assessment.
         </motion.p>
 
         <motion.p
@@ -141,7 +141,7 @@ export default function Hero() {
         >
           <Button
             href="#contact"
-            className="!min-h-11 !rounded-sm !bg-[image:none] !bg-[#00e5ff] !px-7 !text-[13px] !font-semibold !text-[#0f1621] !shadow-none hover:!translate-y-0 hover:!bg-[#5cfbff] hover:!brightness-105"
+            className="!min-h-11 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-7 !text-[13px] !font-semibold !text-[#1E2A3A] !shadow-none hover:!translate-y-0 hover:!bg-[#007A96] hover:!text-white hover:!brightness-105"
           >
             Request a pilot
             <ArrowUpRight size={15} strokeWidth={2.25} />

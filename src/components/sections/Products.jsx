@@ -3,7 +3,6 @@ import GsprMock from '@/components/craton/GsprMock'
 import ReviewsMock from '@/components/craton/ReviewsMock'
 import Button from '@/components/ui/Button'
 import { site } from '@/config/site'
-import useGsapContext, { revealOnce } from '@/hooks/useGsapContext'
 
 const products = [
   {
@@ -22,38 +21,21 @@ const products = [
   },
 ]
 
-/**
- * Side-by-side comparison surface. Both products stay in view.
- * No pin, no scrub.
- */
+/** Both products side by side. Content height, no pin or width scrub. */
 export default function Products() {
-  const { rootRef } = useGsapContext(({ gsap, ScrollTrigger }) => {
-    revealOnce({ gsap, ScrollTrigger, root: rootRef.current, stagger: 0.1 })
-  })
-
   return (
-    <section
-      id="products"
-      ref={rootRef}
-      className="pad-x py-6 sm:py-8"
-      aria-label="Products"
-    >
+    <section id="products" className="section-pad bg-canvas" aria-label="Products">
       <div className="shell">
-        <div data-reveal className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-          <div className="min-w-0 max-w-[40rem]">
-            <p className="mono-label text-accent">02 / Intelligence, applied</p>
-            <h2 className="mt-2 text-[clamp(1.7rem,3.2vw,2.75rem)] font-normal leading-[1.05] tracking-[-0.04em]">
-              Complexity meets{' '}
-              <span className="serif text-accent">clarity.</span>
-            </h2>
-          </div>
-          <p className="max-w-[36ch] text-[13.5px] leading-relaxed text-muted">
-            Two products. Same evidence-first method — MedTech regulatory AI
-            and proof for agentic commerce.
+        <div className="max-w-[36rem]">
+          <p className="kicker">Intelligence, applied</p>
+          <h2 className="display mt-3 max-w-[16ch] text-cream">
+            Complexity meets <span className="serif text-accent">clarity.</span>
+          </h2>
+          <p className="lede mt-3 max-w-[46ch]">
+            Two products. Same evidence-first method — MedTech regulatory AI and proof for agentic commerce.
           </p>
         </div>
-
-        <div className="mt-4 grid items-stretch gap-3 lg:grid-cols-2 lg:gap-4">
+        <div className="mt-8 grid items-stretch gap-4 lg:grid-cols-2">
           {products.map(({ product, visual, chapter, cta, tone }) => (
             <ProductCard
               key={product.id}
@@ -61,13 +43,7 @@ export default function Products() {
               chapter={chapter}
               cta={cta}
               tone={tone}
-              visual={
-                visual === 'gspr' ? (
-                  <GsprMock compact />
-                ) : (
-                  <ReviewsMock compact />
-                )
-              }
+              visual={visual === 'gspr' ? <GsprMock compact /> : <ReviewsMock compact />}
             />
           ))}
         </div>
@@ -83,93 +59,45 @@ function ProductCard({ product, chapter, cta, visual, tone }) {
     <article
       id={product.id}
       aria-label={product.name}
-      data-reveal
       className={
         ink
-          ? 'product-lift flex h-full min-w-0 flex-col rounded-2xl border border-ink/15 bg-cream p-3 text-ink sm:p-4'
-          : 'product-lift navy-sheen glass-panel glass-frost glass-cyan-edge flex h-full min-w-0 flex-col rounded-2xl p-3 sm:p-4'
+          ? 'relative flex h-full min-w-0 flex-col rounded-[var(--radius)] bg-vault p-4 text-[#f4f7fa] sm:p-5'
+          : 'relative flex h-full min-w-0 flex-col rounded-[var(--radius)] border border-[var(--hairline)] bg-paper-2 p-4 text-cream sm:p-5'
       }
     >
-      <div className="flex flex-wrap items-center justify-between gap-2">
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-4 left-0 top-4 w-0.5 rounded-full bg-accent"
+      />
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 pl-2">
         <div className="flex items-center gap-3">
-          <span
-            className={
-              ink
-                ? 'font-mono text-[11px] tracking-[0.16em] text-accent'
-                : 'mono-label text-accent'
-            }
-          >
-            {chapter}
-          </span>
-          <span
-            className={
-              ink
-                ? 'rounded-full border border-accent/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-accent'
-                : 'font-mono text-[10px] uppercase tracking-[0.12em] text-muted'
-            }
-          >
+          <span className="font-mono text-[11px] tracking-[0.16em] text-accent">{chapter}</span>
+          <span className={ink ? 'font-mono text-[11px] uppercase tracking-[0.12em] text-[#c5d4e0]' : 'font-mono text-[11px] uppercase tracking-[0.12em] text-muted-ink'}>
             {product.status}
           </span>
         </div>
-        <span
-          className={
-            ink ? 'text-[12px] text-ink-3' : 'text-[12px] text-muted'
-          }
-        >
+        <span className={ink ? 'text-[13px] text-[#c5d4e0]' : 'text-[13px] text-muted-ink'}>
           {product.domain}
         </span>
       </div>
-
-      <h3
-        className={
-          ink
-            ? 'mt-2.5 text-[clamp(1.4rem,2.1vw,1.85rem)] font-normal tracking-tight text-ink'
-            : 'mt-2.5 text-[clamp(1.4rem,2.1vw,1.85rem)] font-normal tracking-tight text-cream'
-        }
-      >
+      <h3 className="mt-2 shrink-0 pl-2 text-[clamp(1.2rem,1.6vw,1.45rem)] font-medium tracking-[-0.03em]">
         {product.name}
       </h3>
-      <p
-        className={
-          ink
-            ? 'mt-1.5 max-w-[48ch] text-[13.5px] leading-relaxed text-ink-2'
-            : 'mt-1.5 max-w-[48ch] text-[13.5px] leading-relaxed text-muted-ink'
-        }
-      >
+      <p className={ink ? 'mt-1 shrink-0 pl-2 text-[13.5px] leading-snug text-[#d5e0ea]' : 'mt-1 shrink-0 pl-2 text-[13.5px] leading-snug text-muted-ink'}>
         {product.headline}
       </p>
-
       <div
         className={
           ink
-            ? 'relative z-[1] mt-3 overflow-hidden rounded-xl bg-paper p-1'
-            : 'relative z-[1] mt-3 overflow-hidden rounded-xl border border-line bg-white p-1'
+            ? 'mt-3 min-w-0 overflow-hidden rounded-[var(--radius)] bg-paper p-1 text-cream'
+            : 'mt-3 min-w-0 overflow-hidden rounded-[var(--radius)] border border-[var(--hairline)] bg-paper p-1'
         }
       >
         {visual}
       </div>
-
-      <div
-        className={
-          ink
-            ? 'mt-3 flex flex-wrap items-end justify-between gap-3 border-t border-ink/15 pt-3'
-            : 'mt-3 flex flex-wrap items-end justify-between gap-3 border-t border-line pt-3'
-        }
-      >
-        <p
-          className={
-            ink
-              ? 'max-w-[42ch] text-[13px] leading-relaxed text-ink-3'
-              : 'max-w-[42ch] text-[13px] leading-relaxed text-muted-ink'
-          }
-        >
-          <span
-            className={
-              ink
-                ? 'mr-2 font-mono text-[10px] uppercase tracking-[0.14em] text-accent'
-                : 'mono-label mr-2 text-accent'
-            }
-          >
+      <div className={ink ? 'mt-3 flex shrink-0 flex-wrap items-end justify-between gap-3 border-t border-white/15 pl-2 pt-3' : 'mt-3 flex shrink-0 flex-wrap items-end justify-between gap-3 border-t border-[var(--hairline)] pl-2 pt-3'}>
+        <p className={ink ? 'max-w-[36ch] text-[13px] leading-snug text-[#d5e0ea]' : 'max-w-[36ch] text-[13px] leading-snug text-muted-ink'}>
+          <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
             Problem
           </span>
           {product.problem}
@@ -177,7 +105,11 @@ function ProductCard({ product, chapter, cta, visual, tone }) {
         <Button
           href="#contact"
           variant={ink ? 'light' : 'outline'}
-          className="!min-h-10 !rounded-md !px-3"
+          className={
+            ink
+              ? '!min-h-10 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-3 !text-[#102033] !shadow-none hover:!bg-[#007A96] hover:!text-white'
+              : '!min-h-10 !rounded-sm !border-[var(--hairline)] !bg-canvas !px-3 !text-cream !shadow-none hover:!border-accent'
+          }
         >
           {cta}
           <ArrowUpRight size={14} />

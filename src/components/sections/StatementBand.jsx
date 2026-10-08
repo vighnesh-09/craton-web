@@ -1,22 +1,21 @@
-/** Conviction line in normal flow. The pinned viewport was empty around the type. */
+/** Centered conviction. Content height, no pin. */
 export default function StatementBand() {
   return (
     <section
+      className="section-pad border-y border-[var(--hairline)] bg-paper-2"
       aria-label="Evidence conviction"
-      className="pad-x border-y border-line bg-ink-2/40 py-[clamp(1.6rem,3.2vw,2.6rem)]"
     >
       <div className="shell text-center">
-        <p className="mono-label text-accent">The Craton conviction</p>
-        <h2 className="mx-auto mt-3 max-w-[18ch] text-[clamp(1.85rem,4.6vw,3.35rem)] font-normal leading-[1.05] tracking-[-0.045em]">
-          Evidence is the product.
-          <br />
+        <p className="kicker">The Craton conviction</p>
+        <h2 className="display mx-auto mt-4 max-w-[18ch] text-cream">
+          Evidence is the product.{' '}
           <span className="serif text-accent">Everything else is decoration.</span>
         </h2>
-        <p className="mx-auto mt-3 max-w-[42ch] text-[14px] leading-relaxed text-muted sm:text-[15px]">
+        <p className="lede mx-auto mt-4 max-w-[46ch]">
           In EU MDR / IVDR work and agentic commerce alike, a recommendation is
           only as strong as the proof behind it.
         </p>
-        <div className="mx-auto mt-5 h-px w-full max-w-xs bg-accent" />
+        <div className="mx-auto mt-8 h-px w-full max-w-xs bg-accent" />
       </div>
     </section>
   )

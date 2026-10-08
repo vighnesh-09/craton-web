@@ -23,6 +23,11 @@
   --color-glow: var(--glow);
   --color-success: var(--success);
   --color-danger: var(--danger);
+  --color-canvas: var(--canvas);
+  --color-vault: var(--vault);
+  --color-on-navy: var(--on-navy);
+  --color-on-navy-soft: var(--on-navy-soft);
+  --color-on-navy-strong: var(--on-navy-strong);
 }
 
 /* Default = Light (logo navy + electric cyan) */
@@ -58,10 +63,83 @@
   --scene-a: rgba(0, 229, 255, 0.28);
   --scene-b: rgba(168, 173, 184, 0.35);
   --scene-c: rgba(58, 109, 140, 0.28);
-  /* Fluid page gutters — mobile-safe, denser vertical rhythm */
-  --pad: clamp(0.875rem, 2.2vw, 2rem);
-  --section-y: clamp(1.6rem, 2.6vw, 2.6rem);
+  /* Shared layout tokens — new sections use these, not a pin */
+  --pad: clamp(1.25rem, 3vw, 2.5rem);
+  --section-y: clamp(4.5rem, 5vw, 6rem);
+  --shell: 76rem;
+  --media-xl: 50vw;
+  --radius: 1rem;
+  --hairline: rgba(30, 42, 58, 0.14);
+  --canvas: #ffffff;
+  --vault: #1e2a3a;
+  --on-navy: #e8ecf1;
+  --on-navy-soft: #dce3ec;
+  --on-navy-strong: #f4f5f7;
+  --field-bg: #ffffff;
+  --field-text: #1e2a3a;
+  --field-border: rgba(30, 42, 58, 0.22);
+  --field-placeholder: #3a6d8c;
+  --field-menu: #ffffff;
+  --field-hover: #f4f7fa;
+  --field-line: rgba(30, 42, 58, 0.12);
+  --ok: #0b6b43;
+  --alert: #8d2c1e;
   color-scheme: light;
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --media-xl: 58vw;
+  }
+}
+
+/* Night: same brand, deep navy field. Applied before React via data-mode. */
+html[data-mode='dark'] {
+  --ink: #121a24;
+  --ink-2: #1a2633;
+  --ink-3: #243447;
+  --paper: #1a2633;
+  --cream: #f4f7fa;
+  --paper-2: #1a2633;
+  --muted: #c5d0dc;
+  --muted-ink: #c5d0dc;
+  --accent: #00e5ff;
+  --accent-deep: #7edff2;
+  --sage: #7ed4e8;
+  --sage-deep: #00e5ff;
+  --line: rgba(255, 255, 255, 0.12);
+  --line-ink: rgba(255, 255, 255, 0.12);
+  --glow: rgba(0, 229, 255, 0.32);
+  --success: #5fca8f;
+  --danger: #e08a78;
+  --glass-bg: rgba(18, 26, 36, 0.82);
+  --glass-bg-strong: rgba(26, 38, 51, 0.94);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-highlight: rgba(255, 255, 255, 0.16);
+  --glass-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.12) inset,
+    0 18px 40px -24px rgba(0, 0, 0, 0.55);
+  --glass-glow: 0 0 50px -12px rgba(0, 229, 255, 0.4);
+  --btn-face: linear-gradient(145deg, #007a96 0%, #0a5c6e 52%, #0c4e5c 100%);
+  --scene-a: rgba(0, 229, 255, 0.16);
+  --scene-b: rgba(58, 109, 140, 0.22);
+  --scene-c: rgba(0, 229, 255, 0.08);
+  --canvas: #121a24;
+  --vault: #0c141c;
+  --hairline: rgba(255, 255, 255, 0.12);
+  --on-navy: #e8ecf1;
+  --on-navy-soft: #dce3ec;
+  --on-navy-strong: #f4f5f7;
+  --field-bg: #121a24;
+  --field-text: #f4f7fa;
+  --field-border: rgba(255, 255, 255, 0.28);
+  --field-placeholder: #c5d0dc;
+  --field-menu: #1a2633;
+  --field-hover: rgba(0, 229, 255, 0.08);
+  --field-line: rgba(255, 255, 255, 0.12);
+  --ok: #8ee0b8;
+  --alert: #ffb4a8;
+  color-scheme: dark;
 }
 
 
@@ -110,6 +188,11 @@
   ::selection {
     background: color-mix(in oklab, var(--accent) 35%, white);
     color: var(--cream);
+  }
+
+  html[data-mode='dark'] ::selection {
+    background: color-mix(in oklab, var(--accent) 42%, #121a24);
+    color: #f4f7fa;
   }
 
   h1,
@@ -314,11 +397,46 @@
     padding-inline: var(--pad);
   }
 
-  /* Fluid content width inside .pad-x — full available width, no 1440 cage */
   .shell {
     width: 100%;
-    max-width: none;
+    max-width: var(--shell);
     margin-inline: auto;
+  }
+
+  .media-xl {
+    width: var(--media-xl);
+    max-width: none;
+  }
+
+  .section-pad {
+    padding-inline: var(--pad);
+    padding-block: var(--section-y);
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .display {
+    font-size: clamp(2rem, 3.4vw, 3.15rem);
+    font-weight: 450;
+    line-height: 1.04;
+    letter-spacing: -0.038em;
+  }
+
+  .lede {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted-ink);
+  }
+
+  .hairline {
+    border-color: var(--hairline);
   }
 
   .serif {
@@ -485,7 +603,7 @@
 }
 
 .chapter-index--navy .font-mono {
-  color: var(--ink-3);
+  color: var(--on-navy-soft);
 }
 
 .chapter-index.is-active {
@@ -534,6 +652,11 @@
 .belief-cell:focus-within .belief-title {
   background-size: 100% 1px;
   color: #0e7490;
+}
+
+html[data-mode='dark'] .belief-cell:hover .belief-title,
+html[data-mode='dark'] .belief-cell:focus-within .belief-title {
+  color: var(--accent);
 }
 
 .method-word {
@@ -631,6 +754,40 @@
 .roster-cell:hover .roster-detail,
 .roster-cell:focus-within .roster-detail {
   color: #0e7490;
+}
+
+html[data-mode='dark'] .roster-cell:hover,
+html[data-mode='dark'] .roster-cell:focus-within {
+  background-color: rgba(0, 229, 255, 0.08);
+}
+
+html[data-mode='dark'] .roster-cell:hover .roster-detail,
+html[data-mode='dark'] .roster-cell:focus-within .roster-detail {
+  color: var(--accent);
+}
+
+/* Page wash behind the navy contact shell. */
+.contact-field {
+  background-color: #f4f7fa;
+  color: #1e2a3a;
+}
+
+html[data-mode='dark'] .contact-field {
+  background-color: #121a24;
+  color: #f4f7fa;
+}
+
+/* Form panel on the navy contact shell. Light gray in day, lifted navy at night. */
+.contact-sheet {
+  background-color: #f7f8fa;
+  color: #1e2a3a;
+}
+
+html[data-mode='dark'] .contact-sheet {
+  background-color: #243447;
+  background-image: none;
+  color: #f4f7fa;
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {

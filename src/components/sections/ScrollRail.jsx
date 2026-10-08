@@ -39,7 +39,7 @@ export default function ScrollRail() {
     <section
       ref={ref}
       aria-label="Craton focus areas"
-      className="relative overflow-hidden border-y border-line py-3 sm:py-4"
+      className="section-pad relative overflow-hidden border-y border-[var(--hairline)] bg-canvas"
     >
       <p className="sr-only">
         Craton focuses on EU MDR, IVDR, GSPR gap assessment, regulatory AI,

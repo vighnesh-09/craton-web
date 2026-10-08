@@ -16,7 +16,7 @@ export default function ChapterIndex({ n, kicker, tone = 'paper' }) {
       <p
         className={
           navy
-            ? 'mono-label mt-0 max-w-[14ch] leading-snug text-ink-3 sm:mt-2'
+            ? 'mono-label mt-0 max-w-[14ch] leading-snug text-on-navy-soft sm:mt-2'
             : 'mono-label mt-0 max-w-[14ch] leading-snug text-muted-ink sm:mt-2'
         }
       >

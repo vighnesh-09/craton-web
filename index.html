@@ -6,6 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#00A8C4" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('craton-theme')
+          var mode = 'light'
+          if (stored === 'dark' || stored === 'ember' || stored === 'vault') mode = 'dark'
+          else if (stored === 'light' || stored === 'craton' || stored === 'aurora') mode = 'light'
+          else if (window.matchMedia('(prefers-color-scheme: dark)').matches) mode = 'dark'
+          document.documentElement.dataset.mode = mode
+          document.documentElement.dataset.theme = mode
+          document.documentElement.style.colorScheme = mode
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', mode === 'dark' ? '#121A24' : '#00A8C4')
+        } catch (e) {}
+      })()
+    </script>
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta
       name="description"

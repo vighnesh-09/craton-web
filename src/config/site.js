@@ -3,7 +3,7 @@ export const site = {
   legalName: 'Craton Technologies LLC',
   url: 'https://craton.io',
   email: 'hello@craton.io',
-  location: 'Frisco, Texas',
+  // location: 'Frisco, Texas',
   logo: '/brand/craton-logo.png',
   founder: {
     name: 'Sheik Ahamed Ali',

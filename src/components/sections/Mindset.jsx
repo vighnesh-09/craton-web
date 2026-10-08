@@ -1,40 +1,36 @@
 import { site } from '@/config/site'
 
-/** 01 — headline, then three beliefs as a type row with hairlines. */
+/** Beliefs beside the question. Open list, every line fully readable. */
 export default function Mindset() {
   return (
-    <section
-      id="mindset"
-      className="pad-x scroll-mt-24 py-8"
-      aria-label="The Craton mindset"
-    >
-      <div className="shell">
-        <p className="mono-label text-accent">01 / The Craton mindset</p>
-        <h2 className="mt-3 max-w-[18ch] text-[clamp(1.85rem,3.6vw,3rem)] font-normal leading-[1.02] tracking-[-0.04em] text-cream">
-          The next breakthrough starts with a{' '}
-          <span className="serif text-accent">better question.</span>
-        </h2>
-        <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-muted-ink">
-          What if complex information could become clearer decisions? We bring
-          bold thinking, deep research, and thoughtful architecture together to
-          build products for work where trust is the hard part.
-        </p>
-
-        <ol className="mt-8 grid grid-cols-1 border-t border-[#1E2A3A]/15 md:grid-cols-3">
+    <section id="mindset" className="section-pad bg-paper-2" aria-label="The Craton mindset">
+      <div className="shell grid items-start gap-8 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-12">
+        <div className="min-w-0">
+          <p className="kicker">The Craton mindset</p>
+          <h2 className="display mt-3 max-w-[14ch] text-cream">
+            The next breakthrough starts with a{' '}
+            <span className="serif text-accent">better question.</span>
+          </h2>
+          <p className="lede mt-4 max-w-[36ch]">
+            What if complex information could become clearer decisions? We bring
+            bold thinking, deep research, and thoughtful architecture together.
+          </p>
+        </div>
+        <ol>
           {site.beliefs.map((belief, i) => (
             <li
               key={belief.title}
-              className="min-w-0 border-b border-[#1E2A3A]/15 py-5 md:border-b-0 md:border-r md:px-6 md:py-6 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
+              className="grid grid-cols-[2.25rem_minmax(0,1fr)] gap-x-3 border-b border-[var(--hairline)] py-5 first:pt-0 last:border-b-0 last:pb-0"
             >
-              <p className="font-mono text-[11px] tracking-[0.16em] text-accent">
+              <span className="pt-1 font-mono text-[11px] tracking-[0.14em] text-accent">
                 {String(i + 1).padStart(2, '0')}
-              </p>
-              <h3 className="mt-3 text-[1.15rem] font-medium leading-snug tracking-[-0.03em] text-cream">
-                {belief.title}
-              </h3>
-              <p className="mt-2 text-[14px] leading-[1.55] text-muted-ink">
-                {belief.body}
-              </p>
+              </span>
+              <div className="min-w-0">
+                <h3 className="text-[clamp(1.15rem,1.8vw,1.45rem)] font-medium leading-snug text-cream">
+                  {belief.title}
+                </h3>
+                <p className="lede mt-2 max-w-[52ch]">{belief.body}</p>
+              </div>
             </li>
           ))}
         </ol>

@@ -33,7 +33,7 @@ export default class ErrorBoundary extends Component {
           <button
             type="button"
             onClick={this.handleReload}
-            className="mt-8 rounded-full bg-paper px-6 py-3 text-sm font-medium text-ink"
+            className="mt-8 rounded-full bg-paper px-6 py-3 text-sm font-medium text-cream"
           >
             Back to home
           </button>
