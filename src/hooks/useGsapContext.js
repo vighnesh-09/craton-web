@@ -30,3 +30,37 @@ export default function useGsapContext(setup, deps = []) {
 
   return { rootRef, reduced }
 }
+
+/** Short fade/slide once, when the section enters. No pin, no scrub.
+ * Uses the `translate` property so hover `transform` lifts stay free. */
+export function revealOnce({ gsap, ScrollTrigger, root, stagger = 0.08 }) {
+  const items = root.querySelectorAll('[data-reveal]')
+  if (!items.length) return
+
+  let played = false
+  const play = () => {
+    if (played) return
+    played = true
+    gsap.killTweensOf(items)
+    gsap.set(items, { clearProps: 'all' })
+    items.forEach((el, i) => {
+      el.style.animation = `craton-rise 0.48s cubic-bezier(0.22, 1, 0.36, 1) ${i * stagger}s both`
+      el.addEventListener(
+        'animationend',
+        () => {
+          el.style.animation = 'none'
+        },
+        { once: true },
+      )
+    })
+  }
+
+  const trigger = ScrollTrigger.create({
+    trigger: root,
+    start: 'top 92%',
+    once: true,
+    onEnter: play,
+  })
+
+  if (trigger.progress > 0) play()
+}

@@ -25,7 +25,7 @@ export default function Proof() {
       ref={ref}
       id="proof"
       aria-label="Proof"
-      className="pad-x relative z-10 py-6 sm:py-8"
+      className="pad-x relative z-10 py-4 sm:py-5"
     >
       <motion.div style={reduced ? undefined : { y, scale }}>
         <Glass className="shell px-5 py-6 sm:px-7 sm:py-8" glow>

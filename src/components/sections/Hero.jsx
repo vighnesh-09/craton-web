@@ -36,7 +36,7 @@ export default function Hero() {
       ref={ref}
       id="top"
       data-hero-mode="cinematic"
-      className="relative flex min-h-[100svh] flex-col overflow-hidden text-[#eef8f4]"
+      className="relative flex h-[100svh] max-h-[100svh] flex-col overflow-hidden text-[#eef8f4]"
     >
       <motion.div
         aria-hidden

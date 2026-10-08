@@ -53,7 +53,7 @@ export default function Trust() {
           Built for work where{' '}
           <span className="serif text-accent">trust is non-negotiable.</span>
         </Reveal>
-        <ul className="mt-7 grid gap-4 md:grid-cols-3">
+        <ul className="mt-5 grid gap-3 md:grid-cols-3">
           {items.map((item) => (
             <li key={item.title}>
               <Glass className="h-full p-6">
@@ -74,7 +74,7 @@ export default function Trust() {
     <section
       ref={ref}
       id="trust"
-      className="relative overflow-hidden pad-x py-[clamp(2.5rem,4vw,4rem)]"
+      className="relative overflow-hidden pad-x py-[var(--section-y)]"
       aria-label="Trust"
     >
       <motion.div style={{ opacity }} className="shell">
@@ -92,7 +92,7 @@ export default function Trust() {
               key={`${item.title}-${i}`}
               className="w-[min(320px,78vw)] shrink-0 md:w-[360px]"
             >
-              <Glass className="h-full p-6 sm:p-7" glow={i % 3 === 1}>
+              <Glass className="h-full p-6 sm:p-7">
                 <item.icon
                   className="mb-4 text-accent"
                   size={22}

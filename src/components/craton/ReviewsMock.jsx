@@ -1,7 +1,7 @@
 export default function ReviewsMock({ className = '', compact = false }) {
   return (
     <figure
-      className={`overflow-hidden rounded-2xl border border-line bg-gradient-to-br from-ink-3 to-ink ${className}`}
+      className={`overflow-hidden rounded-2xl border border-line bg-paper ${className}`}
     >
       <div
         className={`flex items-center justify-between border-b border-line font-mono text-[10px] uppercase tracking-[0.14em] text-muted ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}

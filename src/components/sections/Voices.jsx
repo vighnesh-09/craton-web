@@ -78,7 +78,7 @@ export default function Voices() {
       aria-label="Proof from the market"
     >
       <div className="relative z-0 pad-x">
-        <div className="shell py-[clamp(2.5rem,4vw,4rem)]">
+        <div className="shell py-[var(--section-y)]">
           <VoiceReveal>
             <p className="mono-label text-accent">Proof</p>
           </VoiceReveal>
@@ -111,7 +111,7 @@ export default function Voices() {
               style={reduced ? undefined : { zIndex: i + 1 }}
             >
               <div className="pad-x">
-                <div className="shell flex flex-col gap-6 py-10 sm:gap-8 sm:py-14 lg:grid lg:grid-cols-[0.9fr_1.6fr_18rem] lg:items-start lg:gap-12">
+                <div className="shell flex flex-col gap-4 py-6 sm:gap-5 sm:py-9 lg:grid lg:grid-cols-[0.9fr_1.6fr_18rem] lg:items-start lg:gap-8">
                   <VoiceReveal delay={reduced ? 0 : 0.02} className="min-w-0">
                     <img
                       src={v.logo}

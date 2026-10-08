@@ -41,7 +41,7 @@ export default function FilmStrip() {
       scrollTrigger: {
         trigger: root,
         start: 'top top',
-        end: () => `+=${Math.max(window.innerHeight * 1.9, getTravel())}`,
+        end: () => `+=${Math.round(window.innerHeight * 0.62)}`,
         pin: stage,
         scrub: 0.75,
         anticipatePin: 1,
@@ -54,7 +54,7 @@ export default function FilmStrip() {
     return (
       <section
         aria-label="RAccelerator flow"
-        className="pad-x py-[clamp(2.5rem,4vw,4rem)]"
+        className="pad-x py-[var(--section-y)]"
       >
         <p className="mono-label text-accent">RAccelerator flow</p>
         <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -79,7 +79,7 @@ export default function FilmStrip() {
     >
       <div
         data-stage
-        className="flex h-[100svh] flex-col justify-center overflow-hidden py-8 sm:py-10"
+        className="flex h-[100svh] max-h-[100svh] flex-col justify-center overflow-hidden py-5 sm:py-6"
       >
         <div className="pad-x mb-6 shrink-0">
           <div className="shell flex flex-wrap items-end justify-between gap-4">

@@ -15,7 +15,7 @@ export default function Section({
     <section
       id={id}
       className={cn(
-        'pad-x relative py-[clamp(2.5rem,4vw,4rem)] text-cream',
+        'pad-x relative py-[var(--section-y)] text-cream',
         className,
       )}
       {...props}

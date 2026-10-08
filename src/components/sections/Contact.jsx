@@ -1,11 +1,16 @@
-import { useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
-import { ArrowUpRight, Calendar } from 'lucide-react'
+import { ArrowUpRight, Calendar, ChevronDown } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import Reveal from '@/components/ui/Reveal'
 import { env } from '@/config/env'
 import { site } from '@/config/site'
 import { cn } from '@/lib/cn'
+
+const TOPICS = [
+  ...site.doors.map((d) => d.title),
+  'Something else',
+]
 
 /** Calm contact band — no sticky pin; tighter rhythm than a hero-scale block. */
 export default function Contact() {
@@ -139,11 +144,7 @@ export default function Contact() {
           </Reveal>
 
           <Reveal delay={reduced ? 0 : 0.08}>
-            <form
-              onSubmit={onSubmit}
-              className="glass-panel glass-panel--strong rounded-[1.5rem] p-5 sm:p-6"
-              noValidate
-            >
+            <form onSubmit={onSubmit} className="pt-1" noValidate>
               <div className="grid gap-3.5 sm:grid-cols-2">
                 <Field label="Name" error={errors.name}>
                   <input
@@ -170,19 +171,7 @@ export default function Contact() {
                   />
                 </Field>
                 <Field label="Conversation">
-                  <select
-                    name="topic"
-                    value={door}
-                    onChange={(e) => setDoor(e.target.value)}
-                    className="field-input"
-                  >
-                    {site.doors.map((d) => (
-                      <option key={d.id} value={d.title}>
-                        {d.title}
-                      </option>
-                    ))}
-                    <option value="Something else">Something else</option>
-                  </select>
+                  <TopicSelect value={door} onChange={setDoor} />
                 </Field>
               </div>
 
@@ -196,7 +185,12 @@ export default function Contact() {
               </Field>
 
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <Button as="button" type="submit" disabled={status === 'sending'}>
+                <Button
+                  as="button"
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="contact-press"
+                >
                   {status === 'sending' ? 'Sending…' : 'Start a conversation'}
                   <ArrowUpRight size={14} />
                 </Button>
@@ -226,33 +220,174 @@ export default function Contact() {
       <style>{`
         .field-input {
           width: 100%;
-          min-height: 44px;
-          border-radius: 12px;
-          border: 1px solid var(--line);
-          background: color-mix(in oklab, var(--paper) 70%, transparent);
-          color: var(--cream);
-          padding: 0.65rem 0.85rem;
-          font-size: 0.9rem;
-          outline: none;
-          transition: border-color 200ms ease, background 200ms ease;
-        }
-        .field-input:focus {
-          border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+          min-height: 46px;
+          border-radius: 10px;
+          border: 1px solid rgba(30, 42, 58, 0.22);
           background: var(--paper);
+          color: var(--cream);
+          padding: 0.7rem 0.85rem;
+          font-size: 0.9375rem;
+          outline: none;
+        }
+        textarea.field-input { min-height: 6.5rem; }
+        .field-input:focus {
+          border-color: var(--accent);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
         }
         .field-input::placeholder { color: var(--muted); }
-        select.field-input option { background: var(--paper); color: var(--cream); }
-        html[data-mode='dark'] .field-input {
-          background: rgba(255,255,255,0.03);
+        .depth-key {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem;
+          text-align: left;
+          cursor: pointer;
         }
-        html[data-mode='dark'] .field-input:focus {
-          background: rgba(255,255,255,0.05);
+        .depth-key:focus-visible {
+          outline: 2px solid var(--accent);
+          outline-offset: 2px;
         }
-        html[data-mode='dark'] select.field-input option {
-          background: var(--ink-2);
+        .depth-menu {
+          position: absolute;
+          z-index: 30;
+          left: 0;
+          right: 0;
+          top: calc(100% + 6px);
+          margin: 0;
+          padding: 0.3rem;
+          list-style: none;
+          border-radius: 12px;
+          background: var(--paper);
+          border: 1px solid rgba(30, 42, 58, 0.12);
+          transform: translateY(-2px);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.9),
+            0 6px 0 rgba(30, 42, 58, 0.04),
+            0 14px 28px -12px rgba(30, 42, 58, 0.28);
+          max-height: min(16rem, 50vh);
+          overflow: auto;
+        }
+        .depth-option {
+          display: block;
+          width: 100%;
+          text-align: left;
+          border-radius: 8px;
+          padding: 0.6rem 0.7rem;
+          font-size: 0.9rem;
+          color: var(--cream);
+          background: transparent;
+          border: 0;
+          border-left: 3px solid transparent;
+          cursor: pointer;
+        }
+        .depth-option:hover,
+        .depth-option[data-active='true'] {
+          background: var(--ink);
+        }
+        .depth-option[aria-selected='true'] {
+          border-left-color: var(--accent);
+        }
+        .contact-press:active:not(:disabled) {
+          transform: translateY(2px);
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .depth-menu { transform: none; }
+          .contact-press:active:not(:disabled) { transform: none; }
         }
       `}</style>
     </section>
+  )
+}
+
+function TopicSelect({ value, onChange }) {
+  const [open, setOpen] = useState(false)
+  const [hi, setHi] = useState(() => Math.max(0, TOPICS.indexOf(value)))
+  const rootRef = useRef(null)
+  const listId = useId()
+
+  useEffect(() => {
+    const index = TOPICS.indexOf(value)
+    if (index >= 0) setHi(index)
+  }, [value])
+
+  useEffect(() => {
+    if (!open) return undefined
+    function onPointer(event) {
+      if (!rootRef.current?.contains(event.target)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', onPointer)
+    return () => document.removeEventListener('pointerdown', onPointer)
+  }, [open])
+
+  function choose(next) {
+    onChange(next)
+    setOpen(false)
+  }
+
+  function onKeyDown(event) {
+    const max = TOPICS.length - 1
+    if (event.key === 'ArrowDown') {
+      event.preventDefault()
+      setOpen(true)
+      setHi((index) => Math.min(max, index + (open ? 1 : 0)))
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault()
+      setOpen(true)
+      setHi((index) => Math.max(0, index - (open ? 1 : 0)))
+    } else if (event.key === 'Home') {
+      event.preventDefault()
+      setOpen(true)
+      setHi(0)
+    } else if (event.key === 'End') {
+      event.preventDefault()
+      setOpen(true)
+      setHi(max)
+    } else if (event.key === 'Escape') {
+      setOpen(false)
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      if (!open) setOpen(true)
+      else choose(TOPICS[hi])
+    }
+  }
+
+  return (
+    <div className="relative" ref={rootRef}>
+      <input type="hidden" name="topic" value={value} />
+      <button
+        type="button"
+        className="field-input depth-key"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-activedescendant={open ? `${listId}-opt-${hi}` : undefined}
+        onClick={() => setOpen((current) => !current)}
+        onKeyDown={onKeyDown}
+      >
+        <span className="truncate">{value}</span>
+        <ChevronDown size={16} aria-hidden className="shrink-0 text-accent" />
+      </button>
+      {open ? (
+        <ul id={listId} role="listbox" tabIndex={-1} className="depth-menu">
+          {TOPICS.map((topic, index) => (
+            <li key={topic} role="presentation">
+              <button
+                type="button"
+                id={`${listId}-opt-${index}`}
+                role="option"
+                aria-selected={value === topic}
+                data-active={hi === index}
+                className="depth-option"
+                onMouseEnter={() => setHi(index)}
+                onClick={() => choose(topic)}
+              >
+                {topic}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
   )
 }
 
@@ -265,7 +400,7 @@ function Door({ active, title, body, onClick }) {
       className={cn(
         'rounded-xl border p-3.5 text-left transition duration-300',
         active
-          ? 'border-accent/55 bg-accent/12 shadow-[0_0_0_1px_rgba(0,229,255,0.12)]'
+          ? 'border-accent/55 bg-accent/12'
           : 'border-line bg-paper/40 hover:border-accent/30 hover:bg-paper/70',
       )}
     >
