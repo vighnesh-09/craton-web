@@ -7,11 +7,10 @@ export default function Faq() {
     <section
       id={faq.id}
       aria-labelledby="h-faq"
-      className="border-t border-line bg-foam px-6 py-24 sm:px-8 md:py-32"
+      className="border-t border-line bg-foam px-6 py-16 sm:px-8 md:py-20"
     >
       <SiteContainer>
         <SectionHeading
-          layout="split-eyebrow"
           num={faq.eyebrow.num}
           label={faq.eyebrow.label}
           title={faq.title}
@@ -19,16 +18,16 @@ export default function Faq() {
           headingId="h-faq"
         />
 
-        <dl className="mt-14 border-t border-line sm:mt-20">
+        <dl className="mt-8 border-t border-line md:mt-10">
           {faq.items.map((item) => (
             <div
               key={item.q}
-              className="grid gap-3 border-b border-line py-6 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:gap-12 md:py-8"
+              className="grid min-w-0 gap-2 border-b border-line py-4 md:grid-cols-[38%_minmax(0,1fr)] md:items-start md:gap-8 md:py-5"
             >
-              <dt className="font-display text-[1.15rem] font-semibold leading-snug tracking-[-0.03em] text-ink">
+              <dt className="min-w-0 font-display text-[1.15rem] font-semibold leading-snug tracking-[-0.03em] text-ink">
                 {item.q}
               </dt>
-              <dd className="font-body text-[15px] leading-[1.7] text-ink/65">
+              <dd className="min-w-0 font-body text-[15px] leading-[1.65] text-ink/65">
                 {item.a}
               </dd>
             </div>

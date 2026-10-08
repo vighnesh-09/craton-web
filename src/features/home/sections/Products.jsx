@@ -10,21 +10,29 @@ import { SectionEyebrow } from '@/features/home/components/SectionHeading'
 import { cn } from '@/lib/cn'
 
 const STACK_SURFACE = 'bg-craton'
-/** Park the stack below the navbar. Later cards stop lower so the one underneath still shows. */
+/** First card parks below the navbar. */
 const STICK_TOP = 6.25
-const PEEK = 1.75
-const OVERLAP = 3
+/** Visible rounded lip of the card underneath, once the next card has stuck. */
+const PEEK = 1.5
 
 function StackCard({ item, index, total, sticky }) {
   const isLast = index === total - 1
+  const peek = index * PEEK
 
   return (
     <div
-      className={cn('w-full min-w-0', sticky && 'md:sticky')}
+      className={cn(
+        'w-full min-w-0',
+        sticky && 'md:sticky md:[top:var(--stack-top)] md:[height:var(--stack-height)]',
+      )}
       style={
         sticky
           ? {
-              top: `${STICK_TOP + index * (PEEK + OVERLAP)}rem`,
+              '--stack-top': `${STICK_TOP + peek}rem`,
+              // Shorter than the card face by the lips above it, so the shared
+              // parent releases every card together. A full-height later card
+              // gets pushed up over the previous rounded top.
+              '--stack-height': `calc(100svh - 10rem - ${peek}rem)`,
               zIndex: index + 1,
             }
           : undefined
