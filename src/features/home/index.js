@@ -3,8 +3,13 @@ export {
   Company,
   Contact,
   Domains,
+  Faq,
   Hero,
   Mindset,
+  Patents,
+  Pilot,
+  Practice,
   Products,
   ProofBand,
+  Security,
 } from '@/features/home/sections'

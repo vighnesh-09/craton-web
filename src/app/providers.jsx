@@ -2,6 +2,7 @@
 
 import { MotionConfig } from 'framer-motion'
 import Footer from '@/components/layout/Footer'
+import HashScroll from '@/components/layout/HashScroll'
 import Navbar from '@/components/layout/Navbar'
 import { LenisProvider } from '@/components/providers/LenisProvider'
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
@@ -17,6 +18,7 @@ export default function Providers({ children }) {
       <MotionConfig reducedMotion="user">
         <ThemeProvider>
           <LenisProvider>
+            <HashScroll />
             <div className="min-h-screen bg-foam text-ink">
               <SkipLink />
               <ScrollToTop />

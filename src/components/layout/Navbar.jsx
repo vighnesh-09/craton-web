@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { ArrowUpRight, Menu, Moon, Sun, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { useLenis } from '@/components/providers/LenisProvider'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import BrandMark from '@/components/ui/BrandMark'
 import SiteContainer from '@/components/layout/SiteContainer'
@@ -12,7 +11,7 @@ import {
   headerCta,
   primaryNav,
 } from '@/content/navigation'
-import { scrollToId } from '@/lib/scroll'
+import { useSiteLink } from '@/hooks/useSiteLink'
 import { cn } from '@/lib/cn'
 
 const NAV_SAMPLE_Y = 44
@@ -32,7 +31,7 @@ export default function Navbar() {
   const [overDark, setOverDark] = useState(true)
   const [scrolled, setScrolled] = useState(false)
   const { cycleTheme, isLight } = useTheme()
-  const lenis = useLenis()
+  const follow = useSiteLink()
 
   useEffect(() => {
     let raf = 0
@@ -63,9 +62,8 @@ export default function Navbar() {
   }, [])
 
   const go = (href) => (event) => {
-    event.preventDefault()
     setOpen(false)
-    scrollToId(href, lenis)
+    follow(href)(event)
   }
 
   const onDark = overDark

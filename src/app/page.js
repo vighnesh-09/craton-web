@@ -3,10 +3,15 @@ import {
   Company,
   Contact,
   Domains,
+  Faq,
   Hero,
   Mindset,
+  Patents,
+  Pilot,
+  Practice,
   Products,
   ProofBand,
+  Security,
 } from '@/features/home'
 import { pages } from '@/content/pages'
 
@@ -32,10 +37,15 @@ export default function HomePage() {
     <>
       <Hero />
       <ProofBand />
-      <Mindset />
       <Domains />
       <Products />
+      <Practice />
+      <Security />
+      <Pilot />
+      <Faq />
+      <Mindset />
       <Approach />
+      <Patents />
       <Company />
       <Contact />
     </>

@@ -1,17 +1,11 @@
 'use client'
 
 import SiteContainer from '@/components/layout/SiteContainer'
+import { proof } from '@/content/home'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { cn } from '@/lib/cn'
 
-/** Short, scannable facts for a single-line ticker */
-const facts = Object.freeze([
-  '22+ years shipping enterprise systems',
-  '3 US patents granted · 9 pending',
-  'ReviewsIntel — patent pending, June 2026',
-  'RAccelerator — first enterprise evaluation, Sept 2026',
-  'Frisco, Texas · founder-funded',
-])
+const facts = proof.facts
 
 function Fact({ text }) {
   return (
@@ -38,7 +32,7 @@ export default function ProofMarquee({ className }) {
     <div className={cn(className)}>
       <SiteContainer className="px-6 pb-3 pt-8 text-center sm:px-8">
         <p className="font-serif text-[15px] italic tracking-[-0.01em] text-hero-soft/80 sm:text-[16px]">
-          Building the evidence layer for regulated work.
+          {proof.line}
         </p>
       </SiteContainer>
 

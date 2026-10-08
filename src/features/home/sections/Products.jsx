@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { useReducedMotion } from 'framer-motion'
 import SiteContainer from '@/components/layout/SiteContainer'
@@ -86,13 +87,13 @@ function StackCard({ item, index, total, sticky }) {
               </ul>
 
               <div className="mt-10 flex flex-wrap items-center gap-x-5 gap-y-3">
-                <a
-                  href="#contact"
+                <Link
+                  href={item.href}
                   className="inline-flex items-center gap-2 rounded-full bg-hero-cta px-5 py-2.5 font-body text-[13.5px] font-semibold text-craton transition-opacity hover:opacity-90"
                 >
                   {item.cta}
                   <ArrowUpRight size={15} strokeWidth={2.25} />
-                </a>
+                </Link>
                 <span className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-hero-muted">
                   {item.badge}
                 </span>

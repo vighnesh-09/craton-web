@@ -4,20 +4,22 @@ import { ArrowUp } from 'lucide-react'
 import BrandMark from '@/components/ui/BrandMark'
 import FooterWordmark from '@/components/ui/FooterWordmark'
 import SiteContainer from '@/components/layout/SiteContainer'
-import { useLenis } from '@/components/providers/LenisProvider'
 import { site } from '@/config/site'
 import { footerCopy } from '@/content/home'
-import { footerNav } from '@/content/navigation'
-import { scrollToId } from '@/lib/scroll'
+import {
+  footerLegalNav,
+  footerNav,
+  footerProductNav,
+} from '@/content/navigation'
+import { useSiteLink } from '@/hooks/useSiteLink'
 
 const COPYRIGHT_YEAR = 2026
 
 export default function Footer() {
-  const lenis = useLenis()
+  const follow = useSiteLink()
 
   const go = (href) => (event) => {
-    event.preventDefault()
-    scrollToId(href, lenis)
+    follow(href)(event)
   }
 
   return (
@@ -42,13 +44,48 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="grid gap-10 sm:grid-cols-2">
+            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
                   Navigate
                 </p>
                 <ul className="mt-4 space-y-3">
                   {footerNav.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        onClick={go(link.href)}
+                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
+                  Products
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {footerProductNav.map((link) => (
+                    <li key={link.label}>
+                      <a
+                        href={link.href}
+                        onClick={go(link.href)}
+                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
+                  Legal
+                </p>
+                <ul className="mt-4 space-y-3">
+                  {footerLegalNav.map((link) => (
                     <li key={link.label}>
                       <a
                         href={link.href}
