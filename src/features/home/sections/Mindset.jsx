@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { mindset } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
@@ -8,7 +9,7 @@ import SectionHeading from '@/features/home/components/SectionHeading'
 const ease = [0.22, 1, 0.36, 1]
 
 export default function Mindset() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
 
   return (
     <section

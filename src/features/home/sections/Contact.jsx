@@ -1,13 +1,223 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { motion } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { env } from '@/config/env'
 import { contact } from '@/content/home'
+import { cn } from '@/lib/cn'
 
 const ease = [0.22, 1, 0.36, 1]
+
+function TopicField({ id, labelId, value, topics, onChange, fieldClass }) {
+  const [open, setOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [placement, setPlacement] = useState('below')
+  const [maxHeight, setMaxHeight] = useState(null)
+  const rootRef = useRef(null)
+  const buttonRef = useRef(null)
+  const listRef = useRef(null)
+
+  const selectedIndex = Math.max(0, topics.indexOf(value))
+  const listId = `${id}-listbox`
+
+  const openAt = (index) => {
+    const count = topics.length
+    setActiveIndex((index + count) % count)
+    setOpen(true)
+  }
+
+  const commit = (index) => {
+    const next = topics[index]
+    if (next && next !== value) onChange(next)
+    setOpen(false)
+    buttonRef.current?.focus({ preventScroll: true })
+  }
+
+  useEffect(() => {
+    if (!open) return undefined
+
+    const onPointerDown = (event) => {
+      if (!rootRef.current?.contains(event.target)) setOpen(false)
+    }
+
+    const onKeyDown = (event) => {
+      if (event.key !== 'Escape') return
+      setOpen(false)
+      buttonRef.current?.focus({ preventScroll: true })
+    }
+
+    document.addEventListener('pointerdown', onPointerDown)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [open])
+
+  useLayoutEffect(() => {
+    if (!open || !buttonRef.current || !listRef.current) return undefined
+
+    const measure = () => {
+      const button = buttonRef.current.getBoundingClientRect()
+      const list = listRef.current
+      if (!list) return
+
+      const gap = 8
+      const header = document.querySelector('header')
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0
+      const spaceBelow = Math.max(0, window.innerHeight - button.bottom - gap)
+      const spaceAbove = Math.max(0, button.top - Math.max(gap, headerBottom + gap))
+      const needed = list.scrollHeight
+      const below = spaceBelow >= needed || spaceBelow >= spaceAbove
+      const available = Math.floor(below ? spaceBelow : spaceAbove)
+      const nextPlacement = below ? 'below' : 'above'
+
+      setPlacement((prev) => (prev === nextPlacement ? prev : nextPlacement))
+      setMaxHeight((prev) => (prev === available ? prev : available))
+    }
+
+    measure()
+    window.addEventListener('resize', measure)
+    window.addEventListener('scroll', measure, true)
+    return () => {
+      window.removeEventListener('resize', measure)
+      window.removeEventListener('scroll', measure, true)
+    }
+  }, [open, topics])
+
+  useLayoutEffect(() => {
+    if (!open || !listRef.current) return
+    const option = listRef.current.querySelector('[data-active="true"]')
+    if (!option) return
+    const list = listRef.current
+    const top = option.offsetTop
+    const bottom = top + option.offsetHeight
+    if (top < list.scrollTop) list.scrollTop = top
+    else if (bottom > list.scrollTop + list.clientHeight) {
+      list.scrollTop = bottom - list.clientHeight
+    }
+  }, [open, activeIndex, placement, maxHeight])
+
+  const onKeyDown = (event) => {
+    const count = topics.length
+    switch (event.key) {
+      case 'ArrowDown':
+        event.preventDefault()
+        if (!open) openAt(selectedIndex + 1)
+        else setActiveIndex((index) => (index + 1) % count)
+        break
+      case 'ArrowUp':
+        event.preventDefault()
+        if (!open) openAt(selectedIndex - 1)
+        else setActiveIndex((index) => (index - 1 + count) % count)
+        break
+      case 'Home':
+        event.preventDefault()
+        setActiveIndex(0)
+        setOpen(true)
+        break
+      case 'End':
+        event.preventDefault()
+        setActiveIndex(count - 1)
+        setOpen(true)
+        break
+      case 'Enter':
+      case ' ':
+        event.preventDefault()
+        if (!open) openAt(selectedIndex)
+        else commit(activeIndex)
+        break
+      case 'Escape':
+        if (!open) break
+        event.preventDefault()
+        event.stopPropagation()
+        setOpen(false)
+        break
+      case 'Tab':
+        if (open) setOpen(false)
+        break
+      default:
+        break
+    }
+  }
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        ref={buttonRef}
+        id={id}
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-activedescendant={open ? `${id}-option-${activeIndex}` : undefined}
+        aria-labelledby={`${labelId} ${id}`}
+        onClick={() => {
+          if (open) setOpen(false)
+          else openAt(selectedIndex)
+        }}
+        onKeyDown={onKeyDown}
+        className={cn(
+          fieldClass,
+          'flex items-center justify-between gap-3 text-left',
+          open && 'border-copper',
+        )}
+      >
+        <span className="min-w-0 truncate">{value}</span>
+        <ChevronDown
+          aria-hidden
+          size={16}
+          className={cn(
+            'shrink-0 text-hero-muted transition-transform duration-200',
+            open && 'rotate-180',
+          )}
+        />
+      </button>
+
+      {open ? (
+        <ul
+          ref={listRef}
+          id={listId}
+          role="listbox"
+          aria-labelledby={labelId}
+          tabIndex={-1}
+          style={maxHeight ? { maxHeight } : undefined}
+          onMouseDown={(event) => event.preventDefault()}
+          className={cn(
+            'absolute left-0 z-30 w-full overflow-auto rounded-xl border border-line-on-dark bg-[color-mix(in_srgb,var(--hero-base)_88%,var(--hero-fg))] p-1.5 shadow-[0_16px_40px_color-mix(in_srgb,var(--craton)_50%,transparent)]',
+            placement === 'above' ? 'bottom-full mb-2' : 'top-full mt-2',
+          )}
+        >
+          {topics.map((topic, index) => {
+            const selected = topic === value
+            const active = index === activeIndex
+            return (
+              <li
+                key={topic}
+                id={`${id}-option-${index}`}
+                role="option"
+                aria-selected={selected}
+                data-active={active ? 'true' : undefined}
+                data-cursor="hover"
+                onMouseEnter={() => setActiveIndex(index)}
+                onClick={() => commit(index)}
+                className={cn(
+                  'flex min-h-11 items-center rounded-lg px-3 py-2.5 font-body text-[14.5px] leading-snug text-hero-fg',
+                  active ? 'bg-lagoon/20' : selected && 'bg-hero-fg/10',
+                )}
+              >
+                {topic}
+              </li>
+            )
+          })}
+        </ul>
+      ) : null}
+    </div>
+  )
+}
 
 const initial = {
   name: '',
@@ -18,7 +228,7 @@ const initial = {
 }
 
 export default function Contact() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const [form, setForm] = useState(initial)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('')
@@ -225,24 +435,20 @@ export default function Contact() {
               </div>
               <div>
                 <label
+                  id="f-topic-label"
                   htmlFor="f-topic"
                   className="font-mono text-[10px] uppercase tracking-[0.14em] text-hero-muted"
                 >
                   {contact.form.topicLabel}
                 </label>
-                <select
+                <TopicField
                   id="f-topic"
-                  name="topic"
+                  labelId="f-topic-label"
                   value={form.topic}
-                  onChange={(e) => setField('topic', e.target.value)}
-                  className={`${fieldClass} appearance-none`}
-                >
-                  {contact.topics.map((topic) => (
-                    <option key={topic} value={topic} className="bg-craton text-hero-fg">
-                      {topic}
-                    </option>
-                  ))}
-                </select>
+                  topics={contact.topics}
+                  onChange={(topic) => setField('topic', topic)}
+                  fieldClass={fieldClass}
+                />
               </div>
             </div>
 

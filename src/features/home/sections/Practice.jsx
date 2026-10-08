@@ -2,56 +2,55 @@
 
 import Image from 'next/image'
 import { useRef } from 'react'
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { practice } from '@/content/home'
 import { SectionEyebrow } from '@/features/home/components/SectionHeading'
 
-function Panel({ item, index }) {
+function Panel({ item, index, count }) {
   return (
-    <article className="flex h-svh w-screen shrink-0 flex-col justify-center px-5 pb-16 pt-20 text-ink sm:px-8 sm:pt-24">
-      <div className="mx-auto grid h-full max-h-[40rem] w-full max-w-site items-stretch gap-6 lg:max-h-none lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:gap-10">
+    <article
+      className="flex h-svh min-h-0 min-w-0 shrink-0 flex-col overflow-x-hidden overflow-y-auto px-5 pb-24 pt-16 text-ink sm:px-8 sm:pt-20 lg:justify-center lg:overflow-hidden lg:pb-16 lg:pt-24"
+      style={{ width: `${100 / count}%` }}
+    >
+      <div className="mx-auto my-auto flex w-full min-w-0 max-w-site flex-col gap-4 lg:my-0 lg:grid lg:h-full lg:max-h-none lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-stretch lg:gap-10">
         <div className="flex min-w-0 flex-col justify-center">
           {index === 0 ? (
             <SectionEyebrow
               num={practice.eyebrow.num}
               label={practice.eyebrow.label}
               tone="light"
-              className="mb-7"
+              className="mb-4 lg:mb-7"
             />
           ) : (
-            <p className="mb-7 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45">
+            <p className="mb-4 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45 lg:mb-7">
               {practice.eyebrow.num} / {practice.eyebrow.label}
             </p>
           )}
 
-          <p className="font-display text-[4.5rem] font-semibold leading-none tracking-[-0.06em] text-ink/10 sm:text-[5.5rem]">
+          <p className="font-display text-[2.75rem] font-semibold leading-none tracking-[-0.06em] text-ink/10 sm:text-[4.5rem] lg:text-[5.5rem]">
             {item.num}
           </p>
 
-          <p className="-mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/50">
+          <p className="-mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/50 lg:-mt-3">
             {item.domain}
           </p>
 
-          <h3 className="mt-4 max-w-[12ch] font-display text-[clamp(2.2rem,4vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink">
+          <h3 className="mt-3 max-w-[14ch] font-display text-[clamp(1.7rem,6.2vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink lg:mt-4 lg:max-w-[12ch] lg:text-[clamp(2.2rem,4vw,3.6rem)]">
             {item.title}{' '}
             <span className="font-serif font-normal italic tracking-[-0.03em] text-ink-soft">
               {item.titleAccent}
             </span>
           </h3>
 
-          <p className="mt-5 max-w-[34ch] font-body text-[15px] leading-[1.65] text-ink/60">
+          <p className="mt-3 max-w-[34ch] font-body text-[15px] leading-[1.65] text-ink/60 lg:mt-5">
             {item.copy}
           </p>
         </div>
 
-        <div className="flex min-h-[16rem] flex-col overflow-hidden rounded-[1.35rem] border border-line bg-mist shadow-[0_18px_50px_color-mix(in_srgb,var(--craton)_8%,transparent)] lg:min-h-0">
-          <div className="relative min-h-[12rem] flex-1">
+        <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-[1.35rem] border border-line bg-mist shadow-[0_18px_50px_color-mix(in_srgb,var(--craton)_8%,transparent)] lg:min-h-0">
+          <div className="relative h-32 shrink-0 sm:h-44 lg:h-auto lg:min-h-[12rem] lg:flex-1">
             <Image
               src={item.image.src}
               alt={item.image.alt}
@@ -61,13 +60,13 @@ function Panel({ item, index }) {
             />
           </div>
 
-          <ul className="grid gap-px bg-line sm:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-px bg-line min-[520px]:grid-cols-3">
             {item.beats.map((beat) => (
-              <li key={beat.title} className="bg-mist px-4 py-3.5">
-                <p className="font-display text-[13.5px] font-semibold leading-snug tracking-[-0.02em] text-ink">
+              <li key={beat.title} className="min-w-0 bg-mist px-3 py-2.5 sm:px-4 sm:py-3.5">
+                <p className="font-display text-[12.5px] font-semibold leading-snug tracking-[-0.02em] text-ink sm:text-[13.5px]">
                   {beat.title}
                 </p>
-                <p className="mt-1 line-clamp-3 font-body text-[12px] leading-relaxed text-ink/55">
+                <p className="mt-1 font-body text-[11.5px] leading-relaxed text-ink/55 sm:line-clamp-3 sm:text-[12px]">
                   {beat.detail}
                 </p>
               </li>
@@ -124,9 +123,9 @@ function StaticPractice() {
           {practice.panels.map((item) => (
             <div
               key={item.id}
-              className="border-t border-line pt-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12"
+              className="min-w-0 border-t border-line pt-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12"
             >
-              <div>
+              <div className="min-w-0">
                 <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
                   {item.num} · {item.domain}
                 </p>
@@ -140,7 +139,7 @@ function StaticPractice() {
                   {item.copy}
                 </p>
               </div>
-              <div className="relative mt-6 aspect-[16/10] overflow-hidden rounded-2xl lg:mt-0">
+              <div className="relative mt-6 aspect-[16/10] w-full min-w-0 overflow-hidden rounded-2xl lg:mt-0">
                 <Image
                   src={item.image.src}
                   alt={item.image.alt}
@@ -158,7 +157,7 @@ function StaticPractice() {
 }
 
 export default function Practice() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const trackRef = useRef(null)
   const count = practice.panels.length
 
@@ -191,10 +190,10 @@ export default function Practice() {
       <div className="sticky top-0 h-svh overflow-hidden">
         <motion.div
           style={{ x, width: `${count * 100}%` }}
-          className="flex h-full will-change-transform"
+          className="flex h-svh will-change-transform"
         >
           {practice.panels.map((item, index) => (
-            <Panel key={item.id} item={item} index={index} />
+            <Panel key={item.id} item={item} index={index} count={count} />
           ))}
         </motion.div>
 

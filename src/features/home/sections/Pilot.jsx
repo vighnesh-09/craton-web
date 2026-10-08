@@ -1,7 +1,8 @@
 'use client'
 
 import { ArrowUpRight } from 'lucide-react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { pilot } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
@@ -10,7 +11,7 @@ import { useSiteLink } from '@/hooks/useSiteLink'
 const ease = [0.22, 1, 0.36, 1]
 
 export default function Pilot() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const follow = useSiteLink()
 
   return (

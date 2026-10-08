@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 
 const ease = [0.22, 1, 0.36, 1]
 
@@ -36,7 +37,7 @@ export default function SectionHeading({
   headingId,
   className = '',
 }) {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const dark = tone === 'dark'
 
   const fade = (node, delay = 0) =>

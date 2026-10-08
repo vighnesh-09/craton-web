@@ -45,7 +45,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:gap-10 lg:grid-cols-3">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
                   Navigate
@@ -65,74 +65,76 @@ export default function Footer() {
                 </ul>
               </div>
 
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
-                  Products
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {footerProductNav.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        onClick={go(link.href)}
-                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
-                  Legal
-                </p>
-                <ul className="mt-4 space-y-3">
-                  {footerLegalNav.map((link) => (
-                    <li key={link.label}>
-                      <a
-                        href={link.href}
-                        onClick={go(link.href)}
-                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <div className="flex min-w-0 flex-col gap-10 md:contents">
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
+                    Products
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {footerProductNav.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          onClick={go(link.href)}
+                          className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
+                    Legal
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    {footerLegalNav.map((link) => (
+                      <li key={link.label}>
+                        <a
+                          href={link.href}
+                          onClick={go(link.href)}
+                          className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
 
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
-                  Connect
-                </p>
-                <ul className="mt-4 space-y-3">
-                  <li>
-                    <a
-                      href={`mailto:${env.contactEmail}`}
-                      className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
-                    >
-                      {env.contactEmail}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#contact"
-                      onClick={go('#contact')}
-                      className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
-                    >
-                      Start a conversation
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#top"
-                      onClick={go('#top')}
-                      className="inline-flex items-center gap-2 font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-copper"
-                    >
-                      Back to the top
-                      <ArrowUp size={14} />
-                    </a>
-                  </li>
-                </ul>
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-copper">
+                    Connect
+                  </p>
+                  <ul className="mt-4 space-y-3">
+                    <li>
+                      <a
+                        href={`mailto:${env.contactEmail}`}
+                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                      >
+                        {env.contactEmail}
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#contact"
+                        onClick={go('#contact')}
+                        className="font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-hero-fg"
+                      >
+                        Start a conversation
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="#top"
+                        onClick={go('#top')}
+                        className="inline-flex items-center gap-2 font-body text-[14px] text-hero-nav transition-colors duration-200 hover:text-copper"
+                      >
+                        Back to the top
+                        <ArrowUp size={14} />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>

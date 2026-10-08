@@ -1,12 +1,13 @@
 'use client'
 
-import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 
 /**
  * Site-wide reading progress — replaces the native scrollbar.
  */
 export default function ScrollProgress() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, {
     stiffness: reduced ? 1000 : 140,

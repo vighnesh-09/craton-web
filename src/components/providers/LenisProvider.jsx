@@ -1,6 +1,5 @@
 'use client'
 
-import { cancelFrame, frame } from 'framer-motion'
 import Lenis from 'lenis'
 import { createContext, useContext, useEffect, useState } from 'react'
 
@@ -20,24 +19,46 @@ export function LenisProvider({ children }) {
       touchMultiplier: 1.2,
       wheelMultiplier: 0.92,
       anchors: false,
+      autoRaf: false,
     })
 
     setLenis(instance)
 
-    const update = ({ timestamp }) => {
-      instance.raf(timestamp)
-    }
-    frame.update(update, true)
+    let rafId = 0
+    let pending = false
 
-    // Keep native scroll listeners in sync for UI that reads scrollY
-    const onLenisScroll = () => {
-      window.dispatchEvent(new Event('scroll'))
+    const loop = (time) => {
+      pending = false
+      instance.raf(time)
+      // Keep frames only while a smooth jump is in flight. Idle pages must
+      // not reschedule, and this callback must not emit a native scroll —
+      // Lenis's onNativeScroll would re-enter and overflow the stack.
+      if (instance.isScrolling === 'smooth' || pending) {
+        rafId = requestAnimationFrame(loop)
+      } else {
+        rafId = 0
+      }
     }
-    instance.on('scroll', onLenisScroll)
+
+    const kick = () => {
+      pending = true
+      if (rafId) return
+      rafId = requestAnimationFrame(loop)
+    }
+
+    instance.on('virtual-scroll', kick)
+
+    const scrollTo = instance.scrollTo.bind(instance)
+    instance.scrollTo = (target, options) => {
+      const result = scrollTo(target, options)
+      kick()
+      return result
+    }
 
     return () => {
-      instance.off('scroll', onLenisScroll)
-      cancelFrame(update)
+      if (rafId) cancelAnimationFrame(rafId)
+      instance.off('virtual-scroll', kick)
+      instance.scrollTo = scrollTo
       instance.destroy()
       setLenis(null)
     }

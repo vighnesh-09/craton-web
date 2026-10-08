@@ -176,6 +176,43 @@
     will-change: transform;
   }
 
+  /* Phone/tablet: funnel stays visible behind the copy. Desktop fades before the sculpture. */
+  .hero-signal-mask {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--craton) 78%, transparent) 0%,
+      var(--craton) 14%,
+      var(--craton) 72%,
+      color-mix(in srgb, var(--craton) 48%, transparent) 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--craton) 78%, transparent) 0%,
+      var(--craton) 14%,
+      var(--craton) 72%,
+      color-mix(in srgb, var(--craton) 48%, transparent) 100%
+    );
+  }
+
+  @media (min-width: 64rem) {
+    .hero-signal-mask {
+      -webkit-mask-image: linear-gradient(
+        90deg,
+        var(--craton) 0%,
+        var(--craton) 38%,
+        color-mix(in srgb, var(--craton) 45%, transparent) 52%,
+        transparent 68%
+      );
+      mask-image: linear-gradient(
+        90deg,
+        var(--craton) 0%,
+        var(--craton) 38%,
+        color-mix(in srgb, var(--craton) 45%, transparent) 52%,
+        transparent 68%
+      );
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .proof-marquee {
       animation: none;

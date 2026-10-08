@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import { ArrowRight } from 'lucide-react'
 import HeroSculpture from '@/components/effects/HeroSculpture'
 import SignalFlowBackground from '@/components/effects/SignalFlowBackground'
@@ -47,7 +48,7 @@ function RevealLine({
 }
 
 export default function Hero() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const lenis = useLenis()
 
   const t = (i) => (reduced ? 0 : 0.08 + i * STAGGER)
@@ -66,16 +67,11 @@ export default function Hero() {
         className="pointer-events-none absolute inset-0 bg-hero-base"
       />
 
-      {/* Funnel stays on the left; masked so the trunk doesn't cut through the sculpture */}
+      {/* Below lg the sculpture is hidden, so the funnel runs behind the copy.
+          At lg+ it stays masked to the left so the trunk misses the sculpture. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-[1]"
-        style={{
-          WebkitMaskImage:
-            'linear-gradient(90deg, var(--craton) 0%, var(--craton) 38%, color-mix(in srgb, var(--craton) 45%, transparent) 52%, transparent 68%)',
-          maskImage:
-            'linear-gradient(90deg, var(--craton) 0%, var(--craton) 38%, color-mix(in srgb, var(--craton) 45%, transparent) 52%, transparent 68%)',
-        }}
+        className="hero-signal-mask pointer-events-none absolute inset-0 z-[1]"
       >
         <SignalFlowBackground />
       </div>

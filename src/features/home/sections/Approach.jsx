@@ -1,12 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { approach } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
@@ -71,7 +67,7 @@ function StepCard({ step, y, animate }) {
 }
 
 export default function Approach() {
-  const reduced = useReducedMotion()
+  const reduced = usePrefersReducedMotion()
   const wide = useWideStagger()
   const sectionRef = useRef(null)
   const animate = wide && !reduced
