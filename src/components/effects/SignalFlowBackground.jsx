@@ -34,7 +34,8 @@ const CONFIG = Object.freeze({
   lineCount: 80,
   signalCount: 90,
   spreadHeight: 30,
-  convergePointX: 50,
+  // Screen % where the fan meets. ~59.5% is the open gap just left of the sculpture on a wide desktop.
+  convergePointX: 59.5,
   curvePower: 0.82,
   waveSpeed: 2.4,
   waveHeight: 0.15,

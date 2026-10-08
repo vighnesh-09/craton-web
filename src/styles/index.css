@@ -199,16 +199,14 @@
       -webkit-mask-image: linear-gradient(
         90deg,
         var(--craton) 0%,
-        var(--craton) 38%,
-        color-mix(in srgb, var(--craton) 45%, transparent) 52%,
-        transparent 68%
+        var(--craton) 60%,
+        transparent 67%
       );
       mask-image: linear-gradient(
         90deg,
         var(--craton) 0%,
-        var(--craton) 38%,
-        color-mix(in srgb, var(--craton) 45%, transparent) 52%,
-        transparent 68%
+        var(--craton) 60%,
+        transparent 67%
       );
     }
   }

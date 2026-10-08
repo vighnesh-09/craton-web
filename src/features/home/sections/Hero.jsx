@@ -87,7 +87,7 @@ export default function Hero() {
       />
 
       {/* v2 sculpture — right side, above funnel and the proof bar */}
-      <HeroSculpture className="z-[3] right-[2%] top-0 bottom-24 w-[50%] lg:bottom-28" />
+      <HeroSculpture className="z-[3] right-[2%] top-6 bottom-24 w-[50%] lg:bottom-28" />
 
       <SiteContainer className="relative z-[4] flex min-h-0 flex-1 flex-col justify-center px-6 pb-4 pt-20 sm:px-8 sm:pt-28 lg:pb-6">
         <div className="w-full lg:max-w-[46%]">
@@ -127,7 +127,7 @@ export default function Hero() {
 
           <div className="mt-6 sm:mt-9">
             <RevealLine delay={t(6)} reduced={reduced}>
-              <span className="inline-flex flex-wrap items-center gap-3 sm:gap-4">
+              <span className="inline-flex flex-wrap items-center gap-3 py-1 sm:gap-4">
                 <a
                   href="#products"
                   onClick={go('#products')}
