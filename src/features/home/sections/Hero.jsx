@@ -6,6 +6,7 @@ import { ArrowRight } from 'lucide-react'
 import HeroSculpture from '@/components/effects/HeroSculpture'
 import SignalFlowBackground from '@/components/effects/SignalFlowBackground'
 import SiteContainer from '@/components/layout/SiteContainer'
+import ProofMarquee from '@/components/ui/ProofMarquee'
 import { useLenis } from '@/components/providers/LenisProvider'
 import { env } from '@/config/env'
 import { scrollToId } from '@/lib/scroll'
@@ -85,12 +86,12 @@ export default function Hero() {
         }}
       />
 
-      {/* v2 sculpture — right side, above funnel */}
-      <HeroSculpture className="z-[3] right-[0%] top-0 bottom-8 w-[50%]" />
+      {/* v2 sculpture — right side, above funnel and the proof bar */}
+      <HeroSculpture className="z-[3] right-[0%] top-0 bottom-24 w-[50%] lg:bottom-28" />
 
-      <SiteContainer className="relative z-[4] flex flex-1 flex-col justify-center px-6 pb-8 pt-28 sm:px-8 lg:pb-10">
+      <SiteContainer className="relative z-[4] flex min-h-0 flex-1 flex-col justify-center px-6 pb-4 pt-20 sm:px-8 sm:pt-28 lg:pb-6">
         <div className="w-full max-w-xl lg:max-w-[46%]">
-          <div className="mb-6 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-hero-muted">
+          <div className="mb-4 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-hero-muted sm:mb-6">
             <RevealLine delay={t(0)} reduced={reduced}>
               <span className="inline-flex items-center gap-3">
                 <span aria-hidden className="inline-block h-px w-7 bg-copper" />
@@ -112,7 +113,7 @@ export default function Hero() {
             </RevealLine>
           </h1>
 
-          <div className="mt-7 max-w-[36ch] font-body text-[15px] leading-[1.75] text-hero-body sm:text-[16px]">
+          <div className="mt-5 max-w-[36ch] font-body text-[15px] leading-[1.75] text-hero-body sm:mt-7 sm:text-[16px]">
             <RevealLine delay={t(3)} reduced={reduced}>
               We invent, protect, and ship AI-enabled products
             </RevealLine>
@@ -124,7 +125,7 @@ export default function Hero() {
             </RevealLine>
           </div>
 
-          <div className="mt-9">
+          <div className="mt-6 sm:mt-9">
             <RevealLine delay={t(6)} reduced={reduced}>
               <span className="inline-flex flex-wrap items-center gap-3 sm:gap-4">
                 <a
@@ -152,6 +153,8 @@ export default function Hero() {
 
         <span className="sr-only">{env.appName}</span>
       </SiteContainer>
+
+      <ProofMarquee className="relative z-[5] shrink-0" />
     </section>
   )
 }

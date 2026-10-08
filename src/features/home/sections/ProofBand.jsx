@@ -1,11 +1,10 @@
 'use client'
 
-import ProofMarquee from '@/components/ui/ProofMarquee'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { proof } from '@/content/home'
 import { useSiteLink } from '@/hooks/useSiteLink'
 
-/** Sits below the full-viewport hero — visible after scrolling past 100vh */
+/** Honest status block. The scrolling proof ticker sits on the hero. */
 export default function ProofBand() {
   const follow = useSiteLink()
 
@@ -15,9 +14,7 @@ export default function ProofBand() {
       aria-label="Company proof points"
       className="relative z-10 bg-craton text-hero-fg"
     >
-      <ProofMarquee />
-
-      <SiteContainer className="px-6 pb-14 sm:px-8 md:pb-16">
+      <SiteContainer className="px-6 pb-14 pt-10 sm:px-8 md:pb-16 md:pt-12">
         <div className="border-t border-line-on-dark pt-8">
           <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-hero-muted">
             {proof.status.kicker}

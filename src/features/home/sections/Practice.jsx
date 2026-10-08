@@ -11,46 +11,56 @@ import { SectionEyebrow } from '@/features/home/components/SectionHeading'
 function Panel({ item, index, count }) {
   return (
     <article
-      className="flex h-svh min-h-0 min-w-0 shrink-0 flex-col overflow-x-hidden overflow-y-auto px-5 pb-24 pt-16 text-ink sm:px-8 sm:pt-20 lg:justify-center lg:overflow-hidden lg:pb-16 lg:pt-24"
+      className="flex h-svh min-h-0 min-w-0 shrink-0 flex-col overflow-x-hidden overflow-y-auto px-5 pb-16 pt-16 text-ink sm:px-8 sm:pb-24 sm:pt-20 lg:justify-center lg:overflow-hidden lg:pb-16 lg:pt-24"
       style={{ width: `${100 / count}%` }}
     >
       <div className="mx-auto my-auto flex w-full min-w-0 max-w-site flex-col gap-4 lg:my-0 lg:grid lg:h-full lg:max-h-none lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-stretch lg:gap-10">
-        <div className="flex min-w-0 flex-col justify-center">
-          {index === 0 ? (
-            <SectionEyebrow
-              num={practice.eyebrow.num}
-              label={practice.eyebrow.label}
-              tone="light"
-              className="mb-4 lg:mb-7"
-            />
-          ) : (
-            <p className="mb-4 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45 lg:mb-7">
-              {practice.eyebrow.num} / {practice.eyebrow.label}
+        <div className="flex min-w-0 flex-col gap-1 lg:h-full lg:justify-between lg:gap-0">
+          <p className="font-serif text-[15px] italic leading-snug tracking-[-0.02em] text-ink/45">
+            {item.intro}
+          </p>
+
+          <div className="min-w-0">
+            {index === 0 ? (
+              <SectionEyebrow
+                num={practice.eyebrow.num}
+                label={practice.eyebrow.label}
+                tone="light"
+                className="mb-4 lg:mb-7"
+              />
+            ) : (
+              <p className="mb-4 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45 lg:mb-7">
+                {practice.eyebrow.num} / {practice.eyebrow.label}
+              </p>
+            )}
+
+            <p className="font-display text-[2.75rem] font-semibold leading-none tracking-[-0.06em] text-ink/10 sm:text-[4.5rem] lg:text-[5.5rem]">
+              {item.num}
             </p>
-          )}
 
-          <p className="font-display text-[2.75rem] font-semibold leading-none tracking-[-0.06em] text-ink/10 sm:text-[4.5rem] lg:text-[5.5rem]">
-            {item.num}
-          </p>
+            <p className="-mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/50 lg:-mt-3">
+              {item.domain}
+            </p>
 
-          <p className="-mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink/50 lg:-mt-3">
-            {item.domain}
-          </p>
+            <h3 className="mt-3 max-w-[14ch] font-display text-[clamp(1.7rem,6.2vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink lg:mt-4 lg:max-w-[12ch] lg:text-[clamp(2.2rem,4vw,3.6rem)]">
+              {item.title}{' '}
+              <span className="font-serif font-normal italic tracking-[-0.03em] text-ink-soft">
+                {item.titleAccent}
+              </span>
+            </h3>
 
-          <h3 className="mt-3 max-w-[14ch] font-display text-[clamp(1.7rem,6.2vw,3.6rem)] font-semibold leading-[0.98] tracking-[-0.045em] text-ink lg:mt-4 lg:max-w-[12ch] lg:text-[clamp(2.2rem,4vw,3.6rem)]">
-            {item.title}{' '}
-            <span className="font-serif font-normal italic tracking-[-0.03em] text-ink-soft">
-              {item.titleAccent}
-            </span>
-          </h3>
+            <p className="mt-3 max-w-[34ch] font-body text-[15px] leading-[1.65] text-ink/60 lg:mt-5">
+              {item.copy}
+            </p>
+          </div>
 
-          <p className="mt-3 max-w-[34ch] font-body text-[15px] leading-[1.65] text-ink/60 lg:mt-5">
-            {item.copy}
+          <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">
+            {item.note}
           </p>
         </div>
 
         <div className="flex min-h-0 min-w-0 flex-col overflow-hidden rounded-[1.35rem] border border-line bg-mist shadow-[0_18px_50px_color-mix(in_srgb,var(--craton)_8%,transparent)] lg:min-h-0">
-          <div className="relative h-32 shrink-0 sm:h-44 lg:h-auto lg:min-h-[12rem] lg:flex-1">
+          <div className="relative h-24 shrink-0 sm:h-44 lg:h-auto lg:min-h-[12rem] lg:flex-1">
             <Image
               src={item.image.src}
               alt={item.image.alt}
@@ -126,7 +136,10 @@ function StaticPractice() {
               className="min-w-0 border-t border-line pt-10 lg:grid lg:grid-cols-2 lg:items-center lg:gap-12"
             >
               <div className="min-w-0">
-                <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
+                <p className="font-serif text-[15px] italic leading-snug tracking-[-0.02em] text-ink/45">
+                  {item.intro}
+                </p>
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-ink/45">
                   {item.num} · {item.domain}
                 </p>
                 <h3 className="mt-4 font-display text-[1.75rem] font-semibold tracking-[-0.03em]">
@@ -137,6 +150,9 @@ function StaticPractice() {
                 </h3>
                 <p className="mt-3 font-body text-[14.5px] leading-relaxed text-ink/60">
                   {item.copy}
+                </p>
+                <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">
+                  {item.note}
                 </p>
               </div>
               <div className="relative mt-6 aspect-[16/10] w-full min-w-0 overflow-hidden rounded-2xl lg:mt-0">

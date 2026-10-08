@@ -1,21 +1,76 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion'
 import SiteContainer from '@/components/layout/SiteContainer'
 import { pilot } from '@/content/home'
 import SectionHeading from '@/features/home/components/SectionHeading'
 import { useSiteLink } from '@/hooks/useSiteLink'
 
-const ease = [0.22, 1, 0.36, 1]
+/**
+ * Scrubbed step fall from Approach.jsx (5404196 / 9df261f):
+ * each box translates down by a smaller share of its height as the
+ * section scrolls, so the row settles into an ascending diagonal.
+ */
+const FALL_Y = ['56%', '38%', '20%', '4%']
+
+function useWideStagger() {
+  const [wide, setWide] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1280px)')
+    const update = () => setWide(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  return wide
+}
 
 export default function Pilot() {
   const reduced = usePrefersReducedMotion()
+  const wide = useWideStagger()
   const follow = useSiteLink()
+  const sectionRef = useRef(null)
+  const gridRef = useRef(null)
+  const animate = wide && !reduced
+  const [dropRoom, setDropRoom] = useState(0)
+
+  useEffect(() => {
+    if (!animate) {
+      setDropRoom(0)
+      return
+    }
+    const grid = gridRef.current
+    if (!grid) return
+    const measure = () => {
+      const card = grid.querySelector('li')
+      if (!card) return
+      setDropRoom(card.offsetHeight * (parseFloat(FALL_Y[0]) / 100))
+    }
+    measure()
+    const observer = new ResizeObserver(measure)
+    observer.observe(grid)
+    return () => observer.disconnect()
+  }, [animate])
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 80%', 'end 20%'],
+  })
+
+  const y0 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[0]])
+  const y1 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[1]])
+  const y2 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[2]])
+  const y3 = useTransform(scrollYProgress, [0.05, 0.7], ['0%', FALL_Y[3]])
+  const ys = [y0, y1, y2, y3]
 
   return (
     <section
+      ref={sectionRef}
       id={pilot.id}
       aria-labelledby="h-pilot"
       className="bg-foam px-6 py-24 sm:px-8 md:py-32"
@@ -31,19 +86,16 @@ export default function Pilot() {
           headingId="h-pilot"
         />
 
-        <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:mt-20 md:grid-cols-2 xl:grid-cols-4">
+        <ol
+          ref={gridRef}
+          style={dropRoom ? { paddingBottom: dropRoom } : undefined}
+          className="mt-14 grid gap-3 sm:mt-20 md:grid-cols-2 xl:grid-cols-4"
+        >
           {pilot.steps.map((step, index) => (
             <motion.li
               key={step.num}
-              initial={reduced ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                duration: 0.5,
-                delay: reduced ? 0 : index * 0.06,
-                ease,
-              }}
-              className="bg-foam px-5 py-6"
+              style={animate ? { y: ys[index] } : undefined}
+              className="rounded-2xl border border-line bg-foam px-5 py-6"
             >
               <p className="font-mono text-[11px] tracking-[0.14em] text-ink/40">
                 {step.num}

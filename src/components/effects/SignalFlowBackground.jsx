@@ -120,6 +120,8 @@ export default function SignalFlowBackground({ className }) {
     container.appendChild(renderer.domElement)
 
     const group = new Group()
+    // ~6% of the camera's visible height — fan and pinch move together.
+    group.position.y = visibleH * 0.02
     scene.add(group)
 
     const lineMaterial = new LineBasicMaterial({

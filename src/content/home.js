@@ -62,7 +62,9 @@ export const practice = Object.freeze({
       domain: 'Where we start',
       title: 'Find the work',
       titleAccent: 'still done by hand.',
+      intro: 'Two frontiers. One discipline.',
       copy: 'We look for decisions where a wrong answer is expensive and the proof is still scattered — a technical file rebuilt from folders, or a purchase an agent is about to make with nothing to show for it.',
+      note: 'The expensive decision.',
       signal: 'The expensive decision',
       image: {
         src: '/practice/problem.jpg',
@@ -92,7 +94,9 @@ export const practice = Object.freeze({
       domain: 'How we look',
       title: 'Follow the source,',
       titleAccent: 'not the summary.',
+      intro: 'Same habit, both domains.',
       copy: 'The useful answer is the one someone else can check. We ask what has to be true, attach the document or the review that supports it, and leave the gaps in plain sight.',
+      note: 'Leave the gaps in plain sight.',
       signal: 'Same habit, both domains',
       image: {
         src: '/practice/source.jpg',
@@ -122,7 +126,9 @@ export const practice = Object.freeze({
       domain: 'What we ship',
       title: 'Two products.',
       titleAccent: 'One job.',
+      intro: 'An argument, not a pile of files.',
       copy: 'Each product prepares a case a person can review. Neither one makes the final call.',
+      note: 'Checkout waits for a reason.',
       signal: 'RAccelerator · ReviewsIntel',
       image: {
         src: '/practice/products.jpg',
@@ -152,7 +158,9 @@ export const practice = Object.freeze({
       domain: 'How it stays honest',
       title: 'Fix the work.',
       titleAccent: 'Keep the judgment.',
+      intro: 'Invent · protect · ship',
       copy: 'We protect what is new, put people who have done the job in charge, and ship with someone accountable for the output. Then we use the same method on the next domain.',
+      note: 'A person still decides.',
       signal: 'Invent · protect · ship',
       image: {
         src: '/practice/judgment.jpg',
@@ -382,6 +390,7 @@ export const security = Object.freeze({
   title: 'A technical file',
   titleAccent: 'is not a demo.',
   lead: 'People send us work a wrong answer would make expensive. This is how that work is handled — including what we will not claim.',
+  note: 'A MedTech technical file and an agentic commerce review set stay with the people named on the engagement. The same limit applies to both.',
   items: [
     {
       title: 'Your file stays yours.',

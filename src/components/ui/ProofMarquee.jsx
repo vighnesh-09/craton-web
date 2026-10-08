@@ -29,14 +29,14 @@ export default function ProofMarquee({ className }) {
   const track = [...facts, ...facts]
 
   return (
-    <div className={cn(className)}>
-      <SiteContainer className="px-6 pb-3 pt-8 text-center sm:px-8">
+    <div className={cn('border-t border-line-on-dark bg-craton', className)}>
+      <SiteContainer className="px-6 pb-1.5 pt-3 text-center sm:px-8 sm:pt-4">
         <p className="font-serif text-[15px] italic tracking-[-0.01em] text-hero-soft/80 sm:text-[16px]">
           {proof.line}
         </p>
       </SiteContainer>
 
-      <div className="relative pb-7 pt-4">
+      <div className="relative pb-3 pt-1.5 sm:pb-4">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-craton via-craton/80 to-transparent sm:w-20"

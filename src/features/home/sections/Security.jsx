@@ -15,20 +15,30 @@ export default function Security() {
     <section
       id={security.id}
       aria-labelledby="h-security"
-      className="border-t border-line bg-mist px-6 py-24 sm:px-8 md:py-32"
+      className="border-t border-line bg-mist px-6 py-16 sm:px-8 lg:py-24"
     >
       <SiteContainer>
-        <SectionHeading
-          layout="split-eyebrow"
-          num={security.eyebrow.num}
-          label={security.eyebrow.label}
-          title={security.title}
-          titleAccent={security.titleAccent}
-          lead={security.lead}
-          headingId="h-security"
-        />
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-x-16">
+          <SectionHeading
+            num={security.eyebrow.num}
+            label={security.eyebrow.label}
+            title={security.title}
+            titleAccent={security.titleAccent}
+            lead={security.lead}
+            headingId="h-security"
+          />
+          <motion.p
+            initial={reduced ? false : { opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.65, delay: reduced ? 0 : 0.14, ease }}
+            className="font-body text-[15px] leading-[1.75] text-ink/65 sm:text-base lg:max-w-[40ch]"
+          >
+            {security.note}
+          </motion.p>
+        </div>
 
-        <ul className="mt-14 grid gap-4 sm:mt-20 md:grid-cols-2">
+        <ul className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 md:grid-cols-2 md:gap-5">
           {security.items.map((item, index) => (
             <motion.li
               key={item.title}
