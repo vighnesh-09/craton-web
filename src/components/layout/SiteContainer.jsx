@@ -11,7 +11,10 @@ export default function SiteContainer({
   ...props
 }) {
   return (
-    <Tag className={cn('mx-auto w-full max-w-site', className)} {...props}>
+    <Tag
+      className={cn('mx-auto w-full max-w-site px-6 sm:px-8', className)}
+      {...props}
+    >
       {children}
     </Tag>
   )

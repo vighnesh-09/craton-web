@@ -26,7 +26,7 @@ export default function Footer() {
   return (
     <footer id="footer" className="bg-craton text-hero-fg">
       {/* Professional content band */}
-      <div className="border-b border-line-on-dark px-6 py-16 sm:px-8 md:py-20">
+      <div className="border-b border-line-on-dark py-16 md:py-20">
         <SiteContainer>
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-20">
             <div>
@@ -147,9 +147,11 @@ export default function Footer() {
           <FooterWordmark />
         </div>
 
-        <p className="px-6 pb-10 pt-4 text-center font-display text-[11px] font-medium uppercase leading-[1.1] tracking-[0.08em] text-hero-fg/55 sm:pb-14 sm:pt-5 sm:text-[12px]">
-          Copyright © {COPYRIGHT_YEAR} {site.shortName}. All rights reserved.
-        </p>
+        <SiteContainer className="pb-10 pt-4 sm:pb-14 sm:pt-5">
+          <p className="text-center font-display text-[11px] font-medium uppercase leading-[1.1] tracking-[0.08em] text-hero-fg/55 sm:text-[12px]">
+            Copyright © {COPYRIGHT_YEAR} {site.shortName}. All rights reserved.
+          </p>
+        </SiteContainer>
       </div>
     </footer>
   )

@@ -15,7 +15,7 @@ export default function ProductView({ id }) {
   if (!item) notFound()
 
   return (
-    <article className="bg-foam px-6 pb-24 pt-28 text-ink sm:px-8 md:pb-32 md:pt-36">
+    <article className="bg-foam pb-24 pt-28 text-ink md:pb-32 md:pt-36">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

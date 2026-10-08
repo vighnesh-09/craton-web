@@ -88,7 +88,7 @@ export default function Approach() {
       ref={sectionRef}
       id={approach.id}
       aria-labelledby="h-approach"
-      className="bg-mist/40 px-6 pb-24 pt-24 sm:px-8 md:pt-32 xl:pb-[23rem]"
+      className="bg-mist/40 pb-24 pt-24 md:pt-32 xl:pb-[23rem]"
     >
       <SiteContainer>
         <SectionHeading

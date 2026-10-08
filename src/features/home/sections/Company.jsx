@@ -15,7 +15,7 @@ export default function Company() {
     <section
       id={company.id}
       aria-labelledby="h-company"
-      className="border-t border-line bg-mist px-6 py-24 sm:px-8 md:py-32"
+      className="border-t border-line bg-mist py-24 md:py-32"
     >
       <SiteContainer>
         <SectionHeading

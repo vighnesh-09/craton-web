@@ -73,7 +73,7 @@ export default function Pilot() {
       ref={sectionRef}
       id={pilot.id}
       aria-labelledby="h-pilot"
-      className="bg-foam px-6 py-24 sm:px-8 md:py-32"
+      className="bg-foam py-24 md:py-32"
     >
       <SiteContainer>
         <SectionHeading

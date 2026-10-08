@@ -9,7 +9,7 @@ export default function LegalDocument({
   sections,
 }) {
   return (
-    <article className="bg-foam px-6 pb-24 pt-28 text-center text-ink sm:px-8 md:pb-32 md:pt-36">
+    <article className="bg-foam pb-24 pt-28 text-center text-ink md:pb-32 md:pt-36">
       <SiteContainer>
         <p className="inline-flex items-center gap-3 font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-lagoon">
           <span aria-hidden className="inline-block h-px w-7 bg-copper" />

@@ -13,7 +13,7 @@ const STACK_SURFACE = 'bg-craton'
 /** First card parks below the navbar. */
 const STICK_TOP = 6.25
 /** Visible rounded lip of the card underneath, once the next card has stuck. */
-const PEEK = 1.5
+const PEEK = 4.5
 
 function StackCard({ item, index, total, sticky }) {
   const isLast = index === total - 1
@@ -40,7 +40,8 @@ function StackCard({ item, index, total, sticky }) {
     >
       <div
         className={cn(
-          index > 0 && sticky && 'mt-6 md:-mt-12',
+          'relative',
+          index > 0 && sticky && 'mt-6 md:-mt-[calc(3rem-0.875rem)]',
           !sticky && index > 0 && 'mt-6',
         )}
       >
@@ -64,9 +65,9 @@ function StackCard({ item, index, total, sticky }) {
             }}
           />
 
-          <div className="relative z-[1] mx-auto flex h-full w-full min-w-0 max-w-site flex-1 flex-col-reverse md:flex-row md:items-center md:justify-center md:gap-12 md:px-12 md:py-20 lg:gap-16 lg:px-16 xl:px-20">
+          <div className="relative z-[1] flex h-full w-full min-w-0 flex-1 flex-col-reverse md:flex-row md:items-center md:gap-12 md:px-8 md:py-20 lg:gap-16 lg:px-12">
             {/* Left — brand-first product pitch */}
-            <div className="flex w-full min-w-0 flex-1 flex-col justify-center px-6 py-8 sm:px-8 md:max-w-[38%] md:px-0 md:py-0">
+            <div className="flex w-full min-w-0 flex-1 flex-col justify-center px-8 py-8 sm:px-10 sm:py-10 md:flex-[38_1_0%] md:px-0 md:py-0">
               <p className="font-mono text-[10.5px] uppercase tracking-[0.18em] text-copper">
                 {item.kicker}
               </p>
@@ -113,7 +114,7 @@ function StackCard({ item, index, total, sticky }) {
             </div>
 
             {/* Right — product visual. On small screens this is one full-width landscape band above the copy. */}
-            <div className="relative w-full min-w-0 md:max-w-[54%] md:min-h-0 md:w-auto md:flex-1">
+            <div className="relative w-full min-w-0 md:min-h-0 md:w-auto md:flex-[54_1_0%]">
               <div className="relative aspect-[2/1] w-full overflow-hidden bg-foam md:aspect-auto md:h-[min(58vh,32rem)] md:rounded-xl md:shadow-[0_28px_64px_rgba(0,0,0,0.38)]">
                 <Image
                   src={item.image.src}
@@ -146,7 +147,7 @@ export default function Products() {
     <section
       id={products.id}
       aria-labelledby="h-products"
-      className="relative bg-mist/40 px-4 pb-16 pt-20 sm:px-6 md:px-8 md:pb-24 md:pt-28"
+      className="relative bg-mist/40 pb-16 pt-20 md:pb-24 md:pt-28"
     >
       <SiteContainer>
         <div className="mb-10 flex flex-col justify-between gap-5 md:mb-14 md:flex-row md:items-end">

@@ -15,7 +15,7 @@ export default function Mindset() {
     <section
       id={mindset.id}
       aria-labelledby="h-mindset"
-      className="bg-foam px-6 py-24 sm:px-8 md:py-32"
+      className="bg-foam py-24 md:py-32"
     >
       <SiteContainer>
         <SectionHeading

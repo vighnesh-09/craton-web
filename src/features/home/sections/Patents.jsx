@@ -7,7 +7,7 @@ export default function Patents() {
     <section
       id={patents.id}
       aria-labelledby="h-patents"
-      className="bg-foam px-6 py-24 sm:px-8 md:py-32"
+      className="bg-foam py-24 md:py-32"
     >
       <SiteContainer>
         <SectionHeading

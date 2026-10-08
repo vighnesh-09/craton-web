@@ -47,9 +47,11 @@ export default function ProofMarquee({ className }) {
         />
 
         {reduced ? (
-          <p className="mx-auto max-w-4xl px-6 text-center font-body text-[13px] leading-relaxed text-hero-muted">
-            {facts.join('  ·  ')}
-          </p>
+          <SiteContainer className="px-6 sm:px-8">
+            <p className="text-center font-body text-[13px] leading-relaxed text-hero-muted">
+              {facts.join('  ·  ')}
+            </p>
+          </SiteContainer>
         ) : (
           <div className="group overflow-hidden">
             <div

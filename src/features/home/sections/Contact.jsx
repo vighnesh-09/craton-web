@@ -283,7 +283,7 @@ export default function Contact() {
     <section
       id={contact.id}
       aria-labelledby="h-contact"
-      className="bg-craton px-6 py-24 text-hero-fg sm:px-8 md:py-32"
+      className="bg-craton py-24 text-hero-fg md:py-32"
     >
       <SiteContainer>
         <motion.div

@@ -7,7 +7,7 @@ export default function Faq() {
     <section
       id={faq.id}
       aria-labelledby="h-faq"
-      className="border-t border-line bg-foam px-6 py-16 sm:px-8 md:py-20"
+      className="border-t border-line bg-foam py-16 md:py-20"
     >
       <SiteContainer>
         <SectionHeading

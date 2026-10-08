@@ -11,10 +11,10 @@ import { SectionEyebrow } from '@/features/home/components/SectionHeading'
 function Panel({ item, index, count }) {
   return (
     <article
-      className="flex h-svh min-h-0 min-w-0 shrink-0 flex-col overflow-x-hidden overflow-y-auto px-5 pb-16 pt-16 text-ink sm:px-8 sm:pb-24 sm:pt-20 lg:justify-center lg:overflow-hidden lg:pb-16 lg:pt-24"
+      className="flex h-svh min-h-0 min-w-0 shrink-0 flex-col overflow-x-hidden overflow-y-auto pb-16 pt-16 text-ink sm:pb-24 sm:pt-20 lg:justify-center lg:overflow-hidden lg:pb-16 lg:pt-24"
       style={{ width: `${100 / count}%` }}
     >
-      <div className="mx-auto my-auto flex w-full min-w-0 max-w-site flex-col gap-4 lg:my-0 lg:grid lg:h-full lg:max-h-none lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-stretch lg:gap-10">
+      <SiteContainer className="my-auto flex min-w-0 flex-col gap-4 px-6 sm:px-8 lg:my-0 lg:grid lg:h-full lg:max-h-none lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)] lg:items-stretch lg:gap-10">
         <div className="flex min-w-0 flex-col gap-1 lg:h-full lg:justify-between lg:gap-0">
           <p className="font-serif text-[15px] italic leading-snug tracking-[-0.02em] text-ink/45">
             {item.intro}
@@ -83,7 +83,7 @@ function Panel({ item, index, count }) {
             ))}
           </ul>
         </div>
-      </div>
+      </SiteContainer>
     </article>
   )
 }
@@ -108,7 +108,7 @@ function StaticPractice() {
     <section
       id={practice.id}
       aria-labelledby="h-practice"
-      className="bg-foam px-6 py-24 text-ink sm:px-8 md:py-32"
+      className="bg-foam py-24 text-ink md:py-32"
     >
       <SiteContainer>
         <SectionEyebrow

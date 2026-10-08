@@ -15,7 +15,7 @@ export default function Domains() {
     <section
       id={domains.id}
       aria-labelledby="h-focus"
-      className="border-y border-line bg-mist px-6 py-24 sm:px-8 md:py-32"
+      className="border-y border-line bg-mist py-24 md:py-32"
     >
       <SiteContainer>
         <div>

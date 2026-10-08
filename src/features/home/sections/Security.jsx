@@ -15,7 +15,7 @@ export default function Security() {
     <section
       id={security.id}
       aria-labelledby="h-security"
-      className="border-t border-line bg-mist px-6 py-16 sm:px-8 lg:py-24"
+      className="border-t border-line bg-mist py-16 lg:py-24"
     >
       <SiteContainer>
         <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-x-16">
