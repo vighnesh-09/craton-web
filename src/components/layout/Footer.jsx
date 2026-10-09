@@ -23,13 +23,13 @@ export default function Footer() {
           className="flex flex-col gap-3 text-[13px] text-on-navy-soft"
           aria-label="Footer"
         >
-          <a href="#about" className="hover:text-on-navy-strong">
+          <a href="#about" className="link-draw w-fit hover:text-on-navy-strong">
             Company
           </a>
-          <a href="#products" className="hover:text-on-navy-strong">
+          <a href="#products" className="link-draw w-fit hover:text-on-navy-strong">
             Product
           </a>
-          <a href="#contact" className="text-accent hover:text-on-navy-strong">
+          <a href="#contact" className="link-draw w-fit text-accent hover:text-on-navy-strong">
             Contact
           </a>
         </nav>
@@ -38,13 +38,13 @@ export default function Footer() {
       <div className="shell flex flex-col gap-4 border-t border-white/15 pt-6 text-[12px] text-on-navy-soft sm:flex-row sm:items-center sm:justify-between">
         <span>© 2026 {site.legalName}. All rights reserved.</span>
         <div className="flex flex-wrap gap-5">
-          <Link to="/privacy" className="hover:text-on-navy-strong">
+          <Link to="/privacy" className="link-draw hover:text-on-navy-strong">
             Privacy
           </Link>
-          <Link to="/terms" className="hover:text-on-navy-strong">
+          <Link to="/terms" className="link-draw hover:text-on-navy-strong">
             Terms
           </Link>
-          <Link to="/accessibility" className="hover:text-on-navy-strong">
+          <Link to="/accessibility" className="link-draw hover:text-on-navy-strong">
             Accessibility
           </Link>
         </div>

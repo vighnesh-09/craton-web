@@ -37,19 +37,26 @@ function FilmOpen() {
     } catch {
       /* private mode */
     }
+    const hide = () => setShow(false)
+    const cap = window.setTimeout(hide, 1200)
     const start = performance.now()
     let frame = 0
+    let done = 0
     const step = (now) => {
-      const next = Math.min(100, Math.round(((now - start) / 900) * 100))
+      const next = Math.min(100, Math.round(((now - start) / 720) * 100))
       setPct(next)
       if (next < 100) frame = requestAnimationFrame(step)
-      else window.setTimeout(() => setShow(false), 140)
+      else done = window.setTimeout(hide, 90)
     }
-    frame = requestAnimationFrame(step)
-    const cap = window.setTimeout(() => setShow(false), 1200)
+    try {
+      frame = requestAnimationFrame(step)
+    } catch {
+      hide()
+    }
     return () => {
       cancelAnimationFrame(frame)
       window.clearTimeout(cap)
+      window.clearTimeout(done)
     }
   }, [show, reduced])
 

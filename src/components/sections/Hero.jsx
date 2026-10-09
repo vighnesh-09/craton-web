@@ -9,9 +9,9 @@ export default function Hero() {
   const { rootRef } = useGsapContext(({ gsap, root }) => {
     const lines = root.querySelectorAll('[data-rise]')
     gsap.from(lines, {
-      yPercent: 108,
-      duration: 0.95,
-      stagger: 0.07,
+      yPercent: 110,
+      duration: 0.72,
+      stagger: 0.045,
       ease: 'power3.out',
     })
   })
@@ -36,11 +36,17 @@ export default function Hero() {
         </div>
 
         <h1 className="film-display mt-6">
-          <span className="block overflow-hidden">
-            <span data-rise className="block">
-              AI for EU MDR & IVDR GSPR gap assessment.
+          {['AI', 'for', 'EU', 'MDR', '&', 'IVDR', 'GSPR', 'gap', 'assessment.'].map((word, index, words) => (
+            <span
+              key={`${word}-${index}`}
+              className="inline-block overflow-hidden align-bottom pb-[0.06em]"
+            >
+              <span data-rise className="inline-block">
+                {word}
+                {index < words.length - 1 ? '\u00A0' : ''}
+              </span>
             </span>
-          </span>
+          ))}
         </h1>
 
         <p className="mt-6 max-w-[42ch] text-[16px] leading-[1.55]">

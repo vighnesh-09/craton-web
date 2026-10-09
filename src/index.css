@@ -1056,12 +1056,20 @@ html:not([data-mode='dark']) .text-danger {
   background-position: 0 100%;
   background-repeat: no-repeat;
   background-size: 0 1px;
-  transition: background-size 280ms ease;
+  transition: background-size 200ms ease, color 200ms ease;
 }
 
 .link-draw:hover,
-.link-draw:focus-visible {
+.link-draw:focus-visible,
+.group:hover .link-draw,
+.group:focus-visible .link-draw {
   background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-draw {
+    transition: color 200ms ease;
+  }
 }
 
 .frame-trace {
@@ -1191,6 +1199,45 @@ html[data-mode='dark'] .pilot-echo .echo {
   -webkit-text-stroke-color: #00e5ff;
 }
 
+.manifesto-phrase {
+  white-space: nowrap;
+}
+
+.manifesto-dot {
+  padding-inline: 0.45em;
+  color: #00a8c4;
+}
+
+.stage-detail {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 280ms ease,
+    opacity 220ms ease;
+}
+
+.stage:hover .stage-detail,
+.stage:focus-within .stage-detail,
+.stage.is-open .stage-detail {
+  max-height: 8rem;
+  opacity: 1;
+}
+
+.product-double {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.product-double-ghost {
+  color: transparent;
+  -webkit-text-stroke: 1px #00a8c4;
+  font-weight: 700;
+}
+
 .film-marquee-clip {
   overflow: hidden;
   max-width: 100%;
@@ -1221,6 +1268,15 @@ html[data-mode='dark'] .pilot-echo .echo {
     flex-wrap: wrap;
     width: 100%;
     max-width: 100%;
+  }
+
+  .manifesto-phrase {
+    white-space: normal;
+  }
+
+  .stage-detail {
+    max-height: none;
+    opacity: 1;
   }
 
   .film-marquee-dup {
@@ -1284,7 +1340,12 @@ html[data-mode='dark'] .fast-cursor__ring {
   align-items: flex-end;
   justify-content: space-between;
   padding: 1.25rem;
+  background: #f4f6f8;
+  color: #1e2a3a;
+  pointer-events: none;
+}
+
+html[data-mode='dark'] .film-loader {
   background: #0c141c;
   color: #f4f7fa;
-  pointer-events: none;
 }

@@ -1,6 +1,25 @@
 import { useState } from 'react'
 import { site } from '@/config/site'
 
+function Stage({ step }) {
+  const [pinned, setPinned] = useState(false)
+
+  return (
+    <li className={`stage min-w-0 border-b border-current/15 lg:border-r lg:border-b-0 lg:last:border-r-0 ${pinned ? 'is-open' : ''}`}>
+      <button
+        type="button"
+        className="w-full px-1 py-5 text-left lg:px-4"
+        aria-expanded={pinned}
+        onClick={() => setPinned((open) => !open)}
+      >
+        <p className="type-label">{step.n}</p>
+        <h3 className="type-h3 mt-3">{step.title}</h3>
+      </button>
+      <p className="stage-detail px-1 pb-5 text-[13px] leading-relaxed text-muted-ink lg:px-4">{step.body}</p>
+    </li>
+  )
+}
+
 const SHEETS = [
   { title: 'File', line: 'One reviewable surface', tone: 'bg-[#f4f7fa] text-[#1e2a3a]' },
   { title: 'Rule', line: 'The clause stays attached', tone: 'bg-[#1e2a3a] text-[#f4f7fa]' },
@@ -48,11 +67,7 @@ export default function Approach() {
 
         <ol className="mt-3 grid border-t border-current/15 sm:grid-cols-2 lg:grid-cols-4">
           {site.steps.map((step) => (
-            <li key={step.n} className="min-w-0 border-b border-current/15 px-1 py-5 lg:border-r lg:border-b-0 lg:px-4 lg:last:border-r-0">
-              <p className="type-label">{step.n}</p>
-              <h3 className="type-h3 mt-3">{step.title}</h3>
-              <p className="type-body mt-2 text-muted-ink">{step.body}</p>
-            </li>
+            <Stage key={step.n} step={step} />
           ))}
         </ol>
       </div>

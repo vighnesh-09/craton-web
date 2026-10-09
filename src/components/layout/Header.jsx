@@ -123,7 +123,7 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'inline-flex min-h-12 items-center border-b border-transparent transition-colors duration-[180ms] hover:border-current',
+                  'link-draw inline-flex min-h-12 items-center',
                   overHero && isLight
                     ? 'hover:text-[#00a8c4]'
                     : overHero || darkSolid
@@ -234,7 +234,7 @@ export default function Header() {
                     key={item.href}
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="inline-flex min-h-12 items-center text-base"
+                    className="link-draw inline-flex min-h-12 w-fit items-center text-base"
                   >
                     {item.label}
                   </a>

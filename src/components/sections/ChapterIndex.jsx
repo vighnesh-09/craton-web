@@ -23,7 +23,7 @@ export default function ChapterIndex() {
                   {item.n}
                 </span>
                 <span>
-                  <span className="block text-[14px] font-medium text-cream group-hover:underline group-hover:underline-offset-4">
+                  <span className="link-draw block w-fit text-[14px] font-medium text-cream group-hover:bg-[length:100%_1px]">
                     {item.label}
                   </span>
                   <span className="mt-0.5 block text-[12px] leading-snug text-muted">

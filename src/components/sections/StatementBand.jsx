@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import usePrefersReducedMotion from '@/hooks/usePrefersReducedMotion'
 
-const LINES = ['MDR', 'IVDR', 'GSPR', 'Evidence', 'Trace', 'Annex I', 'Human in the loop']
+const LINE = 'For EU MDR and IVDR, evidence stays attached to the requirement.'
 
 export default function StatementBand() {
   const reduced = usePrefersReducedMotion()
@@ -22,22 +22,22 @@ export default function StatementBand() {
     return () => observer.disconnect()
   }, [reduced])
 
-  const row = LINES.map((word) => (
-    <span key={word} className="px-4 font-sans text-[clamp(1.35rem,2.6vw,2.15rem)] leading-none font-bold tracking-[-0.03em]">
-      {word}
-      <span className="px-4 text-[#00a8c4]" aria-hidden="true">
-        /
+  const phrase = (
+    <span className="manifesto-phrase font-sans text-[clamp(1.15rem,2.2vw,1.65rem)] leading-none font-bold tracking-[-0.03em]">
+      {LINE}
+      <span className="manifesto-dot" aria-hidden="true">
+        ·
       </span>
     </span>
-  ))
+  )
 
   return (
-    <section className="border-y border-current/15 bg-ink text-cream" aria-label="Domains">
+    <section className="border-y border-current/15 bg-ink text-cream" aria-label="Evidence stays attached">
       <div ref={clipRef} className="shell film-marquee-clip py-6">
         <div ref={trackRef} className="film-marquee items-center">
-          <p className="flex items-center">{row}</p>
+          <p className="flex items-center">{phrase}</p>
           <p className="film-marquee-dup flex items-center" aria-hidden="true">
-            {row}
+            {phrase}
           </p>
         </div>
       </div>

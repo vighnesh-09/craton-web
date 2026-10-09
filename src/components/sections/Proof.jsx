@@ -1,4 +1,48 @@
+import { useEffect, useRef, useState } from 'react'
 import { site } from '@/config/site'
+import usePrefersReducedMotion from '@/hooks/usePrefersReducedMotion'
+
+function PatentCount() {
+  const ref = useRef(null)
+  const reduced = usePrefersReducedMotion()
+  const [pair, setPair] = useState(reduced ? [3, 9] : [0, 0])
+
+  useEffect(() => {
+    if (reduced) {
+      setPair([3, 9])
+      return undefined
+    }
+    const node = ref.current
+    if (!node) return undefined
+    let frame = 0
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        observer.disconnect()
+        const start = performance.now()
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / 700)
+          const eased = 1 - (1 - t) ** 3
+          setPair([Math.round(3 * eased), Math.round(9 * eased)])
+          if (t < 1) frame = requestAnimationFrame(tick)
+        }
+        frame = requestAnimationFrame(tick)
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' },
+    )
+    observer.observe(node)
+    return () => {
+      observer.disconnect()
+      cancelAnimationFrame(frame)
+    }
+  }, [reduced])
+
+  return (
+    <p ref={ref} className="type-stat mt-2 break-words">
+      {pair[0]} · {pair[1]}
+    </p>
+  )
+}
 
 export default function Proof() {
   return (
@@ -12,7 +56,11 @@ export default function Proof() {
             <p className="type-label">
               {String(index + 1).padStart(2, '0')}
             </p>
-            <p className="type-stat mt-2 break-words">{item.value}</p>
+            {item.value === '3 · 9' ? (
+              <PatentCount />
+            ) : (
+              <p className="type-stat mt-2 break-words">{item.value}</p>
+            )}
             <p className="type-body mt-2 max-w-[22ch] text-muted-ink">{item.label}</p>
           </li>
         ))}
