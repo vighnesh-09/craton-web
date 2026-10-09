@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   motion,
   useReducedMotion,
@@ -7,12 +7,8 @@ import {
 } from 'framer-motion'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import SignalField from '@/components/craton/SignalField'
 import { cn } from '@/lib/cn'
-
-const ParticleSculpture = lazy(() => import('@/components/craton/ParticleSculpture'))
-
-/** Single soft precision frame — cinematic, not a HUD stack. */
-const FRAME_INSET = 'clamp(1rem, 3.5vw, 3.25rem)'
 
 /**
  * Hero stays cinematic dark regardless of site light/dark toggle.
@@ -22,7 +18,7 @@ export default function Hero() {
   const ref = useRef(null)
   const reduced = useReducedMotion()
   const [showField, setShowField] = useState(false)
-  const [desktopPhoto, setDesktopPhoto] = useState(false)
+  const [desktopField, setDesktopField] = useState(false)
 
   useEffect(() => {
     const boot = document.getElementById('boot-hero')
@@ -60,7 +56,7 @@ export default function Hero() {
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)')
-    const apply = () => setDesktopPhoto(mq.matches)
+    const apply = () => setDesktopField(mq.matches)
     apply()
     mq.addEventListener('change', apply)
     return () => mq.removeEventListener('change', apply)
@@ -95,78 +91,25 @@ export default function Hero() {
       ref={ref}
       id="top"
       data-hero-mode="cinematic"
-      className="relative flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-[#040c0a] text-[#eef8f4]"
+      className="relative flex h-[100svh] max-h-[100svh] flex-col overflow-hidden bg-[#0E1A24] text-[#eef8f4]"
     >
       <motion.div
         aria-hidden
         className="absolute inset-0"
         style={reduced ? undefined : { scale: mediaScale, y: mediaY }}
       >
-        {desktopPhoto ? (
-          <div className="cover-clip absolute inset-0" style={{ '--ar': '1.498127' }}>
-            <img
-              src="/hero/foundation.webp"
-              alt=""
-              width={2400}
-              height={1602}
-              sizes="100vw"
-              decoding="async"
-              fetchPriority="high"
-              className="cover-img cover-img--center"
-            />
-          </div>
-        ) : null}
-        {/* Crush photo whites (windows) into forest ink — hero never reads as a white wall */}
-        <div className="absolute inset-0 bg-[#040c0a]/72" />
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(4,12,10,0.88)_0%,rgba(6,16,14,0.55)_36%,rgba(6,16,14,0.62)_58%,rgba(3,10,8,0.96)_100%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_55%_45%,transparent_0%,rgba(3,10,8,0.55)_55%,rgba(2,8,6,0.85)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(4,12,10,0.55)_0%,transparent_28%,transparent_72%,rgba(4,12,10,0.4)_100%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(15,143,123,0.16),transparent_38%,transparent_62%,rgba(224,154,95,0.07))] mix-blend-soft-light" />
-        <div className="noise pointer-events-none absolute inset-0 opacity-[0.14] mix-blend-overlay" />
+        {desktopField && showField && !reduced ? (
+          <SignalField active />
+        ) : (
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_42%,#163044_0%,#0E1A24_58%,#070e14_100%)]" />
+        )}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_46%,rgba(14,26,36,0.42)_0%,rgba(14,26,36,0.08)_48%,transparent_72%)]" />
       </motion.div>
-
-      {/* Particle morph — behind type; keep opacity modest so copy stays white */}
-      <div className="pointer-events-none absolute inset-0 z-[1] overflow-hidden">
-        {showField ? (
-          <Suspense fallback={null}>
-            <ParticleSculpture
-              className="h-full w-full"
-              canvasClassName="inset-[14%] opacity-[0.38] sm:inset-[15%]"
-              showControls={false}
-              heroScale
-              themeMode="dark"
-            />
-          </Suspense>
-        ) : null}
-      </div>
-
-      {/* One precision frame */}
-      {/* <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-[2] flex items-center justify-center"
-      >
-        <motion.div
-          initial={reduced ? false : { opacity: 0, scale: 0.985 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="absolute border border-[#eef8f4]/14"
-          style={{
-            inset: FRAME_INSET,
-            boxShadow:
-              '0 0 0 1px rgba(0,168,196,0.18), inset 0 0 48px rgba(30,42,58,0.4)',
-          }}
-        >
-          <span className="absolute -left-px -top-px size-2 border-l border-t border-[#00A8C4]/80" />
-          <span className="absolute -right-px -top-px size-2 border-r border-t border-[#00A8C4]/80" />
-          <span className="absolute -bottom-px -left-px size-2 border-b border-l border-[#00A8C4]/80" />
-          <span className="absolute -bottom-px -right-px size-2 border-b border-r border-[#00A8C4]/80" />
-        </motion.div>
-      </div> */}
 
       {/* Center copy — solid light type (no dark blur slab that turns letters black) */}
       <motion.div
         style={reduced ? undefined : { opacity: contentOpacity, y: contentY }}
-        className="relative z-20 flex flex-1 flex-col items-center justify-center px-5 pb-20 pt-28 text-center isolate sm:px-8 sm:pb-24"
+        className="relative z-20 flex flex-1 flex-col items-center justify-center px-6 pb-24 pt-32 text-center isolate sm:px-10 sm:pb-28"
       >
         <motion.p
           initial={false}
@@ -177,26 +120,26 @@ export default function Hero() {
 
         <motion.h1
           initial={false}
-          className="mt-4 min-h-[0.94em] max-w-[18ch] text-[clamp(2.15rem,7.4vw,5.5rem)] font-semibold uppercase leading-[0.94] tracking-[-0.04em] !text-[#f4f7fb] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_0_1px_rgba(255,255,255,0.35)] min-[1024px]:max-w-none min-[1024px]:whitespace-nowrap min-[1024px]:text-[clamp(2.6rem,6.4vw,5.5rem)]"
+          className="mt-7 min-h-[0.94em] max-w-[18ch] text-[clamp(2.15rem,7.4vw,5.75rem)] font-semibold uppercase leading-[0.92] tracking-[-0.045em] !text-[#f4f7fb] [text-shadow:0_1px_2px_rgba(0,0,0,0.75),0_0_1px_rgba(255,255,255,0.35)] min-[1024px]:max-w-none min-[1024px]:whitespace-nowrap min-[1024px]:text-[clamp(2.85rem,6.6vw,6.25rem)]"
         >
           Craton Technologies
         </motion.h1>
 
         <motion.p
           initial={false}
-          className="mt-5 max-w-[36ch] text-[clamp(0.98rem,1.7vw,1.2rem)] font-medium leading-relaxed !text-[#e8eef5] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)]"
+          className="mt-8 max-w-[38ch] text-[clamp(0.98rem,1.7vw,1.2rem)] font-medium leading-relaxed !text-[#e8eef5] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)]"
         >
           AI for EU MDR and IVDR technical documentation and GSPR gap assessment.
         </motion.p>
 
         <motion.p
           initial={false}
-          className="mt-2.5 max-w-[40ch] text-[13px] leading-relaxed !text-[#c9d8e8] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)] sm:text-[14px]"
+          className="mt-4 max-w-[40ch] text-[13px] leading-relaxed !text-[#c9d8e8] [text-shadow:0_1px_2px_rgba(0,0,0,0.7)] sm:text-[14px]"
         >
           Complex requirements. Clearer decisions. Human judgment.
         </motion.p>
 
-        <motion.div initial={false} className="mt-8">
+        <motion.div initial={false} className="mt-10">
           <Button
             href="#contact"
             className="!min-h-12 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-7 !text-[13px] !font-semibold !text-[#1E2A3A] !shadow-none hover:!translate-y-0 hover:!bg-[#007A96] hover:!text-[#102033] hover:!brightness-105"

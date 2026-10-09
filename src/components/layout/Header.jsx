@@ -73,7 +73,7 @@ export default function Header() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full pt-3',
-        overHero && 'bg-[#040c0a]',
+        overHero && 'bg-[#0E1A24]',
       )}
     >
       <div className="pad-x w-full">
