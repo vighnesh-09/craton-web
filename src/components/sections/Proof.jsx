@@ -7,15 +7,13 @@ export default function Proof() {
         {site.proof.map((item, index) => (
           <li
             key={item.label}
-            className="border-b border-current/15 py-8 lg:border-r lg:border-b-0 lg:pr-6 lg:pl-0 lg:last:border-r-0 lg:[&:not(:first-child)]:pl-6"
+            className="min-w-0 border-b border-current/15 py-6 sm:py-8 lg:border-r lg:border-b-0 lg:px-5 lg:py-7 lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
           >
-            <p className="font-mono text-[12px] tracking-[0.16em] text-accent-text">
+            <p className="type-label">
               {String(index + 1).padStart(2, '0')}
             </p>
-            <p className="mt-2 font-serif text-[clamp(2.4rem,4.2vw,4.2rem)] leading-none tracking-[-0.045em]">
-              {item.value}
-            </p>
-            <p className="mt-2 max-w-[18ch] text-[14px] leading-snug text-muted-ink">{item.label}</p>
+            <p className="type-stat mt-2 break-words">{item.value}</p>
+            <p className="type-body mt-2 max-w-[22ch] text-muted-ink">{item.label}</p>
           </li>
         ))}
       </ul>

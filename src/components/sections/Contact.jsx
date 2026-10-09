@@ -81,12 +81,12 @@ export default function Contact() {
 
           <div className="px-4 py-6 sm:px-7 sm:py-8 min-[1100px]:px-9 min-[1100px]:py-9">
             <p className="flex items-center gap-3 font-mono text-[12px] font-medium tracking-[0.16em] text-[#9af3ff] uppercase">
-              04 · Request a pilot
+              06 · Request a pilot
             </p>
-            <h2 className="product-display mt-3 text-[#f4f7fa]">
+            <h2 className="type-h2 mt-3 text-[#f4f7fa]">
               Request a pilot.
             </h2>
-            <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-[#d5dee8]">
+            <p className="mt-3 max-w-[46ch] text-[16px] leading-[1.55] text-[#d5dee8]">
               Tell us who you are and we’ll route you to the right conversation.
             </p>
 

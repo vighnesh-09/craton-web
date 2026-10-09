@@ -23,7 +23,7 @@ export default function StatementBand() {
   }, [reduced])
 
   const row = LINES.map((word) => (
-    <span key={word} className="px-4 font-serif text-[clamp(2rem,4.5vw,4rem)] leading-none tracking-[-0.04em]">
+    <span key={word} className="px-4 font-sans text-[clamp(1.35rem,2.6vw,2.15rem)] leading-none font-bold tracking-[-0.03em]">
       {word}
       <span className="px-4 text-[#00a8c4]" aria-hidden="true">
         /

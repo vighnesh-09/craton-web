@@ -35,12 +35,13 @@ export default function Voices() {
   ))
 
   return (
-    <section className="overflow-x-clip bg-ink py-16 text-cream" aria-label="Illustrative voices">
-      <div className="shell mb-6 flex items-end justify-between gap-3">
-        <h2 className="font-serif text-[clamp(2rem,4vw,3.2rem)] leading-none tracking-[-0.04em]">
-          Voices
-        </h2>
-        <p className="text-[13px] text-muted">Illustrative. Not customer endorsements.</p>
+    <section className="section-pad overflow-x-clip bg-ink text-cream" aria-label="Illustrative voices">
+      <div className="shell mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <p className="type-label">05 · Voices</p>
+          <h2 className="type-h2 mt-2">Voices</h2>
+        </div>
+        <p className="text-[13px] leading-snug text-muted">Illustrative. Not customer endorsements.</p>
       </div>
       <div ref={clipRef} className="shell shell-fit film-marquee-clip">
         <div ref={trackRef} className="film-marquee gap-3">

@@ -84,13 +84,18 @@ export default function Header() {
       <div className="w-full">
         <div
           className={cn(
-            'shell flex items-center justify-between gap-4 transition-all duration-400 ease-out',
+            'shell flex min-w-0 items-center justify-between gap-2 transition-all duration-400 ease-out sm:gap-3',
             overHero &&
               'rounded-full border border-transparent bg-transparent px-3 py-2.5 shadow-none sm:px-4',
             overHero && isLight && 'text-[#1e2a3a]',
             overHero && !isLight && 'text-[#eef8f4]',
             overHero &&
               scrolled &&
+              isLight &&
+              'border-[#1e2a3a]/10 bg-white/80 text-[#1e2a3a] shadow-[0_8px_28px_-18px_rgba(30,42,58,0.35)] backdrop-blur-md',
+            overHero &&
+              scrolled &&
+              !isLight &&
               'border-white/10 bg-[#0f1621]/60 backdrop-blur-md',
             lightSolid &&
               'glass-panel rounded-full px-4 py-2.5 text-[#1e2a3a] sm:px-5',
@@ -104,7 +109,7 @@ export default function Header() {
 
           <nav
             className={cn(
-              'hidden items-center gap-5 text-[13px] xl:gap-6 lg:flex',
+              'hidden min-w-0 items-center gap-3 text-[13px] lg:flex xl:gap-5',
               overHero && isLight
                 ? 'text-[#1e2a3a]'
                 : overHero || darkSolid
@@ -214,6 +219,10 @@ export default function Header() {
               className={cn(
                 'shell mt-2 rounded-[1.5rem] p-5 lg:hidden',
                 overHero &&
+                  isLight &&
+                  'border border-[#1e2a3a]/10 bg-white/95 text-[#1e2a3a] shadow-[0_16px_40px_-24px_rgba(30,42,58,0.4)] backdrop-blur-xl',
+                overHero &&
+                  !isLight &&
                   'border border-white/10 bg-[#0f1621]/95 text-[#e8eef5] backdrop-blur-xl',
                 lightSolid && 'glass-panel glass-panel--strong text-[#1e2a3a]',
                 darkSolid && 'glass-panel glass-panel--strong text-[#e8eef5]',

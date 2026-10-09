@@ -18,19 +18,17 @@ export default function Approach() {
 
   return (
     <section id="approach" className="scroll-mt-24 bg-ink text-cream" aria-label="How it works">
-      <div className="shell py-16 sm:py-24">
-        <p className="font-mono text-[12px] tracking-[0.16em] text-accent-text uppercase">
-          Illustrative · move across the stack
-        </p>
-        <h2 className="mt-2 max-w-[16ch] font-serif text-[clamp(2.6rem,6vw,5rem)] leading-[0.86] font-medium tracking-[-0.045em]">
+      <div className="shell section-pad">
+        <p className="type-label">03 · How it works</p>
+        <h2 className="type-h2 mt-2 max-w-[18ch]">
           Slice the file. See the evidence.
         </h2>
-        <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-muted-ink">
+        <p className="type-body mt-3 max-w-[46ch] text-muted-ink">
           A pointer trace through a document stack. Conceptual only — not a product control and not a score.
         </p>
 
         <div
-          className="relative mt-6 h-[min(70vh,28rem)] overflow-hidden border border-current/15"
+          className="relative mt-6 h-[min(42vh,18rem)] min-h-[12rem] overflow-hidden border border-current/15"
           onPointerMove={onMove}
           onPointerDown={onMove}
         >
@@ -50,12 +48,10 @@ export default function Approach() {
 
         <ol className="mt-3 grid border-t border-current/15 sm:grid-cols-2 lg:grid-cols-4">
           {site.steps.map((step) => (
-            <li key={step.n} className="border-b border-current/15 px-1 py-5 lg:border-r lg:border-b-0 lg:px-4 lg:last:border-r-0">
-              <p className="font-mono text-[12px] text-accent-text">{step.n}</p>
-              <h3 className="mt-3 font-serif text-[clamp(1.5rem,2vw,2rem)] leading-none tracking-[-0.03em]">
-                {step.title}
-              </h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-muted-ink">{step.body}</p>
+            <li key={step.n} className="min-w-0 border-b border-current/15 px-1 py-5 lg:border-r lg:border-b-0 lg:px-4 lg:last:border-r-0">
+              <p className="type-label">{step.n}</p>
+              <h3 className="type-h3 mt-3">{step.title}</h3>
+              <p className="type-body mt-2 text-muted-ink">{step.body}</p>
             </li>
           ))}
         </ol>
@@ -67,8 +63,8 @@ export default function Approach() {
 function Sheet({ sheet, className }) {
   return (
     <div className={`${sheet.tone} flex h-full flex-col justify-between p-6 sm:p-8 ${className}`}>
-      <p className="font-mono text-[12px] tracking-[0.16em] uppercase opacity-70">{sheet.title}</p>
-      <p className="max-w-[14ch] font-serif text-[clamp(2.2rem,4vw,3.6rem)] leading-[0.9] tracking-[-0.04em]">
+      <p className="type-label opacity-70">{sheet.title}</p>
+      <p className="type-h2 max-w-[16ch]">
         {sheet.line}
       </p>
     </div>

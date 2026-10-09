@@ -85,13 +85,14 @@ export default function FilmStrip() {
   }, [reduced])
 
   return (
-    <section id="evidence" className="scroll-mt-24 overflow-x-clip bg-ink py-14 sm:py-20" aria-label="Evidence index">
-      <div className="shell mb-6 flex items-end justify-between gap-4">
-        <h2 className="font-serif text-[clamp(2.4rem,6vw,5.2rem)] leading-[0.86] font-medium tracking-[-0.045em] text-cream">
-          Drag the file.
-        </h2>
-        <p className="max-w-[16ch] text-right text-[13px] leading-snug text-muted">
-          Large frames. The next one stays in view.
+    <section id="evidence" className="section-pad scroll-mt-24 overflow-x-clip bg-ink" aria-label="Evidence index">
+      <div className="shell mb-6 flex flex-wrap items-end justify-between gap-3">
+        <div className="min-w-0">
+          <p className="type-label">01 · File</p>
+          <h2 className="type-h2 mt-2 text-cream">Drag the file.</h2>
+        </div>
+        <p className="type-body max-w-[28ch] text-muted-ink">
+          Frames stay in the shell. The next one peeks.
         </p>
       </div>
 
@@ -105,7 +106,7 @@ export default function FilmStrip() {
           {FRAMES.map((frame) => (
             <li key={frame.n} className="evidence-frame shrink-0">
               <article
-                className={`flex h-[min(62vh,32rem)] min-h-[22rem] flex-col justify-between p-5 sm:p-8 ${
+                className={`flex min-h-[16rem] flex-col justify-between p-5 sm:min-h-[18rem] sm:p-7 ${
                   frame.tone === 'dark'
                     ? 'bg-[#0c141c] text-[#f4f7fa]'
                     : 'bg-[#f4f7fa] text-[#1e2a3a]'
@@ -113,14 +114,14 @@ export default function FilmStrip() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <span
-                    className={`font-mono text-[12px] tracking-[0.18em] uppercase ${
+                    className={`type-label ${
                       frame.tone === 'dark' ? 'text-[#9af3ff]' : 'text-[#075e73]'
                     }`}
                   >
                     {frame.label}
                   </span>
                   <span
-                    className={`font-serif text-[clamp(5rem,12vw,9rem)] leading-none tracking-[-0.06em] ${
+                    className={`font-sans text-[clamp(2.75rem,6vw,4.25rem)] leading-none font-bold tracking-[-0.05em] ${
                       frame.tone === 'dark' ? 'text-white/15' : 'text-[#1e2a3a]/12'
                     }`}
                     aria-hidden
@@ -129,11 +130,11 @@ export default function FilmStrip() {
                   </span>
                 </div>
                 <div>
-                  <h3 className="max-w-[12ch] font-serif text-[clamp(2.6rem,5vw,4.6rem)] leading-[0.88] font-medium tracking-[-0.045em]">
+                  <h3 className="type-h3 max-w-[16ch]">
                     {frame.title}
                   </h3>
                   <p
-                    className={`mt-4 max-w-[28ch] text-[16px] leading-relaxed ${
+                    className={`type-body mt-3 max-w-[32ch] ${
                       frame.tone === 'dark' ? 'text-[#d5dee8]' : 'text-[#2f3f54]'
                     }`}
                   >
