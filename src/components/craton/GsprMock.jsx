@@ -47,7 +47,7 @@ export default function GsprMock({ className = '', compact = false }) {
     >
       <div className="pointer-events-none absolute inset-0 noise opacity-[0.04]" />
       <div
-        className={`flex items-center justify-between border-b border-line font-mono text-[10px] uppercase tracking-[0.14em] text-muted ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}
+        className={`flex items-center justify-between border-b border-line font-mono text-[11px] uppercase tracking-[0.14em] text-muted ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}
       >
         <span className="flex items-center gap-2 text-cream/90">
           <span className="size-1.5 rounded-full bg-accent" />
@@ -66,7 +66,7 @@ export default function GsprMock({ className = '', compact = false }) {
             key={label}
             className="rounded-lg border border-line bg-white/[0.03] px-3 py-3"
           >
-            <p className="font-mono text-[9px] uppercase tracking-[0.12em] text-muted">
+            <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">
               {label}
             </p>
             <p className="mt-1.5 font-mono text-xl tracking-tight text-cream sm:text-2xl">
@@ -82,7 +82,7 @@ export default function GsprMock({ className = '', compact = false }) {
       <div
         className={`overflow-x-auto ${compact ? 'px-3 pb-3' : 'px-4 pb-4 sm:px-5 sm:pb-5'}`}
       >
-        <table className="w-full min-w-[420px] border-collapse text-left text-[12.5px]">
+        <table className="w-full border-collapse text-left text-[12.5px]">
           <thead>
             <tr className="font-mono text-[10px] uppercase tracking-[0.12em] text-muted">
               <th className="pb-2 font-medium">Requirement</th>

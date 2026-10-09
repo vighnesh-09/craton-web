@@ -21,7 +21,12 @@ export default function Header() {
   const lenis = useLenis()
 
   useEffect(() => {
-    let heroLine = window.innerHeight * 0.72
+    const measureHero = () => {
+      const hero = document.getElementById('top')
+      if (!hero) return 160
+      return Math.max(hero.offsetHeight - 24, 96)
+    }
+    let heroLine = measureHero()
     let scrolledNow = false
     let overNow = true
     const readScroll = () =>
@@ -43,7 +48,7 @@ export default function Header() {
     }
 
     const onResize = () => {
-      heroLine = window.innerHeight * 0.72
+      heroLine = measureHero()
       sync()
     }
 
@@ -73,15 +78,17 @@ export default function Header() {
     <header
       className={cn(
         'fixed inset-x-0 top-0 z-50 w-full pt-3',
-        overHero && 'bg-[#0E1A24]',
+        overHero && 'bg-transparent',
       )}
     >
-      <div className="pad-x w-full">
+      <div className="w-full">
         <div
           className={cn(
             'shell flex items-center justify-between gap-4 transition-all duration-400 ease-out',
             overHero &&
-              'rounded-full border border-transparent bg-transparent px-3 py-2.5 text-[#eef8f4] shadow-none sm:px-4',
+              'rounded-full border border-transparent bg-transparent px-3 py-2.5 shadow-none sm:px-4',
+            overHero && isLight && 'text-[#1e2a3a]',
+            overHero && !isLight && 'text-[#eef8f4]',
             overHero &&
               scrolled &&
               'border-white/10 bg-[#0f1621]/60 backdrop-blur-md',
@@ -92,13 +99,17 @@ export default function Header() {
           )}
         >
           <a href="#top" aria-label={site.name}>
-            <BrandLogo inverted={overHero || darkSolid} />
+            <BrandLogo inverted={(overHero && !isLight) || darkSolid} />
           </a>
 
           <nav
             className={cn(
               'hidden items-center gap-5 text-[13px] xl:gap-6 lg:flex',
-              overHero || darkSolid ? 'text-[#d5e0ea]' : 'text-[#2f3f54]',
+              overHero && isLight
+                ? 'text-[#1e2a3a]'
+                : overHero || darkSolid
+                  ? 'text-[#d5e0ea]'
+                  : 'text-[#2f3f54]',
             )}
             aria-label="Primary"
           >
@@ -107,10 +118,12 @@ export default function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'inline-flex min-h-12 items-center transition-colors',
-                  overHero || darkSolid
-                    ? 'hover:text-white'
-                    : 'hover:text-[#0f1621]',
+                  'inline-flex min-h-12 items-center border-b border-transparent transition-colors duration-[180ms] hover:border-current',
+                  overHero && isLight
+                    ? 'hover:text-[#00a8c4]'
+                    : overHero || darkSolid
+                      ? 'hover:text-white'
+                      : 'hover:text-[#0f1621]',
                 )}
               >
                 {item.label}
@@ -121,8 +134,12 @@ export default function Header() {
           <div className="flex items-center gap-2 sm:gap-3">
             <span
               className={cn(
-                'mono-label hidden text-[7.5px] xl:block',
-                overHero || darkSolid ? 'text-[#d5e0ea]' : 'text-[#1e4d66]',
+                'mono-label hidden text-[11px] min-[1500px]:block',
+                overHero && isLight
+                  ? 'text-[#1e4d66]'
+                  : overHero || darkSolid
+                    ? 'text-[#d5e0ea]'
+                    : 'text-[#1e4d66]',
               )}
             >
               {site.location}
@@ -134,6 +151,10 @@ export default function Header() {
               className={cn(
                 'jelly inline-flex size-12 items-center justify-center rounded-full border',
                 overHero &&
+                  isLight &&
+                  'border-[#1e2a3a]/15 bg-white/70 text-[#1e2a3a]',
+                overHero &&
+                  !isLight &&
                   'border-white/15 bg-white/[0.06] text-[#e8eef5] hover:bg-white/12',
                 lightSolid &&
                   'border-[#1e2a3a]/12 bg-[#f4f5f7] text-[#1e2a3a] hover:bg-[#e8ecf1]',
@@ -152,7 +173,10 @@ export default function Header() {
               href="#contact"
               className={cn(
                 'hidden !min-h-12 !rounded-sm !bg-[image:none] !px-4 !shadow-none sm:inline-flex',
-                (overHero || darkSolid) &&
+                overHero &&
+                  isLight &&
+                  '!bg-[#00a8c4] !text-[#102033] hover:!bg-[#007a96] hover:!text-white',
+                ((overHero && !isLight) || darkSolid) &&
                   '!bg-[#00e5ff] !text-[#0f1621] hover:!bg-[#5cfbff]',
                 lightSolid &&
                   '!bg-[#00a8c4] !text-[#102033] hover:!bg-[#007a96] hover:!text-white',
@@ -165,8 +189,8 @@ export default function Header() {
               type="button"
               className={cn(
                 'jelly inline-flex size-12 items-center justify-center rounded-full border lg:hidden',
-                overHero &&
-                  'border-white/15 bg-white/[0.06] text-[#e8eef5]',
+                overHero && isLight && 'border-[#1e2a3a]/15 bg-white/70 text-[#1e2a3a]',
+                overHero && !isLight && 'border-white/15 bg-white/[0.06] text-[#e8eef5]',
                 lightSolid &&
                   'border-[#1e2a3a]/12 bg-[#f4f5f7] text-[#1e2a3a]',
                 darkSolid &&
@@ -189,7 +213,8 @@ export default function Header() {
               exit={{ opacity: 0, y: -6 }}
               className={cn(
                 'shell mt-2 rounded-[1.5rem] p-5 lg:hidden',
-                overHero && 'border border-white/10 bg-[#0f1621]/95 text-[#e8eef5] backdrop-blur-xl',
+                overHero &&
+                  'border border-white/10 bg-[#0f1621]/95 text-[#e8eef5] backdrop-blur-xl',
                 lightSolid && 'glass-panel glass-panel--strong text-[#1e2a3a]',
                 darkSolid && 'glass-panel glass-panel--strong text-[#e8eef5]',
               )}

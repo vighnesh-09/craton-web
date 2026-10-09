@@ -3,7 +3,7 @@ export const site = {
   legalName: 'Craton Technologies LLC',
   url: 'https://craton.io',
   email: 'hello@craton.io',
-  // location: 'Frisco, Texas',
+  location: 'Frisco, Texas',
   logo: '/brand/craton-logo.webp',
   founder: {
     name: 'Sheik Ahamed Ali',
@@ -20,8 +20,8 @@ export const site = {
       'EU MDR, IVDR, GSPR gap assessment, regulatory AI, MedTech, RAccelerator, ReviewsIntel, Craton Technologies',
   },
   nav: [
-    { label: 'Domain', href: '#domain' },
-    { label: 'Product', href: '#products' },
+    { label: 'RAccelerator', href: '#raccelerator' },
+    { label: 'ReviewsIntel', href: '#reviewsintel' },
     { label: 'How it works', href: '#approach' },
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },

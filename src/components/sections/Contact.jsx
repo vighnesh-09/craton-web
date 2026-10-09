@@ -72,21 +72,19 @@ export default function Contact() {
       className="contact-field section-pad scroll-mt-24"
       aria-label="Contact"
     >
-      <div className="shell">
-        <div className="relative overflow-visible rounded-[1.75rem] bg-[#1E2A3A] text-[#f4f7fa] shadow-[0_24px_50px_-28px_rgba(15,22,33,0.55)]">
+      <div className="shell shell-fit">
+        <div className="relative overflow-visible bg-[#1E2A3A] text-[#f4f7fa]">
           <span
             aria-hidden
             className="pointer-events-none absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-[#00A8C4] to-transparent"
           />
 
           <div className="px-4 py-6 sm:px-7 sm:py-8 min-[1100px]:px-9 min-[1100px]:py-9">
-            <p className="flex items-center gap-3 font-mono text-[11px] font-medium uppercase tracking-[0.16em] text-accent">
-              A question worth exploring?
-              <span aria-hidden>+</span>
+            <p className="flex items-center gap-3 font-mono text-[12px] font-medium tracking-[0.16em] text-[#9af3ff] uppercase">
+              04 · Request a pilot
             </p>
-            <h2 className="display mt-3 text-[#f4f7fa]">
-              The future doesn’t build itself.{' '}
-              <span className="serif text-accent">Let’s move it forward.</span>
+            <h2 className="product-display mt-3 text-[#f4f7fa]">
+              Request a pilot.
             </h2>
             <p className="mt-3 max-w-[46ch] text-[15px] leading-relaxed text-[#d5dee8]">
               Tell us who you are and we’ll route you to the right conversation.

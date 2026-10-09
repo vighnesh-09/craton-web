@@ -4,7 +4,7 @@ export default function ReviewsMock({ className = '', compact = false }) {
       className={`overflow-hidden rounded-2xl border border-line bg-paper ${className}`}
     >
       <div
-        className={`flex items-center justify-between border-b border-line font-mono text-[10px] uppercase tracking-[0.14em] text-muted ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}
+        className={`flex items-center justify-between border-b border-line font-mono text-[11px] uppercase tracking-[0.14em] text-muted ${compact ? 'px-4 py-3' : 'px-5 py-4'}`}
       >
         <span className="flex items-center gap-2 text-cream/90">
           <span className="size-1.5 rounded-full bg-accent" />

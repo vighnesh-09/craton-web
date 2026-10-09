@@ -1,119 +1,55 @@
-import { ArrowUpRight } from 'lucide-react'
-import GsprMock from '@/components/craton/GsprMock'
-import ReviewsMock from '@/components/craton/ReviewsMock'
-import Button from '@/components/ui/Button'
 import { site } from '@/config/site'
 
-const products = [
-  {
-    product: site.products.ra,
-    visual: 'gspr',
-    chapter: '01',
-    cta: 'Start a pilot',
-    tone: 'light',
-  },
-  {
-    product: site.products.ri,
-    visual: 'reviews',
-    chapter: '02',
-    cta: 'Discuss ReviewsIntel',
-    tone: 'ink',
-  },
-]
+const ra = site.products.ra
+const ri = site.products.ri
 
-/** Both products side by side. Content height, no pin or width scrub. */
+const INDEX = {
+  [ra.id]: ['Device classification', 'GSPR gap assessment', 'Traceable reasoning'],
+  [ri.id]: ['Review evidence', 'Decision context', 'Visible rationale'],
+}
+
 export default function Products() {
   return (
-    <section id="products" className="section-pad bg-canvas" aria-label="Products">
-      <div className="shell">
-        <div className="max-w-[36rem]">
-          <p className="kicker">Intelligence, applied</p>
-          <h2 className="display mt-3 max-w-[16ch] text-cream">
-            Complexity meets <span className="serif text-accent">clarity.</span>
-          </h2>
-          <p className="lede mt-3 max-w-[46ch]">
-            Two products. Same evidence-first method — MedTech regulatory AI and proof for agentic commerce.
-          </p>
-        </div>
-        <div className="mt-8 grid items-stretch gap-4 lg:grid-cols-2">
-          {products.map(({ product, visual, chapter, cta, tone }) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              chapter={chapter}
-              cta={cta}
-              tone={tone}
-              visual={visual === 'gspr' ? <GsprMock compact /> : <ReviewsMock compact />}
-            />
-          ))}
-        </div>
-      </div>
+    <section id="products" aria-label="Products">
+      <Product product={ra} tone="paper" />
+      <Product product={ri} tone="ink" />
     </section>
   )
 }
 
-function ProductCard({ product, chapter, cta, visual, tone }) {
+function Product({ product, tone }) {
   const ink = tone === 'ink'
-
   return (
     <article
       id={product.id}
-      aria-label={product.name}
-      className={
-        ink
-          ? 'relative flex h-full min-w-0 flex-col rounded-[var(--radius)] bg-vault p-4 text-[#f4f7fa] sm:p-5'
-          : 'relative flex h-full min-w-0 flex-col rounded-[var(--radius)] border border-[var(--hairline)] bg-paper-2 p-4 text-cream sm:p-5'
-      }
+      className={`scroll-mt-28 ${ink ? 'bg-[#0c141c] text-[#f4f7fa]' : 'bg-[#f4f7fa] text-[#1e2a3a]'}`}
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute bottom-4 left-0 top-4 w-0.5 rounded-full bg-accent"
-      />
-      <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 pl-2">
-        <div className="flex items-center gap-3">
-          <span className="font-mono text-[11px] tracking-[0.16em] text-accent">{chapter}</span>
-          <span className={ink ? 'font-mono text-[11px] uppercase tracking-[0.12em] text-[#c5d4e0]' : 'font-mono text-[11px] uppercase tracking-[0.12em] text-muted-ink'}>
-            {product.status}
-          </span>
-        </div>
-        <span className={ink ? 'text-[13px] text-[#c5d4e0]' : 'text-[13px] text-muted-ink'}>
-          {product.domain}
-        </span>
-      </div>
-      <h3 className="mt-2 shrink-0 pl-2 text-[clamp(1.2rem,1.6vw,1.45rem)] font-medium tracking-[-0.03em]">
-        {product.name}
-      </h3>
-      <p className={ink ? 'mt-1 shrink-0 pl-2 text-[13.5px] leading-snug text-[#d5e0ea]' : 'mt-1 shrink-0 pl-2 text-[13.5px] leading-snug text-muted-ink'}>
-        {product.headline}
-      </p>
-      <div
-        className={
-          ink
-            ? 'mt-3 min-w-0 overflow-hidden rounded-[var(--radius)] bg-paper p-1 text-cream'
-            : 'mt-3 min-w-0 overflow-hidden rounded-[var(--radius)] border border-[var(--hairline)] bg-paper p-1'
-        }
-      >
-        {visual}
-      </div>
-      <div className={ink ? 'mt-3 flex shrink-0 flex-wrap items-end justify-between gap-3 border-t border-white/15 pl-2 pt-3' : 'mt-3 flex shrink-0 flex-wrap items-end justify-between gap-3 border-t border-[var(--hairline)] pl-2 pt-3'}>
-        <p className={ink ? 'max-w-[36ch] text-[13px] leading-snug text-[#d5e0ea]' : 'max-w-[36ch] text-[13px] leading-snug text-muted-ink'}>
-          <span className="mr-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
-            Problem
-          </span>
-          {product.problem}
-        </p>
-        <Button
-          href="#contact"
-          variant={ink ? 'light' : 'outline'}
-          className={
-            ink
-              ? '!min-h-12 !rounded-sm !bg-[image:none] !bg-[#00A8C4] !px-3 !text-[#102033] !shadow-none hover:!bg-[#007A96] hover:!text-[#102033]'
-              : '!min-h-12 !rounded-sm !border-[var(--hairline)] !bg-canvas !px-3 !text-cream !shadow-none hover:!border-accent'
-          }
+      <div className="shell shell-fit py-16 sm:py-24">
+        <p
+          className={`font-mono text-[12px] tracking-[0.16em] uppercase ${ink ? 'text-[#9af3ff]' : 'text-[#075e73]'}`}
         >
-          {cta}
-          <ArrowUpRight size={14} />
-        </Button>
+          {product.status} · {product.domain}
+        </p>
+        <h2 className="product-display mt-4">{product.name}</h2>
+        <p className={`mt-6 max-w-[46ch] text-[17px] leading-relaxed ${ink ? 'text-[#d5dee8]' : 'text-[#2f3f54]'}`}>
+          {product.headline}
+        </p>
+        <div className={`mt-10 h-px w-full ${ink ? 'bg-white/20' : 'bg-[#1e2a3a]/15'}`} />
+        <ol className="mt-8 grid gap-6 sm:grid-cols-3">
+          {INDEX[product.id].map((item, index) => (
+            <li key={item}>
+              <p className={`font-mono text-[12px] tracking-[0.14em] ${ink ? 'text-[#9af3ff]' : 'text-[#075e73]'}`}>
+                {String(index + 1).padStart(2, '0')}
+              </p>
+              <p className="mt-2 font-serif text-[clamp(1.35rem,2.2vw,1.85rem)] leading-tight tracking-[-0.03em]">
+                {item}
+              </p>
+            </li>
+          ))}
+        </ol>
+        <p className={`mt-10 max-w-[62ch] text-[13px] leading-relaxed ${ink ? 'text-[#c5d0dc]' : 'text-[#3a6d8c]'}`}>
+          {product.disclaimer}
+        </p>
       </div>
     </article>
   )

@@ -206,7 +206,7 @@ function buildWordmark(N, C, seed, out, colors) {
   const R = mulberry(seed)
   const u = WM.u
   const main = textCanvas(
-    `600 ${172 * u}px "Plus Jakarta Sans",system-ui,sans-serif`,
+    `600 ${172 * u}px "Source Sans 3",system-ui,sans-serif`,
     `${-10 * u}px`,
     'craton',
     128 * u,

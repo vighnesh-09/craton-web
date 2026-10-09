@@ -4,7 +4,10 @@ import { site } from '@/config/site'
 
 export default function Footer() {
   return (
-    <footer className="pad-x border-t border-white/10 bg-[#1E2A3A] pb-6 pt-8 text-[#f4f7fa]">
+    <footer className="border-t border-white/10 bg-[#0c141c] pb-6 pt-8 text-[#f4f7fa]">
+      <p className="px-3 font-serif text-[clamp(4.5rem,18vw,16rem)] leading-[0.78] tracking-[-0.06em] sm:px-4">
+        Craton.
+      </p>
       <div className="shell mb-6 grid gap-6 lg:grid-cols-[1.1fr_1.4fr_0.8fr]">
         <a href="#top" className="self-start" aria-label={site.name}>
           <BrandLogo size="lg" inverted />

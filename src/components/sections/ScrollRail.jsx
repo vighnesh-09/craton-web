@@ -47,12 +47,13 @@ export default function ScrollRail() {
       </p>
 
       {reduced ? (
-        <div className="pad-x flex flex-wrap justify-center gap-x-6 gap-y-2 text-[13px] text-muted">
+        <div className="shell flex flex-wrap justify-center gap-x-6 gap-y-2 text-[13px] text-muted">
           {[...TRACK_A, ...TRACK_B].slice(0, 8).map((word) => (
             <span key={word}>{word}</span>
           ))}
         </div>
       ) : (
+        <div className="shell overflow-hidden">
         <div className="space-y-3">
           <MarqueeRow style={{ x: xA }} words={[...TRACK_A, ...TRACK_A]} />
           <MarqueeRow
@@ -60,6 +61,7 @@ export default function ScrollRail() {
             words={[...TRACK_B, ...TRACK_B]}
             muted
           />
+        </div>
         </div>
       )}
     </section>
